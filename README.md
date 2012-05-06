@@ -1,4 +1,4 @@
 msc_thesis
 ==========
 
-MSc thesis about &quot;Developing an eye tracking system based on image procession&quot;
+MSc thesis about &quot;Development of a Gaze Tracking System Based on Image Procession&quot;

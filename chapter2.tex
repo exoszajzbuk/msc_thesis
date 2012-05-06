@@ -1,0 +1,166 @@
+%----------------------------------------------------------------------------
+\chapter{A tekintetkövetésről}\label{sect:tekintetkovetes}
+%----------------------------------------------------------------------------
+
+A tekintetkövető rendszer fejlesztésének megkezdése előtt számos elméleti és gyakorlati szempont veendő figyelembe, hogy a rendszer által nyújtott kritériumok a lehető legjobban közelítsék az elvártat. Nem kerülhető meg az általános technikák, vagy már meglévő megoldások áttekintése a szakirodalomból, aminek segítségével képet alkothatunk a kutatási téma jelenlegi állásáról, és a gyakorlati szempontok figyelembe vételével dönthetjük el, hogy mely módszer mellett tesszük le végül a voksunkat.
+
+\bigskip
+
+A fejezet \sectref{modszerek} szakaszában mindenekelőtt a jelenleg elérhető tekintetkövetési módszereket veszem górcső alá, majd hasonlítom össze őket, hogy kellően megalapozott döntést hozhassak a később felhasználni kívánt technikával kapcsolatban. 
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Tekintetkövetési módszerek}\label{sect:modszerek}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+Bár már lassan másfél évtizedes, a témában mégis hiánypótló munka Arne John Glenstroupnak és Theo Engell-Nielsennek, a dán Københavns Universitet (Koppenhágai Egyetem) hallgatóinak diplomamunkája \cite{eye_media}. Dolgozatuk jelen szempontból fontos második fejezetét a modern tekintetkövetési technikák bemutatásának és összehasonlításának szentelik, meglátásaik pedig mind a mai napig helytállóak.
+
+\bigskip
+
+Ebben a szakaszban főleg az ő munkájuk alapján szeretném összefoglalni a tekintet követésére felhasználható technikákat, néhol a lényeg kiemelésével, ahol pedig szükséges, a hivatkozott cikk keletkezése óta az idő múlásával érvénytelenné vált adatok, paraméterek aktualizálásával.
+
+%............................................................................
+\subsection{Az ideális tekintetkövető}\label{sect:idealis}
+%............................................................................
+
+Manapság számos módszer kínálkozik a tekintet követésére. De mégis milyen követelményeket kell teljesíteni az ,,ideális'' tekintetkövetőnek? Scott és Findlay 1993-as munkájukban \cite{scott} Hallett eredményeit \cite{hallett} figyelembe véve meghatározták az ideális tekintetkövető eszköz (vagy rendszer) paramétereit és tulajdonságait.
+
+Ezek szerint az ideális tekintetkövető eszköznek a következő 12 pont által támasztott követelményeket kell teljesítenie:
+
+\begin{enumerate}[a.]
+ \item az arc és a fejrégió könnyen hozzáférhető maradjon
+ \item ne legyen fizikailag kapcsolatban a vizsgált személlyel
+ \item ha szükséges, képes legyen stabilizálni a kapott eredményeket
+ \item a rendszer \emph{pontossága} néhány százalékos (1--2 szögperces) eltérést engedjen meg
+ \item támogasson legalább egy szögperces \emph{felbontást} másodpercenként, hogy a szempozíció legkisebb változása is követhető legyen; a felbontásnak csak az érzékelő eszköz zaja szabjon határt
+ \item támogasson kellően széles \emph{dinamika-tartományt} a szem mozogásainak leképezéséhez
+ \item a rendszer időbeli dinamikája legyen megfelelő (jó erősítés, kis fázistolás)
+ \item nyújtson \emph{valósidejű} válaszidőt
+ \item legyen \emph{invariáns} mindhárom forgási és eltolási szabadságfokra
+ \item egyszerűen kiterjeszthető legyen mindkét szem feldolgozására (\emph{binokuláris} vizsgálat)
+ \item \emph{kompatibilis} meglévő legyen fej- és testfelvételek használatával
+ \item tesztalanyok széles skáláján (pl. nem, kor, rassz szerint, vagy szemüvegesek és szemüveg nélküliek körében) használható legyen
+\end{enumerate}
+
+A fent felsorolt követelmények valóban az ideális esetet testesítik meg. Sokszor egy követelmény enyhítésével, vagy figyelmen kívül hagyásával más követelmények kielégítése jelentősen egyszerűsödik. Ha például a \emph{b.} pont szerinti fizikai kontaktust mégis megengedjük, rögzíthetjük a követésre használt kamerát a vizsgálni kívánt alany fejéhez (természetesen kellően diszkrét és kényelmes módon). Ebben az esetben a \emph{i.} pont szerinti invariancia biztosítása máris egyszerűbb feladat, mint külső nézőpontból geometriai transzformációk segítségével végezni ugyanezt.
+
+Több más, látszólag egymásnak ellentmondó követelményt is észrevehetünk az ideális tekintetkövető eszköz 12 pontja között. Komoly megoldandó mérnöki feladatot jelent az ütközések feloldásával az ideális eszközt különböző, valós életben használható megoldásokká alakítani.
+
+\bigskip
+
+A gyakorlatban használható tekintetkövetési megoldások egy lehetséges csoportosítása az alábbi elveken működő iránymeghatározásokat tartalmazza:
+
+\begin{enumerate}
+ \item a szem felületének (vagy a felület speciális megvilágításának) alapján, optikai elven 
+ \item a szem körüli bőrfelület elektromos potenciáljának mérésével
+ \item speciális kontaktlencse használatával
+\end{enumerate}
+
+Már csekély megfontolással látszik, hogy minden csoportnak vannak előnyei és hátrányai. Például az \emph{1.} csoportba tartozó megoldások igénylik a legkevésbé -- többnyire egyáltalán nem -- a fizikai kontaktust a vizsgált személlyel. Azonban elképzelhető, hogy ennek az az ára, hogy az ebbe a csoportba tartozó megoldások nem veszik fel a versenyt a másik két alapelv szerint fejlesztett rendszerekkel pl. a pontosság, vagy valamely más kritérium tekintetében.
+
+Ennek megfelelően szükség van a lehetőségek számba vételére, értékelésére, majd összehasonlítására, hogy a legmegfelelőbb technikát tudjuk kiválasztani, ha tekintetkövető eszköz (alkalmazás) fejlesztésébe fogunk. A következő szakaszokban ezért röviden ismertetem a fenti kategóriákba eső megoldások alapjait, majd összehasonlítom jellemző tulajdonságaikat, valamint a használatukkal elérhető fontos pontossági- és sebességértékeket.
+
+%............................................................................
+\subsection{Optikai elvű követés}\label{sect:optikai}
+%............................................................................
+
+Az optikai elvű követés során -- a nevéből adódóan -- optikai úton próbáljuk meghatározni a tekintet irányát. Ez történhet speciális megvilágítás nélkül, pl. az írisz (pontosabban az írisz és az ínhártya közti határvonal, a limbus), vagy a pupilla követésével.
+
+A másik lehetséges megoldásra a szem speciális, többnyire infravörös fénnyel történő megvilágítása, majd a szemgolyó felületén megjelenő tükröződések, visszaverődések vizsgálata kínálkozik. Az infravörös megvilágítás előnye a látható fénnyel szemben egyrészt az, hogy nem zavarja a vizsgált személyt, nem vonja el a figyelmét, másrészt pedig infraszűrők használatával a látható fény tartományába eső változásokkal a megfelelő körülmények között (lehetőleg kevés napfény a magas infratartalma miatt) invariánssá tehető.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Limbuskövetés}\label{sect:limbusz}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Az írisz és az ínhártya közötti határvonal a többnyire nagy intenzitásváltozás miatt könnyen detektálható lehet. Ugyanakkor meg kell jegyeznünk, hogy az esetek jelentős részében a limbus számottevő része lehet a szemhéjak takarásában. Ennek megfelelően a technika csak vízszintes helyzet és mozgás követésére alkalmas kielégítő pontossággal \cite{scott}.
+
+Klasszikus esetben ez a követési technika a limbus \emph{relatív} fejhez képest helyzetén alapul, ezért a vizsgálat közben a fejmozgások teljes hanyagolását, esetleg a tekintetkövető eszköz fejhez rögzítettségét igényli.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Pupillakövetés}\label{sect:pupilla}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+A pupillakövetési technika hasonló az előbb említett limbuskövetéshez, de némi többlet előnyt is magában hordoz. Az egyik ilyen előny, hogy a pupilla közel sincs olyan nagy részben a szemhéjak takarásában, mint a limbus, ennek következtében függőleges irányú követés is megvalósítható lehet. A másik előny, hogy az írisz és a pupilla közti határvonal jóval élesebb, mint az írisz-ínhártya határa, ezért jobb felbontással, pontosabban tudjuk meghatározni a nézeti irányt.
+
+Az előző technikához képest azonban meg kell említeni a felmerülő nehézségeket is. A kontraszt ugyan lehet, hogy nagyobb az írisz-pupilla határon, azonban az intenzitáskülönbség nem olyan jelentős, mint a limbus környezetében. Az sem elhanyagolható szempont, hogy a pupilla átmérője is szükségszerűen kisebb, mint az íriszé, vagyis a forrásnak relatívan nagyobb felbontásúnak kell lennie, hogy azonos pixelnyi méretű pupillát és íriszt detektálhassunk; ellenkező esetben a kisebb abszolút méret a pontosság rovására mehet.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Visszaverődés-alapú követés}\label{sect:visszaverodes}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+A szemet (infravörös) fénnyel megvilágítva több tükröződés is megfigyelhető lesz a szemlencse és a szaruhártya határán: ezek az úgynevezett \emph{Purkinje-képek} (lásd \figref{purkinje} ábra).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=110mm, keepaspectratio]{figures/purkinje_kepek.png}
+\caption{A \emph{Purkinje-képek} elhelyezkedése. Forrás: \url{http://www.fourward.com/dconcept.htm}}
+\label{fig:purkinje}
+\end{figure}
+
+Ezen visszavert képek intenzitása sorrendben egyre csökken, az első azonban (közkeletű nevén az úgynevezett \emph{,,csillanás''}, angolul \emph{glint}) még viszonylag egyszerűen detektálható. Infravörös megvilágításban ugyancsak egyszerű a megfelelő kamerával a pupilláról visszavert fény detektálása -- a pupilla a környezeténél jóval nagyobb mértékben veri vissza az infravörös fényt, az infraképen egy ,,fényes'', kontrasztos objektumot alkotva.
+
+A fenti két objektum egymáshoz viszonyított \emph{relatív} helyzetéből következtethetünk a tekintet irányára, ugyanis az első Purkinje-kép világos pontja, illetve a pupilla kontrasztos ellipszise egymással összefüggésben mozdulnak el a fej vagy a szem mozgatásának következtében.
+
+Az előző bekezdésben foglaltakból látszik, hogy a technika nem igényeli a fej mozdulatlanságát, vagy a képfelvevő eszköz fejhez rögzítését. Ezen előnye azonban egy megkötést is magával hordoz: egyszerű algoritmusok segítségével kb. $\pm12$--$15$ foknyi szabadsága van a felhasználónak a fejmozgásokra \cite{scott}, nagyobb mértékű mozgások esetén ugyanis komplexebb matematikai számítások szükségesek a követett objektumok mozgásának modellezéséhez.
+
+\bigskip
+
+A visszaverődés-alapú megoldásokkal rokonítható még az a módszer, amikor szintén az első Purkinje-kép erős visszaverődését detektálva a képen, kivágunk egy viszonylag kicsi (párszor tíz pixel nagyságrendű) részt, a csillanással a középpontban. Az így kapott képről egy neurális hálózat dönti el, hogy milyen nézeti irányhoz tartozik \cite{baluja}.
+
+A neurális hálózatot természetesen be kell tanítani a használhatóság érdekében. A betanítási procedúra első lépéseként tanítóképeket kell generálni, általános esetben pár percet vesz igénybe, ami alatt a követnie kell egy, a képernyőn megjelenő jelzést. A tanítóképek birtokában ezután a hálózat betanítható, ez a jelenlegi technikai szint mellett kb. tíz perces nagyságrendű időt vesz igénybe. Azonban azonos körülmények és tesztszemély esetén a tanítást nem kell máskor újra elvégezni.
+
+A neurális hálózat előnye a betanítás után, használat közben mutatkozik meg leginkább: felépítéséből adódóan a háló nagyon rövid idő alatt ,,döntést tud hozni'', így a valósidejű feldolgozási sebesség kritériuma mindenképpen kielégített lesz. A döntés eredménye ráadásul akár közvetlenül felhasználható: mindössze úgy kell megterveznünk a rendszert, hogy a neurális háló kimenet közvetlenül egy kétdimenziós koordinátát szolgáltasson a felhasznált képernyő koordináta-rendszerében.
+
+A módszer egy másik előnye, hogy nem igényel közeli, nagy felbontású képet a szemrégióról, egy átlagos felbontású kamerával, pl. kartávolságból is elegendő nagyságú lesz a szemrégió. Ennek egyik folyományaként -- hogy nagyobb látószögű képek használhatók -- adódik, hogy viszonylag nagy mozgási szabadsága lehetséges a vizsgált személy fejének tekintetében, anélkül, hogy a kamerát újra kéne pozicionálnunk.
+
+Ennek a szabadságnak azonban ára van: ha a kalibrálási fázis során több fejpozícióból is rögzítettünk tanító képeket, akkor a betanítás után a neurális hálózat jó eséllyel fogja felismerni különböző fejpozíciókban is a tekintet irányát; a mozgási szabadság azonban a pontosság csökkenésével jár. A pontosság egyébként is érzékeny pontja az eljárásnak, ezt pedig éppen úgy növelhetjük, ha tanítás és előhívás közben \emph{nem} engedjük meg, hogy a fejpozíció változzon.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Purkinje-képek követése}\label{sect:purkinje}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Egy további lehetséges optikai elven működő tekintetkövetési technikát mutatott be Müller \emph{et al} 1993-ban \cite{muller}, \emph{,,Kettős Purkinje-kép''} (Dual-Purkinje Image) módszer néven. Az eljárás lényege, hogy a már említett első és negyedik Purkinje-kép egymáshoz viszonyított helyzetéből számítja a tekintet irányát. Megfelelő matematikai modell esetén a módszer rendkívül pontos, azonban a negyedik Purkinje-kép alacsony intenzitása miatt hatványozottan érzékeny a megvilágítási problémákra.
+
+%............................................................................
+\subsection{Elektromos potenciál-alapú követés}\label{sect:potencial}
+%............................................................................
+
+Az eddigiektől egy merőben eltérő megközelítése a problémának az \emph{elektro-okulográfia} (EOG). Az eljárásból nyerhető elektro-okulogram rögzítése pl. megismerési és kognitív folyamatok, a vizuális információfeldolgozás, vagy az alvásvizsgálat terén szokásos.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm, keepaspectratio]{figures/eog.png}
+\caption{Az EOG eljárás elektródái. Forrás: \url{http://www.metrovision.fr/mv-po-notice-us.html}}
+\label{fig:eog}
+\end{figure}
+
+A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkülönbség mérésén alapul, amellyel mind függőleges, mind vízszintes irányban követhető a szem mozgása, de csak körülbelül $1$--$2$ fok pontossággal. A használata azonban korántsem mondható egyszerűnek: az potenciálváltozást érzékelő elektródák (lásd \figref{eog}) miatt szükséges fizikai kontaktuson kívül a rendszer kalibrációja rendkívül hosszadalmas, és hozzáértést igénylő feladat.
+
+%............................................................................
+\subsection{Követés speciális kontaktlencse használatával}\label{sect:kontakt}
+%............................................................................
+
+A szem helyzetének, ebből közvetve a tekintet irányának számításához speciális kontaktlencséket is használhatunk. Az egyik lehetséges megoldás, hogy a lencse anyagában olyan véseteket alakítanak ki (tipikusan valamilyen könnyen felismerhető mintázatot), amelyek a fénytörés felhasználásával megkönnyítik a szem helyzetének meghatározását.
+
+Ha azonban egy megfelelően kis méretű indukciós tekercset is sikerült a kontaktlencse anyagába ágyazni, akkor a fej körül generált nagyfrekvenciás elektromágneses mezőkkel az tekercs helyzete közvetlenül is könnyen meghatározható. Az eljárás körülményessége azonban kétségessé teszi a technika laboratóriumokon kívüli felhasználását.
+
+
+%............................................................................
+\subsection{A tekintetkövetési módszerek összehasonlítása}\label{sect:tekintet_osszehas}
+%............................................................................
+
+A \tabref{osszehas} táblázat tartalmazza az ebben a szakaszban felsorolt tekintetkövetési módszerek összehasonlítását. Az összehasonlítás szempontjai a módszer által igényelt kontaktust, az általa nyújtott pontosságot, illetve felbontást (hogy a bemeneti képen mekkora minimális elmozdulás jelent változást a kimeneti pozícióban) jelentik. 
+
+\begin{table}[ht]
+	\centering
+	\caption{A felsorolt tekintetkövetési módszerek összehasonlítása.} \label{tab:osszehas}
+	\begin{tabular}{ l || c | c | c | c | c | c | c }
+	 & kontaktus & pontosság & felbontás \\ \hline \hline
+	limbuskövetés & pl. áll-tartó & $1$--$7^\circ$ & $0,\!1^\circ$ \\
+	pupillakövetés & nincs & $0,\!003^\circ$ & $0,\!005^\circ$ \\
+	visszaverődés alapú & nincs & $0,\!5$--$2^\circ$ & jó \\
+	neurális hálózat & nincs & $1,\!5\circ$ & -- \\
+	kettős Purkinje-képek & nincs & $0,\!017^\circ$ & $0,\!25^\circ$ \\ 
+	elektro-okulográfia & elektródák & $\pm1,\!5$--$2^\circ$ & jó \\
+	kontaktlencse & kontaktlencse & $0,\!08^\circ$ & $0,\!017^\circ$ \\
+	\end{tabular}
+\end{table}

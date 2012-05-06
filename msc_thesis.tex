@@ -1,0 +1,213 @@
+\documentclass[12pt,a4paper,oneside]{report}             % Single-side
+%\documentclass[11pt,a4paper,twoside,openright]{report}  % Duplex
+
+%\PassOptionsToPackage{chapternumber=Huordinal}{magyar.ldf}
+\usepackage{t1enc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[thmmarks]{ntheorem}
+\usepackage{graphics}
+\usepackage{epsfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{anysize}
+\usepackage[magyar]{babel}
+%\usepackage{indentfirst}
+%\usepackage{natbib}
+\usepackage{sectsty}
+\usepackage{setspace}  % Ettol a tablazatok, abrak, labjegyzetek maradnak 1-es sorkozzel!
+\usepackage[hang,compatibility=false]{caption}
+%\usepackage{hyperref}
+\usepackage{bookmark}
+
+
+%--------------------------------------------------------------------------------------
+% Main variables
+%--------------------------------------------------------------------------------------
+\newcommand{\mitauthor}{Kovács Balázs}
+\newcommand{\mitadvisor}{Kertész Zsolt}
+\newcommand{\mittitle}{Tekintetkövető rendszer fejlesztése képfeldolgozási alapokon}
+
+%--------------------------------------------------------------------------------------
+% Custom hyphenations
+%--------------------------------------------------------------------------------------
+\hyphenation{OpenCV}
+\hyphenation{Linux}
+\hyphenation{Ubuntu}
+\hyphenation{toolkit}
+\hyphenation{wxWidgets}
+\hyphenation{AdaBoost}
+
+%--------------------------------------------------------------------------------------
+% Redefine original \chapter and \section commands
+%--------------------------------------------------------------------------------------
+\let\oldchap=\chapter
+\renewcommand*{\chapter}{\secdef{\chapternostar}{\chapterstar}}
+%\newcommand\chapterstar[1]{\oldchap*{#1}\markboth{~}{#1}\addcontentsline{toc}{chapter}{#1}}
+\newcommand\chapterstar[1]{\phantomsection\addcontentsline{toc}{chapter}{#1}\oldchap*{#1}\markboth{~}{#1}}
+%The first argument to \chapter is optional, hence the need for "[]"
+%in the following definition. However, \secdef duplicates the mandatory
+%argument if no optional argument was given. So we'll always have that
+%argument and the default doesn't matter.
+%\newcommand\chapternostar[2][]{\oldchap[#1]{#2}\markboth{\thechapter. #1}{\thechapter. #1}}
+\newcommand\chapternostar[2][]{\phantomsection\oldchap[#1]{#2}\markboth{\thechapter. #1}{\thechapter. #1}}
+
+\let\oldsect=\section
+\renewcommand*{\section}{\secdef{\sectionnostar}{\sectionstar}}
+%\newcommand\sectionstar[1]{\oldsect{#1}\markright{\thesection. #1}}
+\newcommand\sectionstar[1]{\phantomsection\oldsect{#1}\markright{\thesection. #1}}
+%\newcommand\sectionnostar[2][]{\oldsect[#1]{#2}\markright{\thesection. #1}}
+\newcommand\sectionnostar[2][]{\phantomsection\oldsect[#1]{#2}\markright{\thesection. #1}}
+
+\let\oldsubsect=\subsection
+\renewcommand*{\subsection}{\secdef{\subsectionnostar}{\subsectionstar}}
+\newcommand\subsectionstar[1]{\phantomsection\oldsubsect{#1}\markright{\thesection. #1}}
+\newcommand\subsectionnostar[2][]{\phantomsection\oldsubsect[#1]{#2}\markright{\thesection. #1}}
+
+\let\oldsubsubsect=\subsubsection
+\renewcommand*{\subsubsection}{\secdef{\subsubsectionnostar}{\subsubsectionstar}}
+\newcommand\subsubsectionstar[1]{\phantomsection\oldsubsubsect{#1}\markright{\thesection. #1}}
+\newcommand\subsubsectionnostar[2][]{\phantomsection\oldsubsubsect[#1]{#2}\markright{\thesection. #1}}
+
+%--------------------------------------------------------------------------------------
+% Page layout setup
+%--------------------------------------------------------------------------------------
+% we need to redefine the pagestyle plain
+% another possibility is to use the body of this command without \fancypagestyle
+% and use \pagestyle{fancy} but in that case the special pages
+% (like the ToC, the References, and the Chapter pages)remain in plane style
+\fancypagestyle{plain}
+{
+	\fancyhead[R]{}
+	\fancyhead[CO]{\bfseries\footnotesize\nouppercase{\rightmark}}
+	\fancyhead[C]{\bfseries\footnotesize\nouppercase{\leftmark}}
+	\fancyhead[L]{}
+	\fancyfoot[L,RO]{}%\thepage}%{\thepage\pageref{LastPage}}
+	\fancyfoot[C]{\thepage}
+	\fancyfoot[LO,R]{}
+	\renewcommand{\headrulewidth}{0.4pt}
+%	\renewcommand{\footrulewidth}{0.4pt}
+}
+
+\pagestyle{plain}
+\setlength{\headheight}{15pt}
+%\setlength{\parindent}{0pt} % áttekinthetőbb, angol nyelvű dokumentumokban jellemző
+%\setlength{\parskip}{8pt plus 3pt minus 3pt} % áttekinthetőbb, angol nyelvű dokumentumokban jellemző
+\setlength{\parindent}{12pt} % magyar nyelvű dokumentumokban jellemző
+\setlength{\parskip}{0pt}    % magyar nyelvű dokumentumokban jellemző
+
+\marginsize{35mm}{25mm}{15mm}{15mm} % anysize package
+\setcounter{secnumdepth}{0}
+%\setcitestyle{authoryear, round, comma, aysep={;}, yysep={,}, notesep={, }}
+\sectionfont{\large\upshape\bfseries}
+
+\setcounter{secnumdepth}{2}
+\singlespacing
+\frenchspacing
+
+%--------------------------------------------------------------------------------------
+%	Setup hyperref package
+%--------------------------------------------------------------------------------------
+\hypersetup{
+    %bookmarks=true,           % show bookmarks bar?
+    bookmarksnumbered=true,   % set numbering
+    unicode=true,             % non-Latin characters in Acrobat’s bookmarks
+    pdftitle={\mittitle},     % title
+    pdfauthor={\mitauthor},   % author
+    pdfsubject={diplomaterv},   % subject of the document
+    pdfcreator={\mitauthor},  % creator of the document
+    pdfproducer={Kovács Balázs},   % producer of the document
+    pdfkeywords={tekintetkövetés, gaze tracking, képfeldolgozás, image processing},   % list of keywords
+    pdfnewwindow=true,        % links in new window
+    colorlinks=true,          % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links
+    citecolor=black,          % color of links to bibliography
+    filecolor=black,          % color of file links
+    urlcolor=black            % color of external links
+}
+%--------------------------------------------------------------------------------------
+%	Some new commands and declarations
+%--------------------------------------------------------------------------------------
+\renewcommand{\captionfont}{\small\itshape}
+\renewcommand{\captionlabelfont}{\small\upshape\bfseries}
+\newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}}
+%\newcommand{\url}[1]{{\upshape\ttfamily\normalsize #1}}
+
+% define references
+\newcommand{\figref}[1]{\ref{fig:#1}.}
+\renewcommand{\eqref}[1]{(\ref{eq:#1})}
+\newcommand{\listref}[1]{\ref{listing:#1}.}
+\newcommand{\sectref}[1]{\ref{sect:#1}.}
+\newcommand{\tabref}[1]{\ref{tab:#1}.}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*[1]{\floor}{arg\,max}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\rot}{rot}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+
+\author{\mitauthor, \mitauthork}
+\title{\mittitle}
+\includeonly{
+	preliminaries,%
+	statement,
+	abstract,
+	introduction,%
+	chapter1,%
+	chapter2,%
+	chapter3,%
+	chapter4,%
+	assessment,%
+	acknowledgement,%
+	appendices,%
+}
+%--------------------------------------------------------------------------------------
+%	Setup captions
+%--------------------------------------------------------------------------------------
+\captionsetup[figure]{
+%labelsep=none,
+%font={footnotesize,it},
+%justification=justified,
+width=.75\textwidth,
+aboveskip=10pt}
+
+\renewcommand{\captionlabelfont}{\small\bf}
+\renewcommand{\captionfont}{\footnotesize\it}
+
+%--------------------------------------------------------------------------------------
+% Table of contents and the main text
+%--------------------------------------------------------------------------------------
+\begin{document}
+
+\singlespacing
+\include{preliminaries}
+\pagenumbering{Roman}
+\tableofcontents\vfill\markboth{Tartalomjegyzék}{~}
+
+\include{statement}
+\include{abstract}
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\include{introduction}
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{assessment}
+\include{acknowledgement}
+
+%\phantomsection\markboth{Ábrák jegyzéke}{}\listoffigures\newpage
+%\phantomsection\markboth{Táblázatok jegyzéke}{}\listoftables\newpage
+
+\phantomsection\markboth{Irodalomjegyzék}{}\bibliography{mybib}
+%\addcontentsline{toc}{chapter}{Irodalomjegyzék}
+\bibliographystyle{unsrt}
+
+\include{appendices}
+
+\label{page:last}
+\end{document}

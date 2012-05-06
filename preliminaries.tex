@@ -1,0 +1,46 @@
+%--------------------------------------------------------------------------------------
+%	The title page
+%--------------------------------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+
+\pdfbookmark[0]{Címoldal}{titlepage}
+
+\includegraphics[width=100mm,keepaspectratio]{figures/BMElogo.png}\\
+\textsc{Budapesti Műszaki és Gazdaságtudományi Egyetem}\\
+\textsc{Villamosmérnöki és Informatikai Kar}\\
+\textsc{Irányítástechnika és Informatika Tanszék}\\[5cm]
+
+\vspace{0.4cm}
+{\huge \bfseries \mittitle}\\[0.8cm]
+\vspace{0.5cm}
+\textsc{\Large Diplomaterv}\\[4cm]
+
+\begin{tabular}{cc}
+ \makebox[7cm]{\emph{Készítette}} & \makebox[7cm]{\emph{Konzulens}} \\
+ \makebox[7cm]{\mitauthor} & \makebox[7cm]{\mitadvisor}
+\end{tabular}
+
+\vfill
+{\large \today}
+\end{center}
+\end{titlepage}
+
+%--------------------------------------------------------------------------------------
+% Set up listings
+%--------------------------------------------------------------------------------------
+\lstset{
+	basicstyle=\scriptsize\ttfamily, % print whole listing small
+	keywordstyle=\color{black}\bfseries\underbar, % underlined bold black keywords
+	identifierstyle=, 					% nothing happens
+	commentstyle=\color{white}, % white comments
+	stringstyle=\scriptsize\sffamily, 			% typewriter type for strings
+	showstringspaces=false,     % no special string spaces
+	aboveskip=3pt,
+	belowskip=3pt,
+	columns=fixed,
+	backgroundcolor=\color{lightgray},
+} 		
+\def\lstlistingname{lista}
+
+%\newpage\thispagestyle{empty} % an empty page

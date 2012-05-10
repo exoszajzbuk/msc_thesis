@@ -1,0 +1,166 @@
+%----------------------------------------------------------------------------
+\chapter{Megvalósítás}\label{sect:hardver}
+%----------------------------------------------------------------------------
+
+A rendszer szoftverét C++ nyelven fejlesztettem, az OpenCV gépi látás könyvtár, illetve a Qt felhasználói toolkit segítségével. A feladat megoldása során törekedtem az objektum-orientált paradigma szem előtt tartására, valamint hogy az elkészült rendszer a lehető legkönnyebben testre szabható, illetve igény esetén kiegészíthető legyen.
+
+%Szöveg.
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Az OpenCV könyvtár}\label{sect:opencv}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+Az OpenCV\footnote{\url{http://opencv.willowgarage.com/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \textbf{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül.
+
+\bigskip
+
+Az OpenCV projekt hivatalosan 1999-ben indult az Intel kezdeményezésében. A nagyközönségnek a 2000. évi \textit{,,IEEE Conference on Computer Vision and Pattern Recognition''} konferencián mutatkozott be, majd öt béta-verziót követően 2006-ban jutott el az 1.0-ás hivatalos kiadásig. A fejlesztése itt úgy tűnt, hogy megáll, de végül a projektet a Willow Garage\footnote{\url{http://www.willowgarage.com/}} robotikai kutatólabor 2008-ban szárnyai alá vette, és azóta is aktív fejlesztés alatt áll. 2008 októberében az 1.1-es verzióval közel egy időben látott napvilágot az elsõ hivatalos OpenCV-vel foglalkozó könyv \textit{,,Learning OpenCV: Computer Vision with the OpenCV Library''} címmel Gary Bradski és Adrian Kaehler fejlesztõk tollából \cite{opencv_book}. Az egy évvel később, 2009 októberében megjelent 2.0-ás verzióval a projekt nagy fejlődésen esett át. Ebben a verzióban található meg elõször a C++ és Python interfész (ez a meglévő C mellett már három hivatalosan fejlesztett interfészt jelent), amely az egyszerûbb kezelhetõség, új függvények mellett a meglévő eljárások teljesítmény tekintetében -- különösen többmagos rendszereken -- jobb implementációját kínálja a felhasználóknak.
+
+\bigskip
+
+Az OpenCV jelenlegi 2.1-es verziója elérhető FreeBSD, Linux, Mac OS és Windows operációs rendszerek alá. Széles körben, mondhatni világszerte használt, felhasználói tábora több, mint 40\,000 főt számlál. Köszönhető ez többek között annak, hogy felhasználási lehetőségei igencsak sokrétűek: több, mint 500 optimalizált algoritmust kínál annak érdekében, hogy ,,ne kelljen újra feltalálnunk a kereket''. Sebesség tekintetében érződik a kipróbált, optimalizált algoritmusok használata: az OpenCV a jelenleg elérhető leggyorsabb alternatíva gépi látás terén (\figref{opencv_speed} ábra). Teljesítménye azonban adott esetben még tovább növelhető, mivel ha Intel IPP\footnote{\url{http://software.intel.com/en-us/intel-ipp/}} (Integrated Performance Primitives) támogatást észlel, az abban található szálakra optimalizált algoritmusok használatát fogja preferálni.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/opencv_speed.png}
+\caption{Az OpenCV teljesítménye az LTI és VXL képfeldolgozási könyvtárakkal összehasonlítva.\\Forrás: \cite{opencv_book}}
+\label{fig:opencv_speed}
+\end{figure}
+
+A teljes funkcionalitás részletekbe menõ bemutatása -- mint láthattuk \cite{opencv_book} -- egy könyvet is megtölt, de a teljesség igénye nélkül tekintsük át, hogy milyen alapvető jellemzői és alkalmazásai vannak a környezetnek:
+
+\begin{itemize}
+
+ \item alap adatstruktúrák
+  \begin{itemize}
+   \item mátrixok, vektorok
+  \end{itemize} 
+
+ \item mátrix és vektor manipuláció, lineáris algebra
+  
+ \item dinamikus adatstruktúrák
+  \begin{itemize}
+   \item listák, sorok, halmazok
+   \item gráfok és fák
+  \end{itemize}
+
+ \item kép és videó input/output
+  \begin{itemize}
+   \item beolvasás fájlból (kép vagy videó) és kameráról
+   \item kiírási lehetőség képként vagy videóként
+  \end{itemize}
+
+ \item előfeldolgozás
+  \begin{itemize}
+   \item él- és sarokkeresés
+   \item mintavételezés és interpoláció
+   \item színkonverzió
+   \item morfológiai operátorok
+  \end{itemize}
+
+ \item struktúraanalízis
+  \begin{itemize}
+   \item távolság- és Hough-transzformáció
+   \item kontúrfeldolgozás
+   \item sablonillesztés
+   \item különböző momentumok
+   \item Delaunay háromszögelés
+  \end{itemize}
+
+ \item kamerakalibráció
+  \begin{itemize}
+   \item kalibrációs mintázatok felismerése és követése
+   \item fundamentális mátrix becslés
+   \item homográfia becslés
+   \item sztereó megfeleltetés
+  \end{itemize}
+  
+ \item mozgásanalízis
+  \begin{itemize}
+   \item optical flow
+   \item mozgásszegmentálás és -követés
+  \end{itemize}
+
+ \item objektumfelismerés
+  \begin{itemize}
+   \item eigen-módszerek
+   \item rejtett Markov-modell (Hidden Markov Model -- HMM)
+  \end{itemize}
+  
+ \item GUI és rajzolás
+  \begin{itemize}
+   \item kép és videó megjelenítés
+   \item billentyűzet és egérkezelés
+   \item egyenes, kör, poligon, szöveg rajzolása
+  \end{itemize}
+  
+\end{itemize}
+
+Láthatjuk, hogy a fent felsorolt funkciókkal a gépi látás terén rengeteg egyszerűbb feladatot szinte ,,egy lépésben'', beépített, optimalizált eljárások segítségével oldhatunk meg. Ha nagyobb szabású projektbe kezdünk, akkor is hasznunkra lehet, hogy részben vagy egészében egy több tízezres felhasználói tábor (melynek jelentős részét aktív kutatók alkotják) visszajelzései alapján fejlesztett környezetre építhetjük munkánkat.
+
+Az OpenCV számos előnye mellett hátrányként említhető meg, hogy segítségével a felhasználói felületet csak nagyon leegyszerűsített módon szabhatjuk testre. Igaz, hogy a könyvtár feladata elsősorban a képfeldolgozás és nem a megjelenítés, így ebből a nézőpontból a beépített kép és videó megjelenítési lehetőség, billentyűzet- és egérkezelés valamint trackbarok (csúsztatható kezelőszerv értékek beállítására) létrehozásának lehetősége inkább hozzáadott értékként jelenik meg. Azonban ez nem változtat azon a tényen, hogy ha igény van felhasználóbarát kezelőfelület készítésére, az OpenCV-t integrálnunk kell valamely elterjedt grafikus felhasználói felület toolkittel.
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Pszichológiai bemutató}\label{sect:pszicho}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+A rendszer működését úgy demonstráltam, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható a \figref{yarbus} ábrán.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/yarbus.jpg}
+\caption{Yarbus '67-es kísérletének eredménye}
+\label{fig:yarbus}
+\end{figure}
+
+Látható, hogy a kísérlet végrehajtásához szükség volt a tekintet követésére. Ekkor még a kornak megfelelően nem álltak rendelkezésre kifinomult módszerek: az alanyokat egy meglehetősen kényelmetlen acélszerkezethez rögzítve vizsgálták. A bemutató alkalmazásomban arra kerestem a választ, hogy lehetséges-e hasonló méréseket elvégezni az általam fejlesztett rendszerrel.
+
+\bigskip
+
+Az általam tesztelt alanyoknak a következő kérdésekre kellett válaszolniuk a tesztkép (Repin: Váratlan utazó) rövid vizsgálata után. A vizsgálatot minden kérdésben 200 beérkezett érvényes mérési pontig folytattam, ez a felhasznált webkamera, illetve a feldolgozási sebesség mellett nagyjából kérdésenként 15--20 másodpercet vett igénybe.
+
+\begin{enumerate}
+ \item szabad nézelődés
+ \item ,,Milyen anyagi körülmények között él a család?''
+ \item ,,Adja meg az egyes szereplők életkorát!''
+ \item ,,Mit csinálhattak a szereplők, mielőtt az utazó betoppant?''
+ \item ,,Milyen ruhát viselnek a kép szereplői?''
+ \item ,,Próbáljon megjegyezni minél több strukturális részletet (személyek, tárgyak pozíciója)!''
+ \item ,,Mennyi ideig lehetett távol az utazó a családtól?''
+\end{enumerate}
+
+A kérdésekre nem volt jó, vagy rossz válasz, a kísérlet minden alanynál csak a feladatnak megfelelő figyelmi területek változását vizsgálja. A vizsgálatom eredménye a \label{fig:eredmeny} ábrán követhető.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/yarbus_eredmeny.png}
+\caption{Eredmények a saját rendszerrel}
+\label{fig:eredmeny}
+\end{figure}
+
+Látható -- bár ez nem volt feltétel -- hogy a mérési eredmények ezen alany esetén meglehetősen jól fedik Yarbus tesztalanyának eredményeit. Az viszont mindenképpen kijelenthető, hogy szignifikáns különbség van az ábra első (szabad nézelődés), valamint többi része között. Nem célom a kísérlet pszichológiai eredményeit értékelni, az viszont bizonyos, hogy a rendszer hasonló kísérletek elvégzését támogatja.
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Webergonómiai bemutató}\label{sect:web}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+Ahogyan dolgozatom első fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem az pszichológiai kísérlet adatait hőtérképen (heat map) megjelenítő funkciót is, ennek eredménye egy tesztképre a \label{fig:heatmap} ábrán látható.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/heatmap.jpg}
+\caption{Hőtérképes megjelenítés a pszichológiai teszt egy adathalmazára (,,Adja meg a szereplők életkorát!'')}
+\label{fig:heatmap}
+\end{figure}
+
+Minden vizsgálatban célszerű a lehető leginkább informatív megjelenítést választani a rendelkezésre álló adathalmaz alapján. A képen egyre pirosabb színnel jelöltem a kép frekventáltan vizsgált területeit, például egy webergonómiai vizsgálatban az adatok effajta vizualizációja lehet a legcélszerűbb.
+
+%............................................................................
+%\subsection{Analóg TV-kamera}\label{sect:analog}
+%............................................................................
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+%\section{Összefoglalás}\label{sect:hardver_osszefoglalas}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+%Összefoglalás.

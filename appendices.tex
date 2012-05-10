@@ -14,28 +14,28 @@
 \section{Mellékletek}\label{sect:mellekletek}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Jelen dokumentum, a féléves munkát bemutató prezentáció, valamint az alkalmazás forráskódja, elérhetők az Interneten is, a \url{http://mozes.info/pupilmeasure/} címen.
+%Jelen dokumentum, a féléves munkát bemutató prezentáció, valamint az alkalmazás forráskódja, elérhetők az Interneten is, a \url{http://mozes.info/pupilmeasure/} címen.
 
-Az alkalmazás forráskódja a \url{https://github.com/obrien/pupilmeasure} címen található GitHub\footnote{\url{http://github.com/}} projektben is elérhető és felhasználható.
+%Az alkalmazás forráskódja a \url{https://github.com/obrien/pupilmeasure} címen található GitHub\footnote{\url{http://github.com/}} projektben is elérhető és felhasználható.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Telepítés}\label{sect:telepites}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Az alkalmazás fordítása az alábbi verziójú programokkal történt:
+%Az alkalmazás fordítása az alábbi verziójú programokkal történt:
 
-\begin{itemize}
-\item g++ --  4.4.5
-\item OpenCV -- 2.1.0
-\item wxWidgets -- 2.8.10
-\end{itemize}
+%\begin{itemize}
+%\item g++ --  4.4.5
+%\item OpenCV -- 2.1.0
+%\item wxWidgets -- 2.8.10
+%\end{itemize}
 
-A  2.1.0 verziójú \textit{OpenCV} könyvtár forráskódja az \url{http://opencv.willowgarage.com/wiki/} címről letölthető. Az ennél újabb verziók interfészébe nem került bele a működéshez elengedhetetlenül szükséges \texttt{cvSnakeImage} függvény, ezért az alkalmazás mindenképpen a fenti verziójú \textit{OpenCV} könyvtár meglétét igényli! A fordításhoz szükséges csomagok a használt disztribúció csomagkezelőjéből elérhetők az \listref{install} listában felsorolt (vagy ahhoz hasonló) néven.
+%A  2.1.0 verziójú \textit{OpenCV} könyvtár forráskódja az \url{http://opencv.willowgarage.com/wiki/} címről letölthető. Az ennél újabb verziók interfészébe nem került bele a működéshez elengedhetetlenül szükséges \texttt{cvSnakeImage} függvény, ezért az alkalmazás mindenképpen a fenti verziójú \textit{OpenCV} könyvtár meglétét igényli! A fordításhoz szükséges csomagok a használt disztribúció csomagkezelőjéből elérhetők az \listref{install} listában felsorolt (vagy ahhoz hasonló) néven.
 
-\begin{lstlisting}[frame=single,float=!ht,caption=Az OpenCV fordításához szükséges csomagok telepítése,label=listing:install]
-sudo apt-get install libgtk2.0-dev libunicap2-dev libucil2-dev libswscale-dev \\
-libdc1394-22-dev libv4l-dev libxine-dev libavformat-dev libglut3-dev \\
-libwxgtk2.8-dev
-\end{lstlisting}
+%\begin{lstlisting}[frame=single,float=!ht,caption=Az OpenCV fordításához szükséges csomagok telepítése,label=listing:install]
+%sudo apt-get install libgtk2.0-dev libunicap2-dev libucil2-dev libswscale-dev \\
+%libdc1394-22-dev libv4l-dev libxine-dev libavformat-dev libglut3-dev \\
+%libwxgtk2.8-dev
+%\end{lstlisting}
 
-A \emph{Pupil Measure} alkalmazás fordítása ezek után a forráskód könyvtárában kiadott \texttt{make} paranccsal történhet. A lefordított bináris a \texttt{./pupilmeasure} parancs kiadásával indítható, de előtte az \texttt{LD\_LIBRARY\_PATH} környezeti változóba a \texttt{usr/local/lib} érték betöltendő!
+%A \emph{Pupil Measure} alkalmazás fordítása ezek után a forráskód könyvtárában kiadott \texttt{make} paranccsal történhet. A lefordított bináris a \texttt{./pupilmeasure} parancs kiadásával indítható, de előtte az \texttt{LD\_LIBRARY\_PATH} környezeti változóba a \texttt{usr/local/lib} érték betöltendő!

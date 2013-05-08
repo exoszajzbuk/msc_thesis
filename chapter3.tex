@@ -11,10 +11,10 @@
 \texttt{+++ melyik szakaszban mi van +++}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{A Hough-transzformáció}\label{sect:hough}
+\section{Hough-transzformáció}\label{sect:hough}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Képfeldolgozási szûrõk, függvények segítségével viszonylag könnyen elõállíthatjuk a képtérben számunkra érdekes pontok halmazát. Azokat a pontokat, amelyek valamilyen magasabb absztrakciós szintû képjellemzõhöz kapcsolódnak: például a tárgyak, alakzatok formáját megadó kontúrok pontjait. Ha viszont szeretnénk ,,megérteni'' is a képet, az ilyen formák automatikus és robusztus felismerése szinte elengedhetetlen.
+Képfeldolgozási szûrõk, függvények segítségével viszonylag könnyen előállíthatjuk a képtérben számunkra érdekes pontok halmazát. Azokat a pontokat, amelyek valamilyen magasabb absztrakciós szintû képjellemzõhöz kapcsolódnak: például a tárgyak, alakzatok formáját megadó kontúrok pontjait. Ha viszont szeretnénk ,,megérteni'' is a képet, az ilyen formák automatikus és robusztus felismerése szinte elengedhetetlen.
 
 A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek ideális formákra (egyenesekre, körökre, vagy egyéb görbékre): az éleket torzíthatja zaj, egyes élpontok hiányozhatnak, vagy a felismerni kívánt formák kismértékben el is térhetnek az ideálistól. A kép analízise szempontjából azonban ezzel együtt is nagyon értékes információt rejthetnek magukban, ezt az információt pedig hasznos lenne kinyerni. Viszont egyáltalán nem triviális probléma a valamilyen szempontból összetartozó (például egy egyenesre, vagy egy körvonalra esõ) pontok csoportosítása.
 
@@ -218,15 +218,18 @@ Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- ami
 \end{figure}
 
 %............................................................................
-\subsection{Összefoglalás}\label{sect:hough_osszefoglalas}
+\subsection{Összegzés}\label{sect:hough_osszefoglalas}
 %............................................................................
 
 Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának szûk keresztmetszetét leginkább a nagy számításigénye adja. Ez egyben legfõbb \textbf{hátránya} is: a számításigény a paramétertér dimenziószámának, vagy a kép méretének növekedésével egyre csak növekszik. A dimenziók száma tehát korlátot ad a transzformáció gyakorlati felhasználhatóságának, ezért eredeti formájában leginkább csak egyenesek, vagy körök keresésére használják. A körök keresésének lehetõsége azonban kielégítheti a pupillakövetési probléma által támasztott követelményeket. A követés során \textbf{elõnyére} válhat, hogy a szavazási mechanizmus használata miatt meglehetõsen zajos képeken is képes lehet a pupillakontúr megbízható felismerésére. Nem mesterségesen elõállított tesztesetekben -- hiszen pupillakövetés esetén csak ennek van értelme -- pedig ez korántsem elhanyagolható szempont.
 
 
+\newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Objektumdetektálás és -követés}\label{sect:objdetect}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+\texttt{+++ kis bevezeto +++}
 
 %............................................................................
 \subsection{A Viola--Jones objektumdetektor}\label{sect:viola}
@@ -246,10 +249,6 @@ Az osztályozó úgynevezett \emph{jellemzőkkel} (features) dolgozik, amelyek t
 A jellemző-alapú, úgynevezett \emph{integrális} képreprezentáció esetén az egyes jellemzők ugyan nagyon egyszerűek, viszont konstans időben kiértékelhetők. A jellemzők gyors értékelhetősége azonban nem kompenzálja nagy számukat. Minden egyes területre minden jellemzőt kiértékelve csökkenne a rendszer használatával nyert előny. Ennek kiküszöbölésére a betanítási fázisban a Viola--Jones detektor az AdaBoost \cite{freund} eljárás egy módosított változatát alkalmazza, amely segít kiválasztani a leginkább fontos jellemzőket, valamint korlátokat ad a kész osztályozó általánosító képességére.
 
 Ha csak az AdaBoost eljárás által kiválasztott fontos jellemzőket értékeljük ki, a rendszer alapesetben akkor sem képes a valós idejű osztályozásra. Ennek kivédésére a tanítási folyamatban az egyes elemi osztályozókat egymás után kötik (kaszkádosítják), és minden osztályozó bemenetére csak azok a minták jutnak, amelyeket a sorban előtte lévő összes osztályozó elfogadott.
-
-\bigskip
-
-A fent felsorolt eljárásoknak köszönhetően a Viola--Jones objektumdetektor képes az elődeinél jóval gyorsabban osztályozni a bemenetére küldött képeket. Ha azonban nem is lehetséges a videofolyam minden egyes képkockáján a rendelkezésre álló időn belül önállóan döntést hozni, valamilyen kiegészítő technika használatával (pl. a felismert objektumok optikai áramlás-alapú követése) kellően \emph{robusztus} és \emph{valós idejű} objektumdetektáló rendszer létrehozása válik lehetővé.
 
 %............................................................................
 \subsection{A Lucas--Kanade optikai áramlás eljárás}\label{sect:optflow}
@@ -311,9 +310,160 @@ ami \eqref{optflow_matrix}-at behelyettesítve a következő alakra hozható
 
 vagyis az aktuálisan vizsgált $q_1$, $q_2$, $\ldots$, $q_n$ pontokat tartalmazó ablak $p$ középpontjának $x$ és $y$ irányban vett sebességkomponenseit adja meg közvetlenül a \eqref{optflow_seb2} egyenlet.
 
+%............................................................................
+\subsection{Összegzés}\label{sect:detect_osszefoglalas}
+%............................................................................
 
+A \sectref{viola} szakaszban felsorolt eljárásoknak köszönhetően a Viola--Jones objektumdetektor képes az elődeinél jóval gyorsabban osztályozni a bemenetére küldött képeket. Ha azonban nem is lehetséges a videofolyam minden egyes képkockáján a rendelkezésre álló időn belül önállóan döntést hozni, valamilyen kiegészítő technika használatával (pl. a felismert objektumok optikai áramlás-alapú követése) \emph{valós idejű} objektumdetektáló rendszer létrehozása válik lehetővé.
+
+A Lucas--Kanade optikai áramlás-alapú követés jó kiegészítésként szolgálhat egy nagyobb számításigényű objektumdetektor mellé. Azonban a használat során a két módszer egymáshoz viszonyított ideális összetételének megtalálása döntő a követés pontossága és gyorsasága szempontjából. 
+
+
+
+
+\newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{BLOB műveletek}\label{sect:blob}
+\section{Blob-alapú követés}\label{sect:blob}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-+++ BLOB-alapú keresés elmélete +++
+A képfeldolgozásban a \emph{blob} fogalmat a szó ,,folt'' értelmében használják, nem keverendő össze az adatbázisok BLOB (Binary Large Object -- nagy bináris objektum) fogalmával. Egy \emph{blob} informálisan a következő módon definiálható:
+
+\begin{definition}
+A képtér valamely tulajdonság egyezősége, vagy korlátozott mértékű eltérése alapján összetartozó régióját \textbf{blob}-nak nevezzük.
+\end{definition}
+
+A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban esetlegesen más színtérben reprenzentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
+
+\bigskip
+
+A szakirodalomban két eljárást tartanak számon a blob-okkal kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
+
+A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször bináris képek összetartozó régióinak felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
+
+\bigskip
+
+Munkám során a bináris képek feldolgozása került előtérbe, ennek megfelelően a továbbiakban a címkézéssel kapcsolatos elméleti alapokat foglalom össze. A \sectref{blob_cimke}~szakaszban a címkézési algoritmusokat ismertetem, majd a \sectref{blob_jellemzok}~szakaszban áttekintem azokat a jellemzőket, amelyek hasznosnak bizonyulhatnak a blob-ok osztályozása és szűrése során.
+
+%............................................................................
+\subsection{Komponens-címkézés}\label{sect:blob_cimke}
+%............................................................................
+
+Az egyszerűség kedvéért a komponens-címkézés alapelvét két dimenziós képek esetén mutatom be. Könnyen belátható, hogy a későbbiekben ismeretett módszerek egyszerűen kiterjeszthetők többdimenziós halmazok címkézésére is -- természetesen az idő- és tárigény növekedése mellett.
+
+\bigskip
+
+A címkézés megkezdése előtt minden esetében fontos, hogy megszabjuk a használni kívánt \textbf{szomszédosság-mértéket}. Ez a címkézés során a legtöbbször 4- vagy 8-szomszédosságot jelent. A \textbf{4-szomszédossági} esetben egy pixel szomszédait a tőle $N$, $W$, $S$ és $E$ irányban lévő képpontok jelentik az égtájak angol elnevezései alapján. \textbf{8-szomszédosság} használatakor a képponthoz csak a sarkával illeszkedő pontokat is szomszédnak vesszük, tehát az óramutató járásával ellentétes irányban $N$, $NW$, $W$, $SW$, $S$, $SE$, $E$ és $NE$ szomszédokról beszélhetünk.
+
+\bigskip
+
+A feladat tehát olyan algoritmust találni, amely lehetőleg minél kisebb számítási komplexitással képes adott szomszédosság-mérték mellett elkülöníteni képeken az összetartozó régiókat.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Kétlépéses algoritmusok}\label{sect:blob_ketlepes}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+A kétlépéses (two-pass) algoritmusok -- nevükből adódóan -- két különálló lépésben határozzák meg a bináris képen található összefüggő blob-okat.
+
+\begin{enumerate}
+  \item Első lépésben \textbf{átmeneti címkék} kiosztására, valamint az átmeneti címkék közti ekvivalenciák meghatározására kerül sor.
+  \item Második lépésben már meghatározhatjuk a komponenseket a korábban ekvivalensnek jelzett címkék \textbf{összevonásával}.
+\end{enumerate}
+
+
+%.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
+\paragraph{Rosenfeld--Pfalz}
+%.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
+
+A klasszikus algoritmus \cite{rosenfeld} mindkét lépésben sorra veszi a képtér pontjait balról-jobbra, majd fentről lefelé haladva. Ebben a konfigurációban az összetartozóságot az aktuálisan vizsgált képpontra
+
+\begin{itemize}
+  \item 4-szomszédosság esetén az $N$ és $W$ szomszéd,
+  \item 8-szomszédosság esetén az $NE$, $N$, $NW$ és $W$ szomszédok
+\end{itemize}
+
+vizsgálatával döntjük el. Az algoritmust 4-szomszédosságot feltételezve ismertetem.
+
+\bigskip
+
+Az \textbf{első lépés} során az algoritmus minden képppont esetén a következő négy feltétel vizsgálatát végzi el, és az eredménynek megfelelően látja el a pontot átmeneti címkével. Egy feltétel teljesülése esetén a vizsgálat leáll, egyébként a következő feltétel vizsgálata következik.
+
+Bár egyértelműnek tűnik, de érdemes megjegyezni, hogy az algoritmus leírásában megkülönböztetjük a képpontok \emph{értékét} (bináris képek esetén a hátteret figyelmen kívül hagyva ez egyetlen értéket jelent), valamint a hozzájuk rendelt \emph{címkét}!
+
+\bigskip
+
+Az éppen vizsgálat alatt lévő pontot jelölje $P$, a képpont értékét megadó függvényt $v$, a címkézést definiáló függvényt pedig $c$. A régiók címkéit jelöljük növekvő pozitív egész számokkal.
+
+\begin{enumerate}
+% ---
+% elso
+  \item feltétel: $v(P) = v(W)$ \\ \begin{small} $W$ szomszéd értéke megegyezik a vizsgált pont értékével. \end{small}   
+    \begin{itemize}
+      \item $c(P) := c(W)$ \\ \begin{small} Azonos régióban vagyunk, alkalmazzuk $P$-re $W$ címkéjét. \end{small}
+    \end{itemize}
+ 
+% ---
+% masodik
+  \item feltétel: $v(W) = v(N)$ és $c(W) \neq c(N)$ \\ \begin{small}$W$ és $N$ szomszéd értéke megegyezik, de címkéjük különböző. \end{small}
+    \begin{itemize}
+      \item $c(P) := min \lbrace c(W), c(N)\rbrace$ \\ \begin{small}A két szomszédnak nyilvánvalóan egy régióba kellene tartoznia. Alkalmazzuk a kisebb címkét, és \textbf{jegyezzük fel a címkék ekvivalenciáját}.\end{small}
+    \end{itemize}
+
+% ---
+% harmadik
+  \item feltétel: $v(W) \neq v(P)$ és $v(N) = v(P)$ \\ \begin{small}$W$ értéke különbözik, de $N$ értéke megegyezik vizsgált pont értékével. \end{small}
+    \begin{itemize}
+      \item $c(P) := c(N)$ \\ \begin{small}Alkalmazzuk az $N$ szomszéd címkéjét.\end{small}
+    \end{itemize}
+
+% ---
+% negyedik
+  \item feltétel: $v(W) \neq v(P)$ és $v(N) \neq v(P)$  \\ \begin{small}$W$ és $N$ értéke különbözik $P$ értékétől.\end{small}
+    \begin{itemize}
+      \item $c(P) := max \lbrace c \rbrace + 1$ \\ \begin{small}Készítsünk egy új címkét alkalmazzuk.\end{small}
+    \end{itemize}
+
+\end{enumerate}
+
+A \textbf{második lépésben} az algoritmus újra végigiterál a képpontokon, és minden képpont címkéjét az ekvivalensnek jelzett címkék közül a legkisebbel helyettesíti.
+
+A megvalósítás során az algoritmus \emph{diszjunk-halmaz erdő} (disjoint-set) adatszerkezetet használ, amely ideális a régiók közti ekvivalenciák tárolására és elérésére. 
+
+
+%.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
+\paragraph{Lifeng-Yuyan-Suzuki}
+%.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
+
+A szerzők által 2008-ban prezentált algoritmus \cite{suzuki} a klasszikusnál gyorsabb feldolgozást tesz lehetővé. Az előzőekhez hasonlóan itt is két lépésben iterálunk végig a képen balról-jobbra, fentről-lefelé, a háttérhez tartozó képpontokat figyelmen kívül hagyva.
+
+\bigskip
+
+Az \textbf{első lépés} során elvégzendő feladatok az aktuális képpontra:
+
+\begin{enumerate}
+  \item Vizsgáljuk a képpont szomszédait, a szomszédosság-mértéknek megfelelően!
+  \item Ha nincsenek szomszédok (mind a háttérhez tartozik), rendeljünk új címkét az elemhez és folytassuk az algoritmust a következő képponttal!
+  \item Ha vannak szomszédok, címkézzük a képpontot a legkisebb szomszédos címkével!
+  \item Tároljuk a szomszédos címkék közti ekvivalenciákat!
+\end{enumerate}
+
+A \textbf{második lépésben}, hasonlóan az előző megoldáshoz, a képpontokat újra sorba véve újracímkézzük azokat az ekvivalens címkék legkisebbikével.
+
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Egyéb algoritmusok}\label{sect:blob_egyeb}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+A komponens-címkézés problémájára a \sectref{blob_ketlepes}~szakaszban taglaltakon kívül is számos más megoldás született. Léteznek a feldolgozást összevonó egylépéses (one-pass) algoritmusok, de olyan többlépéses (multi-pass) algoritmust is kifejlesztettek már, amely lineáris komplexitással oldja meg a feladatot. \cite{suzuki_lin}
+
+Az egyesével, szinte egymástól függetlenül vizsgált képpontok feldolgozása párhuzamosításért kiált: párhuzamosított komponens-címkéző algoritmusok fejlesztésére is sor került \cite{comp_parallel}, és a téma továbbra is nagy érdeklődésre tart számot a párhuzamosított számítási platformok (pl. CUDA, OpenMP) előretörésével.
+
+%............................................................................
+\subsection{Blob-jellemzők}\label{sect:blob_jellemzok}
+%............................................................................
+
+adsfasdf
+
+%............................................................................
+\subsection{Összegzés}\label{sect:blob_osszegzes}
+%............................................................................
+
+asdf

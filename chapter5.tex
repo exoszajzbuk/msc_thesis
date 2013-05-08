@@ -1,16 +1,44 @@
 %----------------------------------------------------------------------------
-\chapter{Megvalósítás}\label{sect:hardver}
+\chapter{Kísérlet}\label{sect:kiserlet}
 %----------------------------------------------------------------------------
 
-A rendszer szoftverét C++ nyelven fejlesztettem, az OpenCV gépi látás könyvtár, illetve a Qt felhasználói toolkit segítségével. A feladat megoldása során törekedtem az objektum-orientált paradigma szem előtt tartására, valamint hogy az elkészült rendszer a lehető legkönnyebben testre szabható, illetve igény esetén kiegészíthető legyen.
+\texttt{+++ bevezeto a fejezethez +++}
 
 %Szöveg.
 
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Módszerek összehasonlítása}\label{sect:modsz_osszehasonlitas}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
+\texttt{+++ miert BLOB-os keresest valasztottam Hough vagy Optical flow helyett? +++}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{Pszichológiai bemutató}\label{sect:pszicho}
+\section{Feldolgozási folyamat}\label{sect:feld_folyamat}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+\texttt{+++ milyen kepfeldolgozasi (elo)feldolgozas kell a detektalashoz? +++}
+
+%............................................................................
+\subsection{Pupillakövetés}\label{sect:pupillakov}
+%............................................................................
+
+\texttt{+++ feldolgozasi lepesek a koveteshez +++}
+
+%............................................................................
+\subsection{Kalibráció, leképezés}\label{sect:kalibracio}
+%............................................................................
+
+\texttt{+++ kalibrálás + kepernyo-koordinataba kepzes +++}
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Kísérletek}\label{sect:kiserletek}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+\texttt{+++ leiras hogy miert ezekkel probaltam ki +++}
+
+%............................................................................
+\subsection{Pszichológiai bemutató}\label{sect:pszicho}
+%............................................................................
 
 A rendszer működését úgy demonstráltam, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható a \figref{yarbus} ábrán.
 
@@ -49,7 +77,7 @@ A kérdésekre nem volt jó, vagy rossz válasz, a kísérlet minden alanynál c
 Látható -- bár ez nem volt feltétel -- hogy a mérési eredmények ezen alany esetén meglehetősen jól fedik Yarbus tesztalanyának eredményeit. Az viszont mindenképpen kijelenthető, hogy szignifikáns különbség van az ábra első (szabad nézelődés), valamint többi része között. Nem célom a kísérlet pszichológiai eredményeit értékelni, az viszont bizonyos, hogy a rendszer hasonló kísérletek elvégzését támogatja.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{Webergonómiai bemutató}\label{sect:web}
+\subsection{Webergonómiai bemutató}\label{sect:web}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 Ahogyan dolgozatom első fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem az pszichológiai kísérlet adatait hőtérképen (heat map) megjelenítő funkciót is, ennek eredménye egy tesztképre a \figref{heatmap} ábrán látható.
@@ -63,12 +91,12 @@ Ahogyan dolgozatom első fejezetében már említettem, a tekintet követése a 
 
 Minden vizsgálatban célszerű a lehető leginkább informatív megjelenítést választani a rendelkezésre álló adathalmaz alapján. A képen egyre pirosabb színnel jelöltem a kép frekventáltan vizsgált területeit, például egy webergonómiai vizsgálatban az adatok effajta vizualizációja lehet a legcélszerűbb.
 
-%............................................................................
-%\subsection{Analóg TV-kamera}\label{sect:analog}
-%............................................................................
+\bigskip
+
+\texttt{+++ meg 1-2 bekezdes +++}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-%\section{Összefoglalás}\label{sect:hardver_osszefoglalas}
+\section{Összefoglalás}\label{sect:kiserlet_osszefoglalas}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-%Összefoglalás.
+\texttt{+++ osszefoglalas a kiserletekrol +++}

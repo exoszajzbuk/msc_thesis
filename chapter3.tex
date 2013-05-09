@@ -323,7 +323,7 @@ A Lucas--Kanade optikai áramlás-alapú követés jó kiegészítésként szolg
 
 \newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{Blob-alapú követés}\label{sect:blob}
+\section{Blob-műveletek}\label{sect:blob}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 A képfeldolgozásban a \emph{blob} fogalmat a szó ,,folt'' értelmében használják, nem keverendő össze az adatbázisok BLOB (Binary Large Object -- nagy bináris objektum) fogalmával. Egy \emph{blob} informálisan a következő módon definiálható:
@@ -332,17 +332,17 @@ A képfeldolgozásban a \emph{blob} fogalmat a szó ,,folt'' értelmében haszn�
 A képtér valamely tulajdonság egyezősége, vagy korlátozott mértékű eltérése alapján összetartozó régióját \textbf{blob}-nak nevezzük.
 \end{definition}
 
-A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban esetlegesen más színtérben reprenzentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
+A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban más, nem RGB színtérben reprenzentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
 
 \bigskip
 
-A szakirodalomban két eljárást tartanak számon a blob-okkal kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
+A szakirodalomban két eljárást tartanak számon a blob-ok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
 
-A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször bináris képek összetartozó régióinak felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
+A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször két dimenziós bináris képek összetartozó régióinak -- ezek a blob-ok -- felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
 
 \bigskip
 
-Munkám során a bináris képek feldolgozása került előtérbe, ennek megfelelően a továbbiakban a címkézéssel kapcsolatos elméleti alapokat foglalom össze. A \sectref{blob_cimke}~szakaszban a címkézési algoritmusokat ismertetem, majd a \sectref{blob_jellemzok}~szakaszban áttekintem azokat a jellemzőket, amelyek hasznosnak bizonyulhatnak a blob-ok osztályozása és szűrése során.
+Munkám során a bináris képek feldolgozása került előtérbe, ennek megfelelően a továbbiakban a címkézéssel kapcsolatos elméleti alapokat foglalom össze. A \sectref{blob_cimke}~szakaszban a címkézési algoritmusokat ismertetem, majd a \sectref{blob_analizis}~szakaszban áttekintem azokat a jellemzőket, amelyek hasznosnak bizonyulhatnak a blob-ok osztályozása és szűrése során.
 
 %............................................................................
 \subsection{Komponens-címkézés}\label{sect:blob_cimke}
@@ -398,28 +398,28 @@ Az éppen vizsgálat alatt lévő pontot jelölje $P$, a képpont értékét meg
 % elso
   \item feltétel: $v(P) = v(W)$ \\ \begin{small} $W$ szomszéd értéke megegyezik a vizsgált pont értékével. \end{small}   
     \begin{itemize}
-      \item $c(P) := c(W)$ \\ \begin{small} Azonos régióban vagyunk, alkalmazzuk $P$-re $W$ címkéjét. \end{small}
+      \item $c(P) := c(W)$ \\ \begin{small} Mindenképpen azonos régióban vagyunk, alkalmazzuk $P$-re $W$ címkéjét! \end{small}
     \end{itemize}
  
 % ---
 % masodik
   \item feltétel: $v(W) = v(N)$ és $c(W) \neq c(N)$ \\ \begin{small}$W$ és $N$ szomszéd értéke megegyezik, de címkéjük különböző. \end{small}
     \begin{itemize}
-      \item $c(P) := min \lbrace c(W), c(N)\rbrace$ \\ \begin{small}A két szomszédnak nyilvánvalóan egy régióba kellene tartoznia. Alkalmazzuk a kisebb címkét, és \textbf{jegyezzük fel a címkék ekvivalenciáját}.\end{small}
+      \item $c(P) := min \lbrace c(W), c(N)\rbrace$ \\ \begin{small}A két szomszédnak nyilvánvalóan egy régióba kellene tartoznia. Alkalmazzuk a kisebbik címkét, és \textbf{jegyezzük fel a címkék ekvivalenciáját}!\end{small}
     \end{itemize}
 
 % ---
 % harmadik
   \item feltétel: $v(W) \neq v(P)$ és $v(N) = v(P)$ \\ \begin{small}$W$ értéke különbözik, de $N$ értéke megegyezik vizsgált pont értékével. \end{small}
     \begin{itemize}
-      \item $c(P) := c(N)$ \\ \begin{small}Alkalmazzuk az $N$ szomszéd címkéjét.\end{small}
+      \item $c(P) := c(N)$ \\ \begin{small}Alkalmazzuk az $N$ szomszéd címkéjét!\end{small}
     \end{itemize}
 
 % ---
 % negyedik
   \item feltétel: $v(W) \neq v(P)$ és $v(N) \neq v(P)$  \\ \begin{small}$W$ és $N$ értéke különbözik $P$ értékétől.\end{small}
     \begin{itemize}
-      \item $c(P) := max \lbrace c \rbrace + 1$ \\ \begin{small}Készítsünk egy új címkét alkalmazzuk.\end{small}
+      \item $c(P) := max \lbrace c \rbrace + 1$ \\ \begin{small}Készítsünk egy új címkét és alkalmazzuk!\end{small}
     \end{itemize}
 
 \end{enumerate}
@@ -457,10 +457,77 @@ A komponens-címkézés problémájára a \sectref{blob_ketlepes}~szakaszban tag
 Az egyesével, szinte egymástól függetlenül vizsgált képpontok feldolgozása párhuzamosításért kiált: párhuzamosított komponens-címkéző algoritmusok fejlesztésére is sor került \cite{comp_parallel}, és a téma továbbra is nagy érdeklődésre tart számot a párhuzamosított számítási platformok (pl. CUDA, OpenMP) előretörésével.
 
 %............................................................................
-\subsection{Blob-jellemzők}\label{sect:blob_jellemzok}
+\subsection{Blob-analizis}\label{sect:blob_analizis}
 %............................................................................
 
-adsfasdf
+Sok esetben a képen felismert blob-ok nem mindegyik tartalmaz a feldolgozás szempontjából hasznos információt. A blob-ok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blob-okat valamely előre definiált kritérium alapján.
+
+A pupillakeresési feladatnál például az ember számára könnyen feldolgozható \emph{,,keressünk egy relatíve nagy, kör alakú objektumot''} feltételt kell a gépi látás által is megoldható problémává formalizálni.
+
+Nem feltétlenül kell azonban rögtön komplex mértékek felhasználásába bonyolódnunk. Jól megfogalmazott kritérium esetén sokszor a legegyszerűbb jellemzők is segítségünkre lehetnek: legyen szó akár egyszerű zajszűrésről, vagy a feldolgozás szempontjából fontos blob-ok azonosításáról.
+
+\bigskip
+
+Az egyszerűbb mértékek közé tartoznak az objektum kiterjedésével és kerületével kapcsolatos jellemzők.
+
+\begin{itemize}
+  \item \textbf{terület}
+    \begin{itemize}
+      \item objektum területe
+      \item lyukak száma és területe
+      \item teljes terület \\ \begin{small}(objektum plusz lyukak területe)\end{small}
+    \end{itemize}
+  \item \textbf{kerület}, vagyis a kontúr hossza
+  \item \textbf{befoglalók}
+    \begin{itemize}
+      \item befoglaló keret (bounding box) \\ \begin{small}(pl. két ellentétes sarok megadásával)\end{small}
+      \item elforgatott befoglaló keret \\ \begin{small}(pl. középpont, szélesség/magasság valamint irányszög megadásával)\end{small}
+      \item konvex héj (convex hull) \\ \begin{small}(pontjai megadásával)\end{small}
+      \item befoglaló ellipszis \\ \begin{small}(pl. középpont, kis-, nagytengely, irányszög megadásával)\end{small}
+    \end{itemize}
+\end{itemize}
+
+\bigskip
+
+A blob-ok képen belüli elhelyezkedésének meghatározásakor lehet hasznos a blob \textbf{súlypontjának} meghatározása.
+
+\begin{definition}{Súlypont:}
+$x_m = \dfrac{\sum_{i=1 \dots N} x_i}{N}$ és $y_m = \dfrac{\sum_{i=1 \dots N} y_i}{N}$, ahol $N$ a blob-hoz tartozó képpontok száma
+\end{definition}
+
+\bigskip
+
+A szabályos formáktól való eltérés mértékét határozhatjuk meg a \textbf{kompaktság} definiálásával. Jelölje $P$ a kerületet, $A$ a területet, valamint $W$ és $H$ a befoglaló téglalap szélességét és magasságát.
+
+\begin{definition}{Kompaktság 1:}
+$\dfrac{P^2}{A}$ $\Longrightarrow$ diszkre minimális
+\end{definition}
+
+\begin{definition}{Kompaktság 2:}
+$\dfrac{A}{W \cdot H}$ $\Longrightarrow$ téglalapra minimális
+\end{definition}
+
+\bigskip
+
+A befoglaló keret (bounding box) szélesség/hosszúság aránya az objektum általánosságban vett \textbf{elnyújtottságáról} ad információt. 
+
+\begin{definition}{Elnyújtottság:}
+$\dfrac{W}{H}$
+\end{definition}
+
+\bigskip
+
+Az objektum \textbf{körkörösségét} (Heywood Circularity Factor) is könnyen definiálhatjuk a kerület és a terület felhasználásával. A képlet tökéletesen kör alakú objektumra $1$ értéket ad vissza.
+
+\begin{definition}{Körkörösség:}
+$\dfrac{P}{2 \sqrt{\pi A}}$
+\end{definition}
+
+\bigskip
+
+A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt a értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemlélethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főlet angolszász területen elterjedt elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
+
+A gépi látás területén Feret-átmérőn általában automatikusan a legnagyobb Feret-átmérőt értjük. A legnagyobb Feret-átmérő irányszögét kitűnően használhatjuk a blob \textbf{orientációjának} jellemzésére.
 
 %............................................................................
 \subsection{Összegzés}\label{sect:blob_osszegzes}

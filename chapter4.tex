@@ -167,6 +167,10 @@ A Qt-ot használó alkalmazások programozási nyelve alapvetően a sztenderd C+
 
 \bigskip
 
+TODO signal-slot architektura TODO
+
+\bigskip
+
 A Qt 4-es verziójához nagyjából 6 éven át érkeztek a kisebb/nagyobb frissítések, egészen a 4.8-as kiadásig. Ezt követően a koncepcionális változásokat hozó \textbf{Qt 5} feljesztése folytatódik tovább. Az 5-ös verzió funkciói között között a hardveres gyorsítású megjelenítés, a QML\footnote{TODO} és a JavaScript támogatása jelentik a legfontosabb újdonságokat.
 
 A Qt 5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fejlesztés irányába: a \textbf{Qt Project}\footnote{TODO URL} néven futó projektbe már külsős fejlesztők is delegálhatják javításaikat vagy új funkciókat, amelyeket a Digia és a Nokia csapata elbírál, és ha megfelelőnek találtatnak, bekerülhetnek a soron következő verzióba.
@@ -175,7 +179,25 @@ A Qt 5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fej
 \subsection{A Qt Creator fejlesztői környezet}\label{sect:qt_creator}
 %............................................................................
 
+A \textbf{Qt Creator} egy integrált fejlesztői környezet (Integreated Development Environment -- IDE) Qt alapú fejlesztésekhez. Használatával jelentősen megkönnyíthető mind a grafikus felületek kialakítása, mind az alkalmazások forráskódjának szerkesztése és fordítása.
 
+\paragraph{Szerkesztő}
+
+A kódszerkesztő (editor) a kor követelményeinek megfelelően támogatja a szintaxis-kiemelést valamint az automatikus kódkiegészítést (code completion) több programozási nyelvre is. A szerkesztő hátrányának róható fel, hogy a megnyitott fájlokat nem a manapság elterjedt fülek (tab) használatával rendezi, hanem saját fejlesztésű listát használ erre a célra, amely más fejlesztői környezetekből érkezve kissé idegen.
+
+\paragraph{Qt Designer}
+
+A felhasználó felületek kialakításában nélkülözhetetlen segítséget nyújt a beépített Qt Designer eszköz. Használatával WYSIWYG (What You See Is What You Get) módon végezhetjük az alkalmazás grafikus felületének kialakítását. Választhatunk a számtalan beépített widget közül, de saját elemek létrehozását is támogatja a rendsze -- a widgetek fejlesztési konvencióit betartva az egyedi elemek is grafikusan jelennek meg a szerkesztőfelületen.
+
+A felületek integrálása a kóddal az \sectref{qt} szakaszban említett signal-slot mechanizmus segítségével történhet, amelynek megvalósítása szintén nagyon felhasználóbarát módon sikerült.
+
+\paragraph{Qt Quick Designer}
+
+blabla
+
+\paragraph{Példakódok}
+
+blabla
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Módosított kamera}\label{sect:infracam}

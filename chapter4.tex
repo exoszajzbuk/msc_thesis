@@ -8,11 +8,11 @@
 \section{Az OpenCV könyvtár}\label{sect:opencv}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Az \textbf{OpenCV}\footnote{\url{http://opencv.willowgarage.com/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \textbf{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül.
+Az \textbf{OpenCV}\footnote{\url{http://opencv.org/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \textbf{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül.
 
 \bigskip
 
-Az OpenCV projekt hivatalosan 1999-ben indult az Intel kezdeményezésében. A nagyközönségnek a 2000. évi \textit{,,IEEE Conference on Computer Vision and Pattern Recognition''} konferencián mutatkozott be, majd öt béta-verziót követően 2006-ban jutott el az 1.0-ás hivatalos kiadásig. A fejlesztése itt úgy tűnt, hogy megáll, de végül a projektet a Willow Garage\footnote{\url{http://www.willowgarage.com/}} robotikai kutatólabor vette szárnyai alá. Az ő irányításuk alatt 2008 októberében elkészült az 1.1-es verzióval közel egy időben látott napvilágot az elsõ hivatalos OpenCV-vel foglalkozó könyv \textit{,,Learning OpenCV: Computer Vision with the OpenCV Library''} címmel Gary Bradski és Adrian Kaehler fejlesztõk tollából \cite{opencv_book}. Az egy évvel később, 2009 októberében megjelent 2.0-ás verzióval a projekt nagy fejlődésen esett át. Ebben a verzióban található meg elõször a C++ és Python interfész (ez a meglévő C mellett már három hivatalosan fejlesztett interfészt jelentett), amely az egyszerûbb kezelhetõség, új függvények mellett a meglévő eljárások teljesítmény tekintetében -- különösen többmagos rendszereken -- jobb implementációját kínálta a felhasználóknak.
+Az OpenCV projekt hivatalosan 1999-ben indult az Intel kezdeményezésében. A nagyközönségnek a 2000. évi \textit{,,IEEE Conference on Computer Vision and Pattern Recognition''} konferencián mutatkozott be, majd öt béta-verziót követően 2006-ban jutott el az 1.0-ás hivatalos kiadásig. A fejlesztése itt úgy tűnt, hogy megáll, de végül a projektet a Willow Garage\footnote{\url{http://www.willowgarage.com/}} robotikai kutatólabor vette szárnyai alá. Az ő irányításuk alatt 2008 októberében elkészült az 1.1-es verzióval közel egy időben látott napvilágot az elsõ hivatalos OpenCV-vel foglalkozó könyv \textit{,,Learning OpenCV: Computer Vision with the OpenCV Library''} címmel Gary Bradski és Adrian Kaehler fejlesztők tollából \cite{opencv_book}. Az egy évvel később, 2009 októberében megjelent 2.0-ás verzióval a projekt nagy fejlődésen esett át. Ebben a verzióban található meg először a C++ és Python interfész (ez a meglévő C mellett már három hivatalosan fejlesztett interfészt jelentett), amely az egyszerűbb kezelhetőség, új függvények mellett a meglévő eljárások teljesítmény tekintetében -- különösen többmagos rendszereken -- jobb implementációját kínálta a felhasználóknak.
 
 \bigskip
 
@@ -22,7 +22,7 @@ Az elmúlt években a GPU-gyorsítás támogatása terén is komoly előrelépé
 
 \bigskip
 
-A fejlesztést különboző platformokra párhuzamosan (cross-platform) történik. Mivel a könyvtár alapvetően a C nyelvre épül, ezért a számos platformon működésre bírható. A dolgozat írásának idején elérhető 2.5-ös stabil verzió a következő operációs rendszerekre elérhető:
+A fejlesztést különböző platformokra párhuzamosan (cross-platform) történik. Mivel a könyvtár alapvetően a C nyelvre épül, ezért a számos platformon működésre bírható. A dolgozat írásának idején elérhető 2.5-ös stabil verzió a következő operációs rendszerekre elérhető:
 
 \begin{itemize}
   \item asztali (desktop) rendszerek
@@ -44,7 +44,7 @@ A fejlesztést különboző platformokra párhuzamosan (cross-platform) történ
 
 \bigskip
 
-Az OpenCV jelenleg elérhető 2.5-ös verziója széles körben, mondhatni világszerte használt, felhasználói tábora több, mint 40\,000 főt számlál. Köszönhető ez többek között annak, hogy felhasználási lehetőségei igencsak sokrétűek: több, mint 500 optimalizált algoritmust kínál annak érdekében, hogy ,,ne kelljen újra feltalálnunk a kereket''. Sebesség tekintetében érződik a kipróbált, optimalizált algoritmusok használata: az OpenCV a jelenleg elérhető leggyorsabb alternatíva gépi látás terén (\figref{opencv_speed} ábra). Teljesítménye azonban adott esetben még tovább növelhető, mivel ha Intel IPP\footnote{\url{http://software.intel.com/en-us/intel-ipp/}} (Integrated Performance Primitives) támogatást észlel, az abban található szálakra optimalizált algoritmusok használatát fogja preferálni.
+Az OpenCV jelenleg elérhető 2.5-ös verziója széles körben, mondhatni világszerte használt, felhasználói tábora több, mint 47\,000 főt számlál. Köszönhető ez többek között annak, hogy felhasználási lehetőségei igencsak sokrétűek: több, mint 500 optimalizált algoritmust kínál annak érdekében, hogy ,,ne kelljen újra feltalálnunk a kereket''. Sebesség tekintetében érződik a kipróbált, optimalizált algoritmusok használata: az OpenCV a jelenleg elérhető leggyorsabb alternatíva gépi látás terén (\figref{opencv_speed} ábra). Teljesítménye azonban adott esetben még tovább növelhető, mivel ha Intel IPP\footnote{\url{http://software.intel.com/en-us/intel-ipp/}} (Integrated Performance Primitives) támogatást észlel, az abban található szálakra optimalizált algoritmusok használatát fogja preferálni.
 
 \begin{figure}[!ht]
 \centering
@@ -53,7 +53,7 @@ Az OpenCV jelenleg elérhető 2.5-ös verziója széles körben, mondhatni vilá
 \label{fig:opencv_speed}
 \end{figure}
 
-A teljes funkcionalitás részletekbe menõ bemutatása -- mint láthattuk \cite{opencv_book} -- egy könyvet is megtölt, de a teljesség igénye nélkül tekintsük át, hogy milyen alapvető jellemzői és alkalmazásai vannak a környezetnek:
+A teljes funkcionalitás részletekbe menő bemutatása -- mint láthattuk \cite{opencv_book} -- egy könyvet is megtölt, de a teljesség igénye nélkül tekintsük át, hogy milyen alapvető jellemzői és alkalmazásai vannak a környezetnek:
 
 \begin{itemize}
 
@@ -113,6 +113,17 @@ A teljes funkcionalitás részletekbe menõ bemutatása -- mint láthattuk \cite
    \item rejtett Markov-modell (Hidden Markov Model -- HMM)
   \end{itemize}
   
+  \item kiterjesztett valóság-támogatás (Augmented Reality -- AR)
+  
+  \item gépi tanulás könyvtár
+  \begin{itemize}
+    \item döntési fa-alapú tanulás
+    \item klaszterezési algoritmusok (pl. k-szomszédság)
+    \item neurális hálózatok
+    \item Bayes-osztályozó
+    \item szupport vektor gépek (Support Vector Machine -- SVM)
+  \end{itemize}    
+  
  \item GUI és rajzolás
   \begin{itemize}
    \item kép és videó megjelenítés
@@ -128,21 +139,21 @@ Az OpenCV régebbi verzióiban a számos előny mellett hátrányként volt mege
 
 \bigskip
 
-A X.X verziótól kezdődően megjelent egy némileg fejlettebb Qt alapú felhasználói felület. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszerveinek és megjelenítésének problémája már kielégítően elvégezhető egyéb eszköz használata nélkül.
+A 2.1-es verziótól kezdődően megjelent egy némileg fejlettebb Qt alapú felhasználói felület. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszerveinek és megjelenítésének problémája már kielégítően elvégezhető egyéb eszköz használata nélkül.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{A Qt keretrendszer}\label{sect:qt}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A \textbf{Qt} (ejtsd az angol ,,cute'' szó mintájára: kjút) keretrendszer egy széles körben használt szoftver, amelyet egyrész grafikus felhasználói felületek (Graphical User Interface -- GUI), másrészt parancssoros (Command Line Interface -- CLI) alkalmazások feljesztésére is használnak. A grafikus felhasználói felületek fejlesztése során a Qt úgynevezett wiget-toolkitként funkcionál -- kis, önálló elemek (widgetek) felhasználását és összekötését teszi lehetővé, ezek összességéből áll össze az elkészült grafikus felület. A szoftver a  GPL~v3\footnote{TODO} illetve LGPL~v2\footnote{TODO} licencek szerint szabadon elérhető.
+A \textbf{Qt}\footnote{\url{http://qt.digia.com/}} (ejtsd az angol ,,cute'' szó mintájára: kjút) keretrendszer egy széles körben használt szoftver, amelyet egyrészt grafikus felhasználói felületek (Graphical User Interface -- GUI), másrészt parancssoros (Command Line Interface -- CLI) alkalmazások fejlesztésére is használnak. A grafikus felhasználói felületek fejlesztése során a Qt úgynevezett wiget-toolkitként funkcionál -- kis, önálló elemek (widgetek) felhasználását és összekötését teszi lehetővé, ezek összességéből áll össze az elkészült grafikus felület. A szoftver a  GPL~v3\footnote{\url{http://www.gnu.org/licenses/gpl.html}} illetve LGPL~v2\footnote{\url{http://www.gnu.org/licenses/lgpl-2.1.html}} licencek szerint szabadon elérhető.
 
-A keretrendszer egyik nagy előnyének számít más rendszerekkel összehasonlítva, hogy a grafikus felületek kirajzolásakor minden operációs rendszeren igyekszik az elérhető natív elemeket használni, ennek köszönhetően (a natív kirajzolásokból származó nagyszerű performancia mellett) a Qt-vel fejlesztett alkalmazások semmelyik platformon nem tűnnek rendszeridegennek.
+A keretrendszer egyik nagy előnyének számít más rendszerekkel összehasonlítva, hogy a grafikus felületek kirajzolásakor minden operációs rendszeren igyekszik az elérhető natív elemeket használni, ennek köszönhetően (a natív kirajzolásokból származó nagyszerű performancia mellett) a Qt-tal fejlesztett alkalmazások semelyik platformon nem tűnnek rendszeridegennek.
 
 \bigskip
 
-A Qt projekt első hivatalos kiadása a Nokia \emph{Qt Development Frameworks} csoport égisze alatt látta meg a napvilágot, miután a finn mobilgyártó felvásárolta a technológiát a norvég Trolltech vállalattól. Ennek megfelelően a kezeti években az asztali platformok mellett leginkább a Symbian operációs rendszer támogatása jelentette a fő csapásirányt. A Nokia azonban 2011-ben szakított saját fejlesztésű operárciós rendszerével, és a további bizalmát a Microsoft akkori és elkövetkező mobilplatformjaiba (Windows Phone 7, majd 8) fektette.
+A Qt projekt első hivatalos kiadása a Nokia \emph{Qt Development Frameworks} csoport égisze alatt látta meg a napvilágot, miután a finn mobilgyártó felvásárolta a technológiát a norvég Trolltech vállalattól. Ennek megfelelően a kezdeti években az asztali platformok mellett leginkább a Symbian operációs rendszer támogatása jelentette a fő csapásirányt. A Nokia azonban 2011-ben szakított saját fejlesztésű operációs rendszerével, és a további bizalmát a Microsoft akkori és elkövetkező mobilplatformjaiba (Windows Phone 7, majd 8) fektette.
 
-Ezt követően a Nokia megvált a rendszer jogaitól, és azok a Digia\footnote{TODO} vállalathoz kerültek, amely azóta is a projekt karbantartója, bár a tényleges fejlesztői munka nagy részét továbbra is a Nokia mérnökei végzik. A tranzakció után az új tulajdonos közvetlen célnak túzte ki, hogy aktualizálják a Qt által támogatott platformok listáját az időközben népszerűvé vált rendszerekkel.
+Ezt követően a Nokia megvált a rendszer kereskedelmi jogaitól, és azok a Digia\footnote{\url{http://www.digia.com/}} vállalathoz kerültek, amely azóta is a projekt karbantartója, bár a tényleges fejlesztői munka nagy részét továbbra is a Nokia mérnökei végzik. A tranzakció után az új tulajdonos közvetlen célnak tűzte ki, hogy aktualizálják a Qt által támogatott platformok listáját az időközben népszerűvé vált rendszerekkel.
 
 A dolgozat írásakor támogatott fontosabb operációs rendszerek:
 
@@ -160,9 +171,17 @@ A dolgozat írásakor támogatott fontosabb operációs rendszerek:
 A Qt-ot használó alkalmazások programozási nyelve alapvetően a sztenderd C++, a \emph{Meta Object Compiler} (moc) kódgenerátorral kiegészítve, amely számos beépített makróval teszi könnyebbé a fejlesztést. Több más programozási nyelv is használható az ún. kötések (bindings) használatával. A Qt 4-es verziójához elérhető kötések listája a teljesség igénye nélkül:
 
 \begin{itemize}
-  \item TODO
-  \item TODO
-  \item TODO
+  \item C\# és .NET
+  \item Java
+  \item Python
+  \item szkriptnyelvek
+  \begin{itemize}
+    \item Perl
+    \item Ruby
+    \item PHP
+    \item Tcl
+  \end{itemize}    
+   
 \end{itemize}
 
 \bigskip
@@ -171,9 +190,9 @@ TODO signal-slot architektura TODO
 
 \bigskip
 
-A Qt 4-es verziójához nagyjából 6 éven át érkeztek a kisebb/nagyobb frissítések, egészen a 4.8-as kiadásig. Ezt követően a koncepcionális változásokat hozó \textbf{Qt 5} feljesztése folytatódik tovább. Az 5-ös verzió funkciói között között a hardveres gyorsítású megjelenítés, a QML\footnote{TODO} és a JavaScript támogatása jelentik a legfontosabb újdonságokat.
+A Qt 4-es verziójához nagyjából 6 éven át érkeztek a kisebb/nagyobb frissítések, egészen a 4.8-as kiadásig. Ezt követően a koncepcionális változásokat hozó \textbf{Qt 5} fejlesztése folytatódik tovább. Az 5-ös verzió funkciói között között a hardveres gyorsítású megjelenítés, a QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} és a JavaScript támogatása jelentik a legfontosabb újdonságokat.
 
-A Qt 5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fejlesztés irányába: a \textbf{Qt Project}\footnote{TODO URL} néven futó projektbe már külsős fejlesztők is delegálhatják javításaikat vagy új funkciókat, amelyeket a Digia és a Nokia csapata elbírál, és ha megfelelőnek találtatnak, bekerülhetnek a soron következő verzióba.
+A Qt 5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fejlesztés irányába: a \textbf{Qt Project}\footnote{\url{http://qt-project.org/}} néven futó projektbe már külsős fejlesztők is delegálhatják javításaikat vagy új funkciókat, amelyeket a Digia és a Nokia csapata elbírál, és ha megfelelőnek találtatnak, bekerülhetnek a soron következő verzióba.
 
 %............................................................................
 \subsection{A Qt Creator fejlesztői környezet}\label{sect:qt_creator}
@@ -187,21 +206,23 @@ A kódszerkesztő (editor) a kor követelményeinek megfelelően támogatja a sz
 
 \paragraph{Qt Designer}
 
-A felhasználó felületek kialakításában nélkülözhetetlen segítséget nyújt a beépített Qt Designer eszköz. Használatával WYSIWYG (What You See Is What You Get) módon végezhetjük az alkalmazás grafikus felületének kialakítását. Választhatunk a számtalan beépített widget közül, de saját elemek létrehozását is támogatja a rendsze -- a widgetek fejlesztési konvencióit betartva az egyedi elemek is grafikusan jelennek meg a szerkesztőfelületen.
+A felhasználó felületek kialakításában nélkülözhetetlen segítséget nyújt a beépített Qt Designer eszköz. Használatával WYSIWYG (What You See Is What You Get) módon végezhetjük az alkalmazás grafikus felületének kialakítását. Választhatunk a számtalan beépített widget közül, de saját elemek létrehozását is támogatja a rendszer -- a widgetek fejlesztési konvencióit betartva az egyedi elemek is grafikusan jelennek meg a szerkesztőfelületen.
 
 A felületek integrálása a kóddal az \sectref{qt} szakaszban említett signal-slot mechanizmus segítségével történhet, amelynek megvalósítása szintén nagyon felhasználóbarát módon sikerült.
 
 \paragraph{Qt Quick Designer}
 
-Ez az eszköz animációk fejlesztésére szolgál, amelyeket QML\footnote{TODO} nyelvű leírásukkal adhatunk meg.
+Ez az eszköz animációk fejlesztésére szolgál, amelyeket QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} nyelvű leírásukkal adhatunk meg.
 
-\paragraph{Verziókezelők}
+\paragraph{Verziókezelő-integráció}
 
 A fejlesztői környezet képes a legnépszerűbb verziókezelő rendszerek támogatására. A támogatott rendszerek között van a népszerű \emph{Git} valamint \emph{Subversion (SVN)}, de \emph{CVS}, \emph{Bazaar} vagy \emph{Mercurial} kódbázisunkat is kezelhetjük közvetlenül a Qt Creatorral.
 
-\paragraph{Példakődok}
+\paragraph{Példakódok}
 
-Az alkalmazás nyitóképernyőjén rögtön számtalan példaprogram fogadja a felhasználót. A példák százas nagyságrendben érhetők el, és a legegyszerűbb feladatoktól (,,Hello World'') az egészen összetettekig próbálják lefedni a fejlesztés során esetlegesen felmerülő problémákat. Letöltésük nem igényel többet néhány kattintásnál, és integrált megoldás lévén azonnal betöltődik a kód a szerkesztőbe, elkezdhetjük megérteni a működését.
+Az alkalmazás nyitóképernyőjén rögtön számtalan példaprogram fogadja a felhasználót. A példák százas nagyságrendben érhetők el, és a legegyszerűbb feladatoktól (,,Hello World'') az egészen összetettekig próbálják lefedni a fejlesztés során esetlegesen felmerülő problémákat. Letöltésük nem igényel többet néhány kattintásnál, és integrált megoldás lévén a kód betöltődik a szerkesztőbe, azonnal futtathatjuk és elkezdhetjük megérteni a működését.
+
+Maga az ötlet és a megvalósítás is példaértékű, igazi kincsesbánya a Qt működésében elmélyedni kívánó fejlesztők számára.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Módosított kamera}\label{sect:infracam}

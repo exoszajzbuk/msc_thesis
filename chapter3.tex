@@ -14,9 +14,9 @@
 \section{Hough-transzformáció}\label{sect:hough}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Képfeldolgozási szûrõk, függvények segítségével viszonylag könnyen előállíthatjuk a képtérben számunkra érdekes pontok halmazát. Azokat a pontokat, amelyek valamilyen magasabb absztrakciós szintû képjellemzõhöz kapcsolódnak: például a tárgyak, alakzatok formáját megadó kontúrok pontjait. Ha viszont szeretnénk ,,megérteni'' is a képet, az ilyen formák automatikus és robusztus felismerése szinte elengedhetetlen.
+Képfeldolgozási szűrők, függvények segítségével viszonylag könnyen előállíthatjuk a képtérben számunkra érdekes pontok halmazát. Azokat a pontokat, amelyek valamilyen magasabb absztrakciós szintű képjellemzőhöz kapcsolódnak: például a tárgyak, alakzatok formáját megadó kontúrok pontjait. Ha viszont szeretnénk ,,megérteni'' is a képet, az ilyen formák automatikus és robusztus felismerése szinte elengedhetetlen.
 
-A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek ideális formákra (egyenesekre, körökre, vagy egyéb görbékre): az éleket torzíthatja zaj, egyes élpontok hiányozhatnak, vagy a felismerni kívánt formák kismértékben el is térhetnek az ideálistól. A kép analízise szempontjából azonban ezzel együtt is nagyon értékes információt rejthetnek magukban, ezt az információt pedig hasznos lenne kinyerni. Viszont egyáltalán nem triviális probléma a valamilyen szempontból összetartozó (például egy egyenesre, vagy egy körvonalra esõ) pontok csoportosítása.
+A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek ideális formákra (egyenesekre, körökre, vagy egyéb görbékre): az éleket torzíthatja zaj, egyes élpontok hiányozhatnak, vagy a felismerni kívánt formák kismértékben el is térhetnek az ideálistól. A kép analízise szempontjából azonban ezzel együtt is nagyon értékes információt rejthetnek magukban, ezt az információt pedig hasznos lenne kinyerni. Viszont egyáltalán nem triviális probléma a valamilyen szempontból összetartozó (például egy egyenesre, vagy egy körvonalra eső) pontok csoportosítása.
 
 \begin{figure}[!ht]
 \centering
@@ -26,17 +26,17 @@ A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek i
 \label{fig:houghlines}
 \end{figure}
 
-A Hough-transzformáció erre a problémára kínál megoldást. Feladata egyszerû formák, úgymint egyenesek, körök, ellipszisek keresése képeken. Az alakzatok keresését a transzformáció egy ún. paramétertérben végzi egy szavazási mechanizmus segítségével. A felismert potenciális objektumok az akkumulátortér -- a paramétertér egyfajta futás közbeni leképezése -- lokális maximumai alapján adódnak.
+A Hough-transzformáció erre a problémára kínál megoldást. Feladata egyszerű formák, úgymint egyenesek, körök, ellipszisek keresése képeken. Az alakzatok keresését a transzformáció egy ún. paramétertérben végzi egy szavazási mechanizmus segítségével. A felismert potenciális objektumok az akkumulátortér -- a paramétertér egyfajta futás közbeni leképezése -- lokális maximumai alapján adódnak.
 
 \bigskip
 
-Történelmi áttekintésként megjegyezhetjük, hogy a Hough-transzformációt Paul~Hough alkotta meg 1959-ben buborékkamra-fényképek gépi analíziséhez \cite{hough_eredeti}. Ebben a cikkben Hough még csak egyenesek felismerésérõl beszél. A manapság használt transzformációt Richard~Duda és Peter~Hart fejlesztette ki 1972-ben ,,általánosított Hough-transzformáció'' néven \cite{hough_duda}, tíz évvel azután, hogy Paul Hough szabadalmaztatta módszerét. Az õ kiegészítésük már lehetõvé tette, hogy a transzformáció nemcsak egyenesek, hanem körök és más analitikusan leírható görbék keresésére is felhasználható legyen.
+Történelmi áttekintésként megjegyezhetjük, hogy a Hough-transzformációt Paul~Hough alkotta meg 1959-ben buborékkamra-fényképek gépi analíziséhez \cite{hough_eredeti}. Ebben a cikkben Hough még csak egyenesek felismeréséről beszél. A manapság használt transzformációt Richard~Duda és Peter~Hart fejlesztette ki 1972-ben ,,általánosított Hough-transzformáció'' néven \cite{hough_duda}, tíz évvel azután, hogy Paul Hough szabadalmaztatta módszerét. Az õ kiegészítésük már lehetõvé tette, hogy a transzformáció nemcsak egyenesek, hanem körök és más analitikusan leírható görbék keresésére is felhasználható legyen.
 
-A gépi látás felhasználói körében azonban igazán csak Dana~H.~Ballard 1981-es cikke \cite{hough_ballard} nyomán lett népszerû, aki a transzformáció még további felhasználási lehetõségeit vetette fel. Eredményeinek köszönhetõen a módszer analitikusan nem (vagy csak nehezen) leírható formák keresésére is alkalmazhatóvá vált. Félreértésekre adhat okot, hogy mind Duda és Hart, mind Ballard az ,,általánosított'' megnevezést használja a módszer általuk kitalált kiegészítéseinek. A továbbiakban az ,,általános'' jelzõt a Duda--Hart-féle kiegészítés megnevezésére használom, ahol Ballard módszerérõl esik szó, azt külön jelzem.
+A gépi látás felhasználói körében azonban igazán csak Dana~H.~Ballard 1981-es cikke \cite{hough_ballard} nyomán lett népszerű, aki a transzformáció még további felhasználási lehetőségeit vetette fel. Eredményeinek köszönhetően a módszer analitikusan nem (vagy csak nehezen) leírható formák keresésére is alkalmazhatóvá vált. Félreértésekre adhat okot, hogy mind Duda és Hart, mind Ballard az ,,általánosított'' megnevezést használja a módszer általuk kitalált kiegészítéseinek. A továbbiakban az ,,általános'' jelzőt a Duda--Hart-féle kiegészítés megnevezésére használom, ahol Ballard módszeréről esik szó, azt külön jelzem.
 
 \bigskip
 
-A transzformáció általános formájában tehát analitikusan leírható formák keresésére használható. A legegyszerûbb ilyen forma az egyenes, ennek segítségével érthetõ meg legkönnyebben az algoritmus mûködési elve. A \sectref{egyenesek_keresese} szakaszban ezért az egyenesek keresésének elméletét foglalom össze. Ezen elv késõbb már könnyen kiterjeszthetõ tetszõleges formák keresésére, különös tekintettel a pupilla-keresés szempontjából fontos körkeresési problémára, amelyre a \sectref{korkereses} szakaszban térek ki. A \sectref{kiegeszitesek} szakaszban szót ejtek még a módszer további kiegészítési lehetõségeirõl, majd a \sectref{hough_osszefoglalas} szakaszban összefoglalom a Hough-transzformáció használatának korlátait, elõnyeit és hátrányait.
+A transzformáció általános formájában tehát analitikusan leírható formák keresésére használható. A legegyszerûbb ilyen forma az egyenes, ennek segítségével érthető meg legkönnyebben az algoritmus működési elve. A \sectref{egyenesek_keresese} szakaszban ezért az egyenesek keresésének elméletét foglalom össze. Ezen elv később már könnyen kiterjeszthető tetszőleges formák keresésére, különös tekintettel a pupilla-keresés szempontjából fontos körkeresési problémára, amelyre a \sectref{korkereses} szakaszban térek ki. A \sectref{kiegeszitesek} szakaszban szót ejtek még a módszer további kiegészítési lehetőségeiről, majd a \sectref{hough_osszefoglalas} szakaszban összefoglalom a Hough-transzformáció használatának korlátait, előnyeit és hátrányait.
 
 
 %............................................................................
@@ -55,13 +55,13 @@ y = m \cdot x + b
 
 reprezentáció, ahol $ m $ az egyenes meredeksége (iránytangense), a $ b $ konstans az ordinátatengely-metszet, vagyis az egyenes és az $ y $ tengely metszéspontja.
 
-A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordinátarendszer $ y $ tengelyével párhuzamos, vagy ahhoz közelítõ egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függõleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
+A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordinátarendszer $ y $ tengelyével párhuzamos, vagy ahhoz közelítő egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függőleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
 
 \begin{align}\label{eq:egyenes_hesse}
 r = x \cdot \cos \theta + y \cdot \sin \theta
 \end{align}
 
-egyenlettel adja meg a kívánt egyenest, ahol $ r $ az origótól mért távolságot, $ \theta $ pedig az egyenes pozitív valós féltengellyel bezárt szögét jelenti (lásd \figref{repr_line} ábra). Ezzel a megvalósítással már nem ütközik akadályba az $ y $ tengelyhez közelítõ egyenesek modellezése.
+egyenlettel adja meg a kívánt egyenest, ahol $ r $ az origótól mért távolságot, $ \theta $ pedig az egyenes pozitív valós féltengellyel bezárt szögét jelenti (lásd \figref{repr_line} ábra). Ezzel a megvalósítással már nem ütközik akadályba az $ y $ tengelyhez közelítő egyenesek modellezése.
 
 \begin{figure}[!ht]
 \centering
@@ -72,13 +72,13 @@ egyenlettel adja meg a kívánt egyenest, ahol $ r $ az origótól mért távols
 
 \bigskip
 
-Érdekességként megemlíthetõ, hogy bár nyilvánvalónak látszik a Hesse-féle normálalak elõnyösebb volta, Paul Hough eredeti szabadalmában\footnote{U.S. Patent 3,069,654 -- \url{http://www.google.com/patents?q=3069654}} mégis az $ y = m \cdot x + b $ formát használta az egyenesek jellemzésére. Az $ (r, \theta) $ paraméterezés Duda és Hart már hivatkozott cikke nyomán vált általánosan használttá. \cite{hough_duda}
+Érdekességként megemlíthető, hogy bár nyilvánvalónak látszik a Hesse-féle normálalak előnyösebb volta, Paul Hough eredeti szabadalmában\footnote{U.S. Patent 3,069,654 -- \url{http://www.google.com/patents?q=3069654}} mégis az $ y = m \cdot x + b $ formát használta az egyenesek jellemzésére. Az $ (r, \theta) $ paraméterezés Duda és Hart már hivatkozott cikke nyomán vált általánosan használttá. \cite{hough_duda}
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{A paramétertér és az akkumulátor}\label{sect:parameterter_akkumulator}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Minden képtérbeli egyenes tehát \eqref{egyenes_hesse} felhasználásával megfeleltethetõ a paramétertérben egy $ (r, \theta) $ párral jellemzett pontnak. Az egyértelmû megfeleltetés végett két lehetõségünk is adódik a paraméterek korlátainak megválasztására. Ezek formálisan
+Minden képtérbeli egyenes tehát \eqref{egyenes_hesse} felhasználásával megfeleltethető a paramétertérben egy $ (r, \theta) $ párral jellemzett pontnak. Az egyértelmű megfeleltetés végett két lehetőségünk is adódik a paraméterek korlátainak megválasztására. Ezek formálisan
 
 \begin{align}\label{eq:param180}
 \theta \in \left[ 0,180^{\circ} \right) \quad \wedge \quad r \in \mathbf{R}
@@ -90,37 +90,37 @@ vagy
 \theta \in \left[ 0,360^{\circ} \right) \quad \wedge \quad r \geq 0
 \end{align}
 
-Az $ (r, \theta) $ párok terét \textbf{paramétertérnek}, vagy \textbf{Hough-térnek} hívjuk. A paramétertér dimenzióját az ismeretlen paraméterek száma adja, egyenesek esetében ez tehát kettõ.
+Az $ (r, \theta) $ párok terét \textbf{paramétertérnek}, vagy \textbf{Hough-térnek} hívjuk. A paramétertér dimenzióját az ismeretlen paraméterek száma adja, egyenesek esetében ez tehát kettő.
 
-Egy $ (x,y) $ ponton keresztül végtelen sok egyenes húzható, és minden egyenes kielégíti a \eqref{egyenes_hesse} összefüggést. Ezek az egyenesek a paramétertérben ábrázolva egy szinusz-jellegû görbét alkotnak. Természetesen nem határozhatunk meg tetszõleges pontossággal egy pontot, és nem is vehetünk számításba minden (végtelen számú) olyan egyenest, ami az adott ponton átmegy. Szükség van ezért a paramétertér diszkretizálására.
+Egy $ (x,y) $ ponton keresztül végtelen sok egyenes húzható, és minden egyenes kielégíti a \eqref{egyenes_hesse} összefüggést. Ezek az egyenesek a paramétertérben ábrázolva egy szinusz-jellegű görbét alkotnak. Természetesen nem határozhatunk meg tetszőleges pontossággal egy pontot, és nem is vehetünk számításba minden (végtelen számú) olyan egyenest, ami az adott ponton átmegy. Szükség van ezért a paramétertér diszkretizálására.
 
 \bigskip
 
 A paramétertér gyakorlati (kvantált) reprezentációja az \textbf{akkumulátor}. Az akkumulátor egy tömb, dimenziószáma megegyezik a paramétertér dimenziószámával.
 
-A tömbök indexelése egész számokkal történik ezért az $ r $ paramétert egész számokra célszerû kvantálnunk. A $ \theta $ paraméter kvantálásához pedig a végtelen sok egyenes figyelembe vétele helyett az $ (x,y) $ koordinátán keresztül húzhatunk egyeneseket $ \varDelta \theta $ fokonként. Ebbõl következõen a \eqref{param180} vagy \eqref{param360} összefüggések alapján az akkumulátor ezen dimenzióját $ 180^{\circ} / \varDelta \theta $, illetve $ 360^{\circ} / \varDelta \theta $ darab diszkrét részre osztja. A $ \varDelta \theta $ paraméter megválasztásával, a módszer ,,finomságát'' növelhetjük. Például $ \varDelta \theta = 5^{\circ} $ választás esetén a transzformáció csak a pozitív valós féltengellyel $ 0, 5, 10, ... $ fokot bezáró egyenesek felismerésére képes. Túl kis érték választása esetén viszont az eljárás memória- és idõigénye fog az egekbe szökni. A $ \varDelta \theta $ érték gondos megválasztásával tehát a pontosság és gyorsaság egy lehetõleg optimális értékét kell meghatároznunk.
+A tömbök indexelése egész számokkal történik ezért az $ r $ paramétert egész számokra célszerű kvantálnunk. A $ \theta $ paraméter kvantálásához pedig a végtelen sok egyenes figyelembe vétele helyett az $ (x,y) $ koordinátán keresztül húzhatunk egyeneseket $ \varDelta \theta $ fokonként. Ebből következően a \eqref{param180} vagy \eqref{param360} összefüggések alapján az akkumulátor ezen dimenzióját $ 180^{\circ} / \varDelta \theta $, illetve $ 360^{\circ} / \varDelta \theta $ darab diszkrét részre osztja. A $ \varDelta \theta $ paraméter megválasztásával, a módszer ,,finomságát'' növelhetjük. Például $ \varDelta \theta = 5^{\circ} $ választás esetén a transzformáció csak a pozitív valós féltengellyel $ 0, 5, 10, ... $ fokot bezáró egyenesek felismerésére képes. Túl kis érték választása esetén viszont az eljárás memória- és időigénye fog az egekbe szökni. A $ \varDelta \theta $ érték gondos megválasztásával tehát a pontosság és gyorsaság egy lehetőleg optimális értékét kell meghatároznunk.
 
-Gyakorlati szabályként elmondható, hogy 1 fok pontosságnál többre ritkán van szükség. Túl vastag vonalak (amik pedig logikailag összefüggõ egyenesek), zajos kép, vagy túl rövid vonalszakaszok esetén így is romlik a felismerés esélye. Hogy miért, arra a következõ szakasz -- a szavazási mechanizmus ismertetése -- ad választ.
+Gyakorlati szabályként elmondható, hogy 1 fok pontosságnál többre ritkán van szükség. Túl vastag vonalak (amik pedig logikailag összefüggő egyenesek), zajos kép, vagy túl rövid vonalszakaszok esetén így is romlik a felismerés esélye. Hogy miért, arra a következő szakasz -- a szavazási mechanizmus ismertetése -- ad választ.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{A keresés folyamata}\label{sect:kereses_folyamata}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-A továbbiakban tételezzük fel, hogy a kép bináris, és megfelelõen elõfeldolgozott (pl. élkeresés, küszöbözés), azon már csak a felismerni kívánt egyenesek pontjai találhatóak. A háttér képpontjait jelölje a 0 érték, az érdekes pontokat tartalmazó elõtér képpontjai legyenek 1 értékûek.
+A továbbiakban tételezzük fel, hogy a kép bináris, és megfelelően előfeldolgozott (pl. élkeresés, küszöbözés), azon már csak a felismerni kívánt egyenesek pontjai találhatóak. A háttér képpontjait jelölje a 0 érték, az érdekes pontokat tartalmazó előtér képpontjai legyenek 1 értékűek.
 
-A keresés folyamán bejárjuk a képteret pixelrõl pixelre. A 0 értékû képpontok biztosan nem részei egy képen található egyenesnek sem, ezért ezekkel nem kell foglalkozunk. Ha 1 értékû pixelt találunk az $ (x,y) $ helyen, az potenciálisan része lehet egy, a képen található egyenesnek. Az akkumulátor minden $ \theta $ értékhez (pl. fokonként) meghatározzuk az $ (x,y) $ ponton átmenõ, $ \theta $ irányú egyenes origótól vett $ r $ távolságát a \eqref{egyenes_hesse} összefüggés alapján. Az akkumulátortömb értékét minden így kiszámolt $ (r,\theta) $ indexekkel jelölt helyen megnöveljük ($ r $ meghatározásánál természetesen a tömb kvantáltságát figyelembe véve). Ezt a folyamatot úgy is mondhatjuk, hogy az $ (x,y) $ pont a kiszámított $ (r, \theta) $ pontok halmazára, vagyis ezen paraméterek által a képtérben képviselt egyenesekre \textbf{,,szavaz''}.
+A keresés folyamán bejárjuk a képteret pixelrõl pixelre. A 0 értékű képpontok biztosan nem részei egy képen található egyenesnek sem, ezért ezekkel nem kell foglalkozunk. Ha 1 értékű pixelt találunk az $ (x,y) $ helyen, az potenciálisan része lehet egy, a képen található egyenesnek. Az akkumulátor minden $ \theta $ értékhez (pl. fokonként) meghatározzuk az $ (x,y) $ ponton átmenő, $ \theta $ irányú egyenes origótól vett $ r $ távolságát a \eqref{egyenes_hesse} összefüggés alapján. Az akkumulátortömb értékét minden így kiszámolt $ (r,\theta) $ indexekkel jelölt helyen megnöveljük ($ r $ meghatározásánál természetesen a tömb kvantáltságát figyelembe véve). Ezt a folyamatot úgy is mondhatjuk, hogy az $ (x,y) $ pont a kiszámított $ (r, \theta) $ pontok halmazára, vagyis ezen paraméterek által a képtérben képviselt egyenesekre \textbf{,,szavaz''}.
 
-Az algoritmus elsõ fázisának lefutása után az akkumulátortömböt kell vizsgálnunk. Optimális esetben a képen egy egyenesre esõ pixelek mindegyike (a többi más szavazatuk mellett) szavazott a ,,valódi'' egyenest jelentõ $ (r, \theta) $ párra. Az akkumulátortömb maximális értékû $ (r, \theta) $ elemei adják meg tehát a képen található egyeneseket. A zaj, az esetleg több pixel széles vonalak, és a kvantálási pontatlanság miatt azonban célravezetõbb \textbf{lokális maximumokat} (lásd \figref{houghparam} ábra) keresni az akkumulátortömbben így meghatározva a \textbf{legvalószínûbb} egyenesek $ r $ és $ \theta $ paramétereit.
+Az algoritmus első fázisának lefutása után az akkumulátortömböt kell vizsgálnunk. Optimális esetben a képen egy egyenesre eső pixelek mindegyike (a többi más szavazatuk mellett) szavazott a ,,valódi'' egyenest jelentő $ (r, \theta) $ párra. Az akkumulátortömb maximális értékű $ (r, \theta) $ elemei adják meg tehát a képen található egyeneseket. A zaj, az esetleg több pixel széles vonalak, és a kvantálási pontatlanság miatt azonban célravezetőbb \textbf{lokális maximumokat} (lásd \figref{houghparam} ábra) keresni az akkumulátortömbben így meghatározva a \textbf{legvalószínűbb} egyenesek $ r $ és $ \theta $ paramétereit.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=67mm, keepaspectratio]{figures/houghparam_1.png}\hspace{1cm}
 \includegraphics[width=67mm, keepaspectratio]{figures/houghparam_2.png}
-\caption{A képtér (balra) és az ebbõl származó paramétertér (jobbra) egyenesek keresése során.\\Forrás: \url{http://href.hu/x/c91i}}
+\caption{A képtér (balra) és az ebből származó paramétertér (jobbra) egyenesek keresése során.\\Forrás: \url{http://href.hu/x/c91i}}
 \label{fig:houghparam}
 \end{figure}
 
-Az elõzõ szakasz végén felvetett problémát most már megválaszolhatjuk. A túl nagy zaj miatt megnõ azon képpontok száma, amik nem részei egy egyenesnek sem. Azonban szavazni ezek a képpontok is szavaznak, ezzel mintegy ,,háttérzajt'' adva az akkumulátortömbnek. Túl vastag vonalak esetén pedig több, látszólag helyes paraméterezésû egyenes adódna ugyanarra a vonalra (pl. egymással a vonalon belül párhuzamos egyenesek, de kellõen vastag vonal esetén akár ,,átlós'' egyenesek is). Az elsõ esetben az akkumulátortömb elemeinek átlagos értéke nõ meg, a második esetben pedig a sok egymáshoz közeli szavazat miatt lokális maximumok értékei kerülnek közelebb az átlagos tömbértékekhez. Mindkét esetben nehezebbé válik a lokális maximumok pontos meghatározása, ez pedig drasztikusan csökkentheti a keresés pontosságát.
+Az elõzõ szakasz végén felvetett problémát most már megválaszolhatjuk. A túl nagy zaj miatt megnő azon képpontok száma, amik nem részei egy egyenesnek sem. Azonban szavazni ezek a képpontok is szavaznak, ezzel mintegy ,,háttérzajt'' adva az akkumulátortömbnek. Túl vastag vonalak esetén pedig több, látszólag helyes paraméterezésű egyenes adódna ugyanarra a vonalra (pl. egymással a vonalon belül párhuzamos egyenesek, de kellően vastag vonal esetén akár ,,átlós'' egyenesek is). Az első esetben az akkumulátortömb elemeinek átlagos értéke nő meg, a második esetben pedig a sok egymáshoz közeli szavazat miatt lokális maximumok értékei kerülnek közelebb az átlagos tömbértékekhez. Mindkét esetben nehezebbé válik a lokális maximumok pontos meghatározása, ez pedig drasztikusan csökkentheti a keresés pontosságát.
 
 %............................................................................
 \subsection{Körkeresés}\label{sect:korkereses}
@@ -130,7 +130,7 @@ Az elõzõ szakasz végén felvetett problémát most már megválaszolhatjuk. A
 \subsubsection{Körök reprezentációja}\label{sect:korok_reprezentacioja}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-A körökhöz megfelelõ reprezentáció megtalálásához még annyit sem kell törnünk a fejünket, mint az egyeneseknél tettük. Descartes-koordinátarendszerben az $ (x_{0}, y_{0}) $ középpontú $ r $ sugarú körvonal pontjait az
+A körökhöz megfelelő reprezentáció megtalálásához még annyit sem kell törnünk a fejünket, mint az egyeneseknél tettük. Descartes-koordinátarendszerben az $ (x_{0}, y_{0}) $ középpontú $ r $ sugarú körvonal pontjait az
 
 \begin{align}\label{eq:kor_koogeom}
 ( x - x_{0})^{2} + (y - y_{0})^2 = r^2
@@ -143,7 +143,7 @@ x &= x_{0} + r \cdot \cos \theta \nonumber \\
 y &= y_{0} + r \cdot \sin \theta
 \end{align}
 
-formára, ahol $ (x_{0}, y_{0}) $ szintén a kör középpontjának koordinátái, $ r $ a sugár, $ \theta $ pedig a körvonal egy pontját a kör középpontjával összekötõ szakasz pozitív valós féltengellyel bezárt szögét jelenti.
+formára, ahol $ (x_{0}, y_{0}) $ szintén a kör középpontjának koordinátái, $ r $ a sugár, $ \theta $ pedig a körvonal egy pontját a kör középpontjával összekötő szakasz pozitív valós féltengellyel bezárt szögét jelenti.
 
 \begin{figure}[!ht]
 \centering
@@ -156,31 +156,31 @@ formára, ahol $ (x_{0}, y_{0}) $ szintén a kör középpontjának koordinátá
 \subsubsection{A paramétertér körök esetében}\label{sect:korok_parameterter}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Látható, hogy körök esetében már csak akkor elegendõ két paraméter -- az $ (x_{0}, y_{0}) $ középpont-koordináták -- a forma leírásához, ha elõre adott sugarú köröket keresünk, vagyis $ r $ konstans. Ez azonban csak bizonyos esetekben használható, általános esetben túl nagy megkötést jelent. Tehát a paramétertér dimenziószámát növelnünk kell: az $ r $ sugárparaméter dimenziójával együtt az már \textbf{három dimenziós lesz}.
+Látható, hogy körök esetében már csak akkor elegendő két paraméter -- az $ (x_{0}, y_{0}) $ középpont-koordináták -- a forma leírásához, ha előre adott sugarú köröket keresünk, vagyis $ r $ konstans. Ez azonban csak bizonyos esetekben használható, általános esetben túl nagy megkötést jelent. Tehát a paramétertér dimenziószámát növelnünk kell: az $ r $ sugárparaméter dimenziójával együtt az már \textbf{három dimenziós lesz}.
 
-A paraméterteret az akkumulátor tömb mivoltából adódóan itt is egész számokra kell kvantálnunk. Körkeresés esetén az akkumulátor tehát egy három dimenziós tömb, amely a középpont két koordinátájának és a sugárnak egész értékeivel indexelhetõ. Már a pontos algoritmus ismerete nélkül is látszik, hogy a potenciális körök keresése jóval komplexebb mûvelet az ismeretlen paraméterek magasabb száma miatt.
+A paraméterteret az akkumulátor tömb mivoltából adódóan itt is egész számokra kell kvantálnunk. Körkeresés esetén az akkumulátor tehát egy három dimenziós tömb, amely a középpont két koordinátájának és a sugárnak egész értékeivel indexelhető. Már a pontos algoritmus ismerete nélkül is látszik, hogy a potenciális körök keresése jóval komplexebb művelet az ismeretlen paraméterek magasabb száma miatt.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{A körkeresés folyamata}\label{sect:korok_keresese}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Az alaphelyzet legyen az egyenesek keresésekor felállított: a felismerni kívánt körvonalak képpontjai legyenek 1, a háttér felismerés szempontjából érdektelen képpontjai pedig legyenek 0 értékûek.
+Az alaphelyzet legyen az egyenesek keresésekor felállított: a felismerni kívánt körvonalak képpontjai legyenek 1, a háttér felismerés szempontjából érdektelen képpontjai pedig legyenek 0 értékűek.
 
-A bejárás során 1 értékû pixelt találva jóval több számítani valónk van, mint egyenesek esetében. Az akkumulátor \textbf{összes lehetséges $ r $ sugárparaméterére} meg kell határoznunk a potenciális körök középpontjait. Ehhez felhasználjuk az \eqref{kor_param} összefüggéseket $ r $ és $ \theta $ ismeretében ($ \theta $ lehetséges értékeinek megválasztása -- tipikusan például fokonként -- azonos elven történhet a \sectref{parameterter_akkumulator} szakaszban olvashatóakkal).
+A bejárás során 1 értékű pixelt találva jóval több számítani valónk van, mint egyenesek esetében. Az akkumulátor \textbf{összes lehetséges $ r $ sugárparaméterére} meg kell határoznunk a potenciális körök középpontjait. Ehhez felhasználjuk az \eqref{kor_param} összefüggéseket $ r $ és $ \theta $ ismeretében ($ \theta $ lehetséges értékeinek megválasztása -- tipikusan például fokonként -- azonos elven történhet a \sectref{parameterter_akkumulator} szakaszban olvashatóakkal).
 
-Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelõl \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felsõ korlátot adva a keresést a két érték közötti sugarú körökre szûkíthetjük. Némi elõzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentõsen csökkenthetõ a számítási idõ- és tárigény.
+Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felsõ korlátot adva a keresést a két érték közötti sugarú körökre szűkíthetjük. Némi előzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentősen csökkenthető a számítási idő- és tárigény.
 
-Másfelõl pedig felhasználhatunk lokális információkat is: a vizsgálat alatt lévõ képpont egy adott ablaknyi környezetét vizsgálva, meghatározhatjuk a körvonal adott pontbeli \textbf{gradiensét}. Ez az információ felhasználható a középpont keresésében, ugyanis a kör középpontjának a körvonalpont normálisán kell feküdnie. Így, ha nem is egyetlen kitüntetett irányra, de a számítási pontatlanságot és a zajt figyelembe véve egy szûk tartományra korlátozhatjuk a keresett körközéppontok irányát. Ez a választott tartomány méretével fordított arányosságban csökkenti a szükséges számítások számát. Példának okáért, ha a kiszámított gradiens segítségével akár csak 90 fok pontossággal meg tudjuk határozni a pontban vett normális irányát, a számítások háromnegyedét nem kell elvégeznünk, ráadásul az akkumulátortömb sem telítõdik feleslegesen olyan paraméterekkel, amelyekbõl biztosan (vagy elég nagy valószínûséggel) nem fog helyes megoldás születni.
+Másfelől pedig felhasználhatunk lokális információkat is: a vizsgálat alatt lévő képpont egy adott ablaknyi környezetét vizsgálva, meghatározhatjuk a körvonal adott pontbeli \textbf{gradiensét}. Ez az információ felhasználható a középpont keresésében, ugyanis a kör középpontjának a körvonalpont normálisán kell feküdnie. Így, ha nem is egyetlen kitüntetett irányra, de a számítási pontatlanságot és a zajt figyelembe véve egy szűk tartományra korlátozhatjuk a keresett körközéppontok irányát. Ez a választott tartomány méretével fordított arányosságban csökkenti a szükséges számítások számát. Példának okáért, ha a kiszámított gradiens segítségével akár csak 90 fok pontossággal meg tudjuk határozni a pontban vett normális irányát, a számítások háromnegyedét nem kell elvégeznünk, ráadásul az akkumulátortömb sem telítődik feleslegesen olyan paraméterekkel, amelyekből biztosan (vagy elég nagy valószínűséggel) nem fog helyes megoldás születni.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Variációk körkeresésre}\label{sect:korok_kiegeszites}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-A körkeresésre használt Hough-transzformáció további kiegészítéseivel találkozhatunk H. K. Yuen \textit{et al} hivatkozott cikkében \cite{hough_circles}. A cikkben az elõzõ alfejezetben ismertetett sztenderd változat mellett még további négy módosulat vizsgálatát és ezek összehasonlítását végzik el a szerzõk. Ezek közül a cikkben ,,2-1 Hough-transzformációnak'' néven hivatkozott módszert emelném ki, a késõbbiek során ugyanis ennek fontos szerepe lesz. Elnevezésként a cikkben használt ,,21HT'' rövidítést fogom használni.
+A körkeresésre használt Hough-transzformáció további kiegészítéseivel találkozhatunk H. K. Yuen \textit{et al} hivatkozott cikkében \cite{hough_circles}. A cikkben az előző alfejezetben ismertetett sztenderd változat mellett még további négy módosulat vizsgálatát és ezek összehasonlítását végzik el a szerzők. Ezek közül a cikkben ,,2-1 Hough-transzformációnak'' néven hivatkozott módszert emelném ki, a későbbiek során ugyanis ennek fontos szerepe lesz. Elnevezésként a cikkben használt ,,21HT'' rövidítést fogom használni.
 
-A \textbf{21HT} módszer a \cite{hough_21_davies} és \cite{hough_21_illingworth} számon hivatkozott cikkekben volt elõször használatos. A kiegészítés felhasználja a rendelkezésre álló gradiens-információt (lásd: \sectref{korok_keresese}), és ennek ismeretében pedig a problémát két részre osztja. Mivel a kör középpontjának a körvonalpontok normálisán kell feküdnie, ezen normálisok közös metszéspontja valójában tehát meghatározza a középpontot. Egy kétdimenziós akkumulátortömb pedig elég minden pont saját normálisára esõ szavazatainak nyilvántartásához. Ezután a sugár meghatározása a következõ módszerrel történhet: meghatározzuk minden pont és az elõzõ lépésben kiszámított középpont-jelölt távolságát, majd ezekbõl az információkból egy sugár-hisztogramot állítunk elõ. Ennek vizsgálatával már meghatározhatjuk a középpontokhoz tartozó sugarakat is. A módszer tárigénye az eredeti megközelítéshez képest jóval kisebb, hiszen csak egy \textbf{2D akkumulátort} és egy \textbf{1D hisztogramot} kell használnunk -- innen a módszer ,,2-1'' elnevezése.
+A \textbf{21HT} módszer a \cite{hough_21_davies} és \cite{hough_21_illingworth} számon hivatkozott cikkekben volt először használatos. A kiegészítés felhasználja a rendelkezésre álló gradiens-információt (lásd: \sectref{korok_keresese}), és ennek ismeretében pedig a problémát két részre osztja. Mivel a kör középpontjának a körvonalpontok normálisán kell feküdnie, ezen normálisok közös metszéspontja valójában tehát meghatározza a középpontot. Egy kétdimenziós akkumulátortömb pedig elég minden pont saját normálisára esõ szavazatainak nyilvántartásához. Ezután a sugár meghatározása a következő módszerrel történhet: meghatározzuk minden pont és az előző lépésben kiszámított középpont-jelölt távolságát, majd ezekből az információkból egy sugár-hisztogramot állítunk elő. Ennek vizsgálatával már meghatározhatjuk a középpontokhoz tartozó sugarakat is. A módszer tárigénye az eredeti megközelítéshez képest jóval kisebb, hiszen csak egy \textbf{2D akkumulátort} és egy \textbf{1D hisztogramot} kell használnunk -- innen a módszer ,,2-1'' elnevezése.
 
-Eredmények tekintetében az összehasonlító cikk szerint a 21HT módszer felveszi a versenyt a sztenderd megoldással. Igaz, hogy a kétfázisú számítás miatt az elsõ fázisban összeszedett hiba szükségszerûen rárakódik a második fázisra, ezt a pontatlanságot ellensúlyozni tudja a módszer jelentõsen kisebb tárigénye.
+Eredmények tekintetében az összehasonlító cikk szerint a 21HT módszer felveszi a versenyt a sztenderd megoldással. Igaz, hogy a kétfázisú számítás miatt az első fázisban összeszedett hiba szükségszerűen rárakódik a második fázisra, ezt a pontatlanságot ellensúlyozni tudja a módszer jelentősen kisebb tárigénye.
 
 %............................................................................
 \subsection{Kiegészítések}\label{sect:kiegeszitesek}
@@ -189,25 +189,25 @@ Eredmények tekintetében az összehasonlító cikk szerint a 21HT módszer felv
 A meglévõ módszer továbbfejlesztésekor két irányba is elindulhatunk:
 
 \begin{enumerate}
- \item egyrészt növelhetjük az algoritmus teljesítõképességét,
- \item másrészt bõvíthetjük a felismerhetõ formák halmazát.
+ \item egyrészt növelhetjük az algoritmus teljesítőképességét,
+ \item másrészt bővíthetjük a felismerhető formák halmazát.
 \end{enumerate}
 
-Ebben a szakaszban mindkét lehetséges fejlesztési irány eredményeirõl szeretnék röviden beszámolni a témában fellelhetõ szakirodalom felhasználásával.
+Ebben a szakaszban mindkét lehetséges fejlesztési irány eredményeiről szeretnék röviden beszámolni a témában fellelhető szakirodalom felhasználásával.
 
 \bigskip
 
-Az elsõ irányba mutató fejlesztések közül néhánnyal már találkozhattunk jelen dolgozat keretein belül is. Az \sectref{korok_keresese} alszakaszban elõkerült a gradiensinformáció felhasználása és az elõzetes tudás alapján történõ megfelelõ korlátok bevezetése a számítás gyorsítása végett. Ebben a témában mindenképp megemlítendõ még a kernel alapú Hough-transzformáció.
+Az elsõ irányba mutató fejlesztések közül néhánnyal már találkozhattunk jelen dolgozat keretein belül is. Az \sectref{korok_keresese} alszakaszban előkerült a gradiensinformáció felhasználása és az elõzetes tudás alapján történő megfelelő korlátok bevezetése a számítás gyorsítása végett. Ebben a témában mindenképp megemlítendõ még a kernel alapú Hough-transzformáció.
 
-A \textbf{kernel alapú megvalósítás} lehetõségét a szerzõk -- Fernandes és Oliveira -- 2008-as cikkükben \cite{hough_fernandes} vetették fel, tehát a módszer meglehetõsen friss. Állításuk szerint valósidejû mûködés érhetõ el viszonylag nagy képek esetén is a szavazási protokoll továbbfejlesztésének köszönhetõen. A módszer egyeneskereséskor az $ (r, \theta) $ paraméterezésen nem változtat, de nem önmagukban álló pontokat, hanem körülbelül egy irányban álló pixelek klasztereit (csoportjait) veszi figyelembe. Minden klaszterben egy megfelelõ irányba forgatott elliptikus Gauss-kernellel végzett konvolúció hivatott a csoportra vonatkozó bizonytalanságot modellezni. Ez a megközelítés nemcsak hogy a szavazatok számának csökkentésével képes az algoritmus sebességét növelni, hanem a protokollnak köszönhetõen sokkal tisztább akkumulátort is eredményez. A háttérzajtól mentes tömbben pedig jóval könnyebben tudjuk a lokális maximumokat detektálni. Ezzel összességében az eddigieknél gyorsabb és pontosabb egyenesdetektálást tudunk kivitelezni.
+A \textbf{kernel alapú megvalósítás} lehetőségét a szerzők -- Fernandes és Oliveira -- 2008-as cikkükben \cite{hough_fernandes} vetették fel, tehát a módszer meglehetősen friss. Állításuk szerint valósidejű működés érhető el viszonylag nagy képek esetén is a szavazási protokoll továbbfejlesztésének köszönhetően. A módszer egyeneskereséskor az $ (r, \theta) $ paraméterezésen nem változtat, de nem önmagukban álló pontokat, hanem körülbelül egy irányban álló pixelek klasztereit (csoportjait) veszi figyelembe. Minden klaszterben egy megfelelő irányba forgatott elliptikus Gauss-kernellel végzett konvolúció hivatott a csoportra vonatkozó bizonytalanságot modellezni. Ez a megközelítés nemcsak hogy a szavazatok számának csökkentésével képes az algoritmus sebességét növelni, hanem a protokollnak köszönhetően sokkal tisztább akkumulátort is eredményez. A háttérzajtól mentes tömbben pedig jóval könnyebben tudjuk a lokális maximumokat detektálni. Ezzel összességében az eddigieknél gyorsabb és pontosabb egyenesdetektálást tudunk kivitelezni.
 
 \bigskip
 
-Felismerhetõ formák tekintetében a módszer bõvíthetõ az általános analitikus 2D görbék mellett 3D képeken testek felismerésére. Ezen kívül semmiképp nem hagyhatjuk szó nélkül a Ballard-féle általánosított Hough-transzformációt sem.
+Felismerhetõ formák tekintetében a módszer bővíthető az általános analitikus 2D görbék mellett 3D képeken testek felismerésére. Ezen kívül semmiképp nem hagyhatjuk szó nélkül a Ballard-féle általánosított Hough-transzformációt sem.
 
-Három dimenzióban a \textbf{testek felismerése} a két dimenziós esetekhez hasonlóan történik -- hasonló buktatókkal és legtöbbször további járulékos memória- és számításigénnyel. Síkoknál például az egyenesekhez hasonlóan a megszokott reprezentáció nem használható függõleges síkok keresésére. A megoldást ebben az esetben a gömbi koordinátarendszerre való átállás jelenti, ahol a sík már normálvektorával és az origótól való távolságával jellemezhetõ (a paramétertér tehát három dimenziósra adódik). Gömbök, hengerek, ellipszoidok keresése szintén a két dimenziós esetek tapasztalatainak felhasználásával történhet. Az új, akár térbeli formák keresése kombinálható az eddig megismert teljesítménynövelõ eljárásokkal: a már megismer eljárások használhatók a keresés során, természetesen adott esetben három dimenzióra vonatkoztatva azokat.
+Három dimenzióban a \textbf{testek felismerése} a két dimenziós esetekhez hasonlóan történik -- hasonló buktatókkal és legtöbbször további járulékos memória- és számításigénnyel. Síkoknál például az egyenesekhez hasonlóan a megszokott reprezentáció nem használható függőleges síkok keresésére. A megoldást ebben az esetben a gömbi koordinátarendszerre való átállás jelenti, ahol a sík már normálvektorával és az origótól való távolságával jellemezhető (a paramétertér tehát három dimenziósra adódik). Gömbök, hengerek, ellipszoidok keresése szintén a két dimenziós esetek tapasztalatainak felhasználásával történhet. Az új, akár térbeli formák keresése kombinálható az eddig megismert teljesítménynövelő eljárásokkal: a már megismer eljárások használhatók a keresés során, természetesen adott esetben három dimenzióra vonatkoztatva azokat.
 
-Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- amint az már jelen dolgozat keretein belül is elõkerült -- lehetõvé teszi modelljükkel reprezentált általános objektumok felismerését a \textbf{mintafelismerés} alapelvét kihasználva. A modell elõfordulásainak keresése a képtérben -- ahogy Ballard megmutatta -- szintén megoldható paraméterek akkumulálásával. Válasszuk ezen paramétereknek a modellt a képtérbe átvivõ transzformáció (vagy transzformációk) paramétereit! Például ha csak a modell pozícióját keressük, akkor mindössze eltolási paramétereket kell figyelembe vennünk, ezek akkumulálásával a megszokott módon és eredményességgel ismerhetjük fel az adott objektum helyzetét. Azonban a módszer a transzláció (eltolás) invariancia mellett rotáció (forgatás) és skálázás (méret) invariánssá is tehetõ, igaz a paramétertér dimenziószámának növelése árán. Láthatjuk, hogy a mintafelismerés és a szavazási mechanizmus elõnyeinek ötvözésével ez az eljárás igazán komoly fegyver lehet a képfeldolgozási eszköztárunkban.
+Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- amint az már jelen dolgozat keretein belül is előkerült -- lehetővé teszi modelljükkel reprezentált általános objektumok felismerését a \textbf{mintafelismerés} alapelvét kihasználva. A modell előfordulásainak keresése a képtérben -- ahogy Ballard megmutatta -- szintén megoldható paraméterek akkumulálásával. Válasszuk ezen paramétereknek a modellt a képtérbe átvivő transzformáció (vagy transzformációk) paramétereit! Például ha csak a modell pozícióját keressük, akkor mindössze eltolási paramétereket kell figyelembe vennünk, ezek akkumulálásával a megszokott módon és eredményességgel ismerhetjük fel az adott objektum helyzetét. Azonban a módszer a transzláció (eltolás) invariancia mellett rotáció (forgatás) és skálázás (méret) invariánssá is tehető, igaz a paramétertér dimenziószámának növelése árán. Láthatjuk, hogy a mintafelismerés és a szavazási mechanizmus előnyeinek ötvözésével ez az eljárás igazán komoly fegyver lehet a képfeldolgozási eszköztárunkban.
 
 \begin{figure}[!ht]
 \centering
@@ -221,7 +221,7 @@ Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- ami
 \subsection{Összegzés}\label{sect:hough_osszefoglalas}
 %............................................................................
 
-Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának szûk keresztmetszetét leginkább a nagy számításigénye adja. Ez egyben legfõbb \textbf{hátránya} is: a számításigény a paramétertér dimenziószámának, vagy a kép méretének növekedésével egyre csak növekszik. A dimenziók száma tehát korlátot ad a transzformáció gyakorlati felhasználhatóságának, ezért eredeti formájában leginkább csak egyenesek, vagy körök keresésére használják. A körök keresésének lehetõsége azonban kielégítheti a pupillakövetési probléma által támasztott követelményeket. A követés során \textbf{elõnyére} válhat, hogy a szavazási mechanizmus használata miatt meglehetõsen zajos képeken is képes lehet a pupillakontúr megbízható felismerésére. Nem mesterségesen elõállított tesztesetekben -- hiszen pupillakövetés esetén csak ennek van értelme -- pedig ez korántsem elhanyagolható szempont.
+Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának szûk keresztmetszetét leginkább a nagy számításigénye adja. Ez egyben legfőbb \textbf{hátránya} is: a számításigény a paramétertér dimenziószámának, vagy a kép méretének növekedésével egyre csak növekszik. A dimenziók száma tehát korlátot ad a transzformáció gyakorlati felhasználhatóságának, ezért eredeti formájában leginkább csak egyenesek, vagy körök keresésére használják. A körök keresésének lehetősége azonban kielégítheti a pupillakövetési probléma által támasztott követelményeket. A követés során \textbf{előnyére} válhat, hogy a szavazási mechanizmus használata miatt meglehetősen zajos képeken is képes lehet a pupillakontúr megbízható felismerésére. Nem mesterségesen előállított tesztesetekben -- hiszen pupillakövetés esetén csak ennek van értelme -- pedig ez korántsem elhanyagolható szempont.
 
 
 \newpage

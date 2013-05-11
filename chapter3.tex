@@ -2,13 +2,13 @@
 \chapter{Elméleti alapok}\label{sect:elmeleti_alapok}
 %----------------------------------------------------------------------------
 
-\texttt{+++ bevezeto a fejezethez +++}
+Már a szakdolgozatomban \cite{thesis_sajat} is arra kerestem a választ, hogy melyek lehetnek a pupilla követésének gyors és robusztus megvalósításai. A kérdés a tekintetkövető rendszer esetében is kardinális: a pupilla gyors és pontos követése a elengedhetetlen a megfelelő minőségű követés megvalósításához.
 
-\texttt{+++ Hough-t megvagni? +++}
+Munkám során számos módszer elméletét kellett megértenem, majd a gyakorlatba ültetnem. Dolgozatomnak ebben a fejezetében ezért a legfontosabb általam vizsgált módszerek alapjaival szeretném megismertetni az olvasót.
 
 \bigskip
 
-\texttt{+++ melyik szakaszban mi van +++}
+A \sectref{hough} szakaszban a Hough-transzformációt mutatom be, kitérve a pupillakeresés szempontjából fontos körkeresési probléma megoldására. A fejezet \sectref{objdetect} szakaszában az objektumdetektálás és -követés lehetőségének elméletét ismertetem a Viola--Jones objektumdetektor és a Lucas--Kanade optikai áramlás módszerein keresztül. Végezetül a blob-alapú követés alapjait jelentő blobok felismerésével és szűrésével kapcsolatos tudnivalókat foglalom össze a \sectref{blob} szakaszban.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Hough-transzformáció}\label{sect:hough}
@@ -26,7 +26,7 @@ A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek i
 \label{fig:houghlines}
 \end{figure}
 
-A Hough-transzformáció erre a problémára kínál megoldást. Feladata egyszerű formák, úgymint egyenesek, körök, ellipszisek keresése képeken. Az alakzatok keresését a transzformáció egy ún. paramétertérben végzi egy szavazási mechanizmus segítségével. A felismert potenciális objektumok az akkumulátortér -- a paramétertér egyfajta futás közbeni leképezése -- lokális maximumai alapján adódnak.
+A \textbf{Hough-transzformáció} erre a problémára kínál megoldást. Feladata egyszerű formák, úgymint egyenesek, körök, ellipszisek keresése képeken. Az alakzatok keresését a transzformáció egy ún. paramétertérben végzi egy szavazási mechanizmus segítségével. A felismert potenciális objektumok az akkumulátortér -- a paramétertér egyfajta futás közbeni leképezése -- lokális maximumai alapján adódnak.
 
 \bigskip
 
@@ -36,8 +36,7 @@ A gépi látás felhasználói körében azonban igazán csak Dana~H.~Ballard 19
 
 \bigskip
 
-A transzformáció általános formájában tehát analitikusan leírható formák keresésére használható. A legegyszerûbb ilyen forma az egyenes, ennek segítségével érthető meg legkönnyebben az algoritmus működési elve. A \sectref{egyenesek_keresese} szakaszban ezért az egyenesek keresésének elméletét foglalom össze. Ezen elv később már könnyen kiterjeszthető tetszőleges formák keresésére, különös tekintettel a pupilla-keresés szempontjából fontos körkeresési problémára, amelyre a \sectref{korkereses} szakaszban térek ki. A \sectref{kiegeszitesek} szakaszban szót ejtek még a módszer további kiegészítési lehetőségeiről, majd a \sectref{hough_osszefoglalas} szakaszban összefoglalom a Hough-transzformáció használatának korlátait, előnyeit és hátrányait.
-
+A transzformáció általános formájában tehát analitikusan leírható formák keresésére használható. A legegyszerűbb ilyen forma az egyenes, ennek segítségével érthető meg legkönnyebben az algoritmus működési elve. A \sectref{egyenesek_keresese} szakaszban ezért az egyenesek, majd a \sectref{korkereses} szakaszban a körök keresésének elméletére térek ki.
 
 %............................................................................
 \subsection{Egyenesek keresése}\label{sect:egyenesek_keresese}
@@ -173,7 +172,7 @@ Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{
 Másfelől pedig felhasználhatunk lokális információkat is: a vizsgálat alatt lévő képpont egy adott ablaknyi környezetét vizsgálva, meghatározhatjuk a körvonal adott pontbeli \textbf{gradiensét}. Ez az információ felhasználható a középpont keresésében, ugyanis a kör középpontjának a körvonalpont normálisán kell feküdnie. Így, ha nem is egyetlen kitüntetett irányra, de a számítási pontatlanságot és a zajt figyelembe véve egy szűk tartományra korlátozhatjuk a keresett körközéppontok irányát. Ez a választott tartomány méretével fordított arányosságban csökkenti a szükséges számítások számát. Példának okáért, ha a kiszámított gradiens segítségével akár csak 90 fok pontossággal meg tudjuk határozni a pontban vett normális irányát, a számítások háromnegyedét nem kell elvégeznünk, ráadásul az akkumulátortömb sem telítődik feleslegesen olyan paraméterekkel, amelyekből biztosan (vagy elég nagy valószínűséggel) nem fog helyes megoldás születni.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-\subsubsection{Variációk körkeresésre}\label{sect:korok_kiegeszites}
+\subsubsection{Egyéb körkeresési eljárások}\label{sect:korok_kiegeszites}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 A körkeresésre használt Hough-transzformáció további kiegészítéseivel találkozhatunk H. K. Yuen \textit{et al} hivatkozott cikkében \cite{hough_circles}. A cikkben az előző alfejezetben ismertetett sztenderd változat mellett még további négy módosulat vizsgálatát és ezek összehasonlítását végzik el a szerzők. Ezek közül a cikkben ,,2-1 Hough-transzformációnak'' néven hivatkozott módszert emelném ki, a későbbiek során ugyanis ennek fontos szerepe lesz. Elnevezésként a cikkben használt ,,21HT'' rövidítést fogom használni.
@@ -221,7 +220,7 @@ Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- ami
 \subsection{Összegzés}\label{sect:hough_osszefoglalas}
 %............................................................................
 
-Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának szûk keresztmetszetét leginkább a nagy számításigénye adja. Ez egyben legfőbb \textbf{hátránya} is: a számításigény a paramétertér dimenziószámának, vagy a kép méretének növekedésével egyre csak növekszik. A dimenziók száma tehát korlátot ad a transzformáció gyakorlati felhasználhatóságának, ezért eredeti formájában leginkább csak egyenesek, vagy körök keresésére használják. A körök keresésének lehetősége azonban kielégítheti a pupillakövetési probléma által támasztott követelményeket. A követés során \textbf{előnyére} válhat, hogy a szavazási mechanizmus használata miatt meglehetősen zajos képeken is képes lehet a pupillakontúr megbízható felismerésére. Nem mesterségesen előállított tesztesetekben -- hiszen pupillakövetés esetén csak ennek van értelme -- pedig ez korántsem elhanyagolható szempont.
+Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának szűk keresztmetszetét leginkább a nagy számításigénye adja. Ez egyben legfőbb \textbf{hátránya} is: a számításigény a paramétertér dimenziószámának, vagy a kép méretének növekedésével egyre csak növekszik. A dimenziók száma tehát korlátot ad a transzformáció gyakorlati felhasználhatóságának, ezért eredeti formájában leginkább csak egyenesek, vagy körök keresésére használják. A körök keresésének lehetősége azonban kielégítheti a pupillakövetési probléma által támasztott követelményeket. A követés során \textbf{előnyére} válhat, hogy a szavazási mechanizmus használata miatt meglehetősen zajos képeken is képes lehet a pupillakontúr megbízható felismerésére. Valós életből vett tesztesetekben -- pupillakövetés esetén ezek számítanak -- pedig ez korántsem elhanyagolható szempont.
 
 
 \newpage
@@ -229,7 +228,9 @@ Az eddigiek alapján látszik, hogy a transzformáció felhasználhatóságának
 \section{Objektumdetektálás és -követés}\label{sect:objdetect}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ kis bevezeto +++}
+Az objektumdetektálás többnyire magasabb absztrakciós szintű képi elemek megtalálására törekszik. Minél magasabb szintű a detektálni kívánt jellemző, azzal arányosan nő a megtalálásához szükséges számítási igény is -- hiszen a kép egyre mélyebb megértésére van szükség. Ezáltal veszélybe kerülhet a valós idejű feldolgozási sebesség. A megnövekedett számítási igény azzal kompenzálható, hogy az objektumdetektálást nem minden képkockán végezzük el, hanem két detektálási lépés között próbáljuk egy ,,olcsóbb'' algoritmus használatával követni a felismert objektumot.
+
+A fent vázolt felépítésre lehet jó példa a Viola--Jones objektumdetektor és a Lucas--Kanade optikai áramlás együttes használata, ezek elméleti alapjait mutatom be a szakasz további részében.
 
 %............................................................................
 \subsection{A Viola--Jones objektumdetektor}\label{sect:viola}
@@ -329,20 +330,20 @@ A Lucas--Kanade optikai áramlás-alapú követés jó kiegészítésként szolg
 A képfeldolgozásban a \emph{blob} fogalmat a szó ,,folt'' értelmében használják, nem keverendő össze az adatbázisok BLOB (Binary Large Object -- nagy bináris objektum) fogalmával. Egy \emph{blob} informálisan a következő módon definiálható:
 
 \begin{definition}
-A képtér valamely tulajdonság egyezősége, vagy korlátozott mértékű eltérése alapján összetartozó régióját \textbf{blob}-nak nevezzük.
+A képtér valamely tulajdonság egyezősége, vagy korlátozott mértékű eltérése alapján összetartozó régióját \textbf{blobnak} nevezzük.
 \end{definition}
 
 A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban más, nem RGB színtérben reprenzentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
 
 \bigskip
 
-A szakirodalomban két eljárást tartanak számon a blob-ok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
+A szakirodalomban két eljárást tartanak számon a blobok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
 
-A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször két dimenziós bináris képek összetartozó régióinak -- ezek a blob-ok -- felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
+A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször két dimenziós bináris képek összetartozó régióinak -- ezek a blobok -- felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
 
 \bigskip
 
-Munkám során a bináris képek feldolgozása került előtérbe, ennek megfelelően a továbbiakban a címkézéssel kapcsolatos elméleti alapokat foglalom össze. A \sectref{blob_cimke}~szakaszban a címkézési algoritmusokat ismertetem, majd a \sectref{blob_analizis}~szakaszban áttekintem azokat a jellemzőket, amelyek hasznosnak bizonyulhatnak a blob-ok osztályozása és szűrése során.
+Munkám során a bináris képek feldolgozása került előtérbe, ennek megfelelően a továbbiakban a címkézéssel kapcsolatos elméleti alapokat foglalom össze. A \sectref{blob_cimke}~szakaszban a címkézési algoritmusokat ismertetem, majd a \sectref{blob_analizis}~szakaszban áttekintem azokat a jellemzőket, amelyek hasznosnak bizonyulhatnak a blobok osztályozása és szűrése során.
 
 %............................................................................
 \subsection{Komponens-címkézés}\label{sect:blob_cimke}
@@ -362,7 +363,7 @@ A feladat tehát olyan algoritmust találni, amely lehetőleg minél kisebb szá
 \subsubsection{Kétlépéses algoritmusok}\label{sect:blob_ketlepes}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-A kétlépéses (two-pass) algoritmusok -- nevükből adódóan -- két különálló lépésben határozzák meg a bináris képen található összefüggő blob-okat.
+A kétlépéses (two-pass) algoritmusok -- nevükből adódóan -- két különálló lépésben határozzák meg a bináris képen található összefüggő blobokat.
 
 \begin{enumerate}
   \item Első lépésben \textbf{átmeneti címkék} kiosztására, valamint az átmeneti címkék közti ekvivalenciák meghatározására kerül sor.
@@ -460,11 +461,11 @@ Az egyesével, szinte egymástól függetlenül vizsgált képpontok feldolgozá
 \subsection{Blob-analizis}\label{sect:blob_analizis}
 %............................................................................
 
-Sok esetben a képen felismert blob-ok nem mindegyik tartalmaz a feldolgozás szempontjából hasznos információt. A blob-ok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blob-okat valamely előre definiált kritérium alapján.
+Sok esetben a képen felismert blobok nem mindegyik tartalmaz a feldolgozás szempontjából hasznos információt. A blobok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blobokat valamely előre definiált kritérium alapján.
 
 A pupillakeresési feladatnál például az ember számára könnyen feldolgozható \emph{,,keressünk egy relatíve nagy, kör alakú objektumot''} feltételt kell a gépi látás által is megoldható problémává formalizálni.
 
-Nem feltétlenül kell azonban rögtön komplex mértékek felhasználásába bonyolódnunk. Jól megfogalmazott kritérium esetén sokszor a legegyszerűbb jellemzők is segítségünkre lehetnek: legyen szó akár egyszerű zajszűrésről, vagy a feldolgozás szempontjából fontos blob-ok azonosításáról.
+Nem feltétlenül kell azonban rögtön komplex mértékek felhasználásába bonyolódnunk. Jól megfogalmazott kritérium esetén sokszor a legegyszerűbb jellemzők is segítségünkre lehetnek: legyen szó akár egyszerű zajszűrésről, vagy a feldolgozás szempontjából fontos blobok azonosításáról.
 
 \bigskip
 
@@ -489,10 +490,10 @@ Az egyszerűbb mértékek közé tartoznak az objektum kiterjedésével és ker�
 
 \bigskip
 
-A blob-ok képen belüli elhelyezkedésének meghatározásakor lehet hasznos a blob \textbf{súlypontjának} meghatározása.
+A blobok képen belüli elhelyezkedésének meghatározásakor lehet hasznos a blob \textbf{súlypontjának} meghatározása.
 
 \begin{definition}{Súlypont:}
-$x_m = \dfrac{\sum_{i=1 \dots N} x_i}{N}$ és $y_m = \dfrac{\sum_{i=1 \dots N} y_i}{N}$, ahol $N$ a blob-hoz tartozó képpontok száma
+$x_m = \dfrac{\sum_{i=1 \dots N} x_i}{N}$ és $y_m = \dfrac{\sum_{i=1 \dots N} y_i}{N}$, ahol $N$ a blobhoz tartozó képpontok száma
 \end{definition}
 
 \bigskip
@@ -527,10 +528,12 @@ $\dfrac{P}{2 \sqrt{\pi A}}$
 
 A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt a értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemlélethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főlet angolszász területen elterjedt elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
 
-A gépi látás területén Feret-átmérőn általában automatikusan a legnagyobb Feret-átmérőt értjük. A legnagyobb Feret-átmérő irányszögét kitűnően használhatjuk a blob \textbf{orientációjának} jellemzésére.
+A gépi látás területén Feret-átmérőn általában automatikusan a legnagyobb Feret-átmérőt értjük. A legnagyobb Feret-átmérőnek kitüntetett szerepet tulajdoníthatunk: irányszögét kitűnően használhatjuk a blob \textbf{orientációjának} jellemzésére.
 
 %............................................................................
 \subsection{Összegzés}\label{sect:blob_osszegzes}
 %............................................................................
 
-asdf
+Látható, hogy a szakirodalom kiforrott eljárásokat tart számon blobok címkézésére és szűrésére. Munkám során joggal számíthattam arra, hogy megfelelően binarizált képből a fent ismertetett algoritmusokkal lehetséges lesz a pupilla mint egy kitüntetett blob felismerése és követése.
+
+Kellően gyors implementációjú algoritmusok használatával nem jelenthet gondot az akár 30 -- párhuzamosított eljárásokkal pedig akár ennél is több -- képkockás másodpercenkénti feldolgozási sebesség sem. A felismert blobok pontos és effektív szűrésével a blob-alapú azonosítás és követés performanciában is bőven felveheti a versenyt a többi vizsgált követési módszerrel.

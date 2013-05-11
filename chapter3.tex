@@ -333,7 +333,7 @@ A képfeldolgozásban a \emph{blob} fogalmat a szó ,,folt'' értelmében haszn�
 A képtér valamely tulajdonság egyezősége, vagy korlátozott mértékű eltérése alapján összetartozó régióját \textbf{blobnak} nevezzük.
 \end{definition}
 
-A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban más, nem RGB színtérben reprenzentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
+A definícióban említett tulajdonság a gyakorlatban legtöbbször a képpontok színe vagy intenzitása. Azonban más, nem RGB színtérben reprezentált képek esetén egyéb tulajdonság szerinti összetartozás is hasznos információt hordozhat (pl. a HSV színtérben vett szaturáció).
 
 \bigskip
 
@@ -349,7 +349,7 @@ Munkám során a bináris képek feldolgozása került előtérbe, ennek megfele
 \subsection{Komponens-címkézés}\label{sect:blob_cimke}
 %............................................................................
 
-Az egyszerűség kedvéért a komponens-címkézés alapelvét két dimenziós képek esetén mutatom be. Könnyen belátható, hogy a későbbiekben ismeretett módszerek egyszerűen kiterjeszthetők többdimenziós halmazok címkézésére is -- természetesen az idő- és tárigény növekedése mellett.
+Az egyszerűség kedvéért a komponens-címkézés alapelvét két dimenziós képek esetén mutatom be. Könnyen belátható, hogy a későbbiekben ismertetett módszerek egyszerűen kiterjeszthetők többdimenziós halmazok címkézésére is -- természetesen az idő- és tárigény növekedése mellett.
 
 \bigskip
 
@@ -375,7 +375,7 @@ A kétlépéses (two-pass) algoritmusok -- nevükből adódóan -- két külön�
 \paragraph{Rosenfeld--Pfalz}
 %.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
 
-A klasszikus algoritmus \cite{rosenfeld} mindkét lépésben sorra veszi a képtér pontjait balról-jobbra, majd fentről lefelé haladva. Ebben a konfigurációban az összetartozóságot az aktuálisan vizsgált képpontra
+A klasszikus algoritmus \cite{rosenfeld} mindkét lépésben sorra veszi a képtér pontjait balról-jobbra, majd fentről lefelé haladva. Ebben a konfigurációban az összetartozást az aktuálisan vizsgált képpontra
 
 \begin{itemize}
   \item 4-szomszédosság esetén az $N$ és $W$ szomszéd,
@@ -386,7 +386,7 @@ vizsgálatával döntjük el. Az algoritmust 4-szomszédosságot feltételezve i
 
 \bigskip
 
-Az \textbf{első lépés} során az algoritmus minden képppont esetén a következő négy feltétel vizsgálatát végzi el, és az eredménynek megfelelően látja el a pontot átmeneti címkével. Egy feltétel teljesülése esetén a vizsgálat leáll, egyébként a következő feltétel vizsgálata következik.
+Az \textbf{első lépés} során az algoritmus minden képpont esetén a következő négy feltétel vizsgálatát végzi el, és az eredménynek megfelelően látja el a pontot átmeneti címkével. Egy feltétel teljesülése esetén a vizsgálat leáll, egyébként a következő feltétel vizsgálata következik.
 
 Bár egyértelműnek tűnik, de érdemes megjegyezni, hogy az algoritmus leírásában megkülönböztetjük a képpontok \emph{értékét} (bináris képek esetén a hátteret figyelmen kívül hagyva ez egyetlen értéket jelent), valamint a hozzájuk rendelt \emph{címkét}!
 
@@ -427,7 +427,7 @@ Az éppen vizsgálat alatt lévő pontot jelölje $P$, a képpont értékét meg
 
 A \textbf{második lépésben} az algoritmus újra végigiterál a képpontokon, és minden képpont címkéjét az ekvivalensnek jelzett címkék közül a legkisebbel helyettesíti.
 
-A megvalósítás során az algoritmus \emph{diszjunk-halmaz erdő} (disjoint-set) adatszerkezetet használ, amely ideális a régiók közti ekvivalenciák tárolására és elérésére. 
+A megvalósítás során az algoritmus \emph{diszjunkt-halmaz erdő} (disjoint-set) adatszerkezetet használ, amely ideális a régiók közti ekvivalenciák tárolására és elérésére. 
 
 
 %.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
@@ -526,7 +526,7 @@ $\dfrac{P}{2 \sqrt{\pi A}}$
 
 \bigskip
 
-A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt a értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemlélethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főlet angolszász területen elterjedt elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
+A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt a értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemléltethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főlet angolszász területen elterjedt elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
 
 A gépi látás területén Feret-átmérőn általában automatikusan a legnagyobb Feret-átmérőt értjük. A legnagyobb Feret-átmérőnek kitüntetett szerepet tulajdoníthatunk: irányszögét kitűnően használhatjuk a blob \textbf{orientációjának} jellemzésére.
 

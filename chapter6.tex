@@ -27,7 +27,7 @@ Mielőtt a fejezet későbbi szakaszaiban részletekbe menőben bemutatom az elk
 
 Az alkalmazás legyen képes:
 
-\begin{itemize}
+\begin{enumerate}[(a)]
   \item valósidejű \textbf{videofolyamot} olvasni a számítógépre kötött webkameráról (lásd \sectref{infracam} szakasz)
   \item a videofolyam feldolgozásával a \textbf{pupillapozíció meghatározására} a \sectref{pupillakov} szakaszban leírtak szerint.
   \item a tekintet \textbf{kalibrációjára} a \sectref{kalibracio} szakaszban ismertetett módszer felhasználásával.
@@ -35,13 +35,13 @@ Az alkalmazás legyen képes:
   \item a korábbi munkamenetek listázására, rendezésére, törlésére.
   \item munkamenetek \textbf{visszajátszására}.
   \item a munkamenetek alapján \textbf{hőtérképek} generálására (lásd \sectref{web} szakasz)
-\end{itemize}
+\end{enumerate}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Architektúra}\label{sect:architektura}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   
-  Az implementációt a \sectref{technologia} fejezetben bemutatott technológiák (OpenCV, Qt, Qt Creator) felhasználásával \textbf{C++ nyelven készítettem el}. A kialakított osztályhierarchia a \figref{overview} ábrán látható módon épül fel. A kibővített osztálydiagram  -- a fontos változók és funkciók feltüntetésével -- megtalálható az \sectref{osztalydiagram} függelékben.
+  Az implementációt a \sectref{technologia} fejezetben bemutatott technológiák (OpenCV, Qt, Qt Creator) felhasználásával \textbf{C++ nyelven készítettem el} a Model--View--Controller (MVC) tervezési minta szem előtt tartásával. A kialakított osztályhierarchia a \figref{overview} ábrán látható módon épül fel. A kibővített osztálydiagram  -- a fontos változók és funkciók feltüntetésével -- megtalálható az \sectref{osztalydiagram} függelékben.
 
 \begin{figure}[!ht]
 \centering
@@ -50,7 +50,12 @@ Az alkalmazás legyen képes:
 \label{fig:overview}
 \end{figure}
 
-Az ábrákon színkódokkal jelöltem a logikailag összetartozó osztályokat. Az alkalmazás egyes funkcióit a videofolyam feldolgozásától a rögzített felvételek visszajátszásáig osztályok egy-egy csoportja végzi
+Az alkalmazás egyes funkcióit a videofolyam feldolgozásától egészen a hőtérképek generálásáig osztályok egy-egy csoportja végzi. A \figref{overview} ábrán színkódokkal jelöltem a logikailag összetartozó osztályokat. A specifikáció egyes pontjait kielégítő osztályok az ábráról leolvasva, felsorolás szintjén:
+
+\begin{itemize}
+  \item \texttt{MainWindow} -- az alkalmazás főablakát tartalmazó osztály, valamint ez szolgál általános kontrollerként is, lévén a felhasználói interakciók döntő része ide fut be
+  \item \texttt{VideoHandler} -- a 
+\end{itemize}
 
 %............................................................................
 \subsection{A \texttt{MainWindow} osztály}\label{sect:mainwindow}

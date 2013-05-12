@@ -339,6 +339,13 @@ A definícióban említett tulajdonság a gyakorlatban legtöbbször a képponto
 
 A szakirodalomban két eljárást tartanak számon a blobok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/blob_sshot.png}
+\caption{Példák blobokra, néhány jellemző jelölésével.\\Forrás: \url{http://bit.ly/10k61se}}
+\label{fig:blob_sshot}
+\end{figure}
+
 A blob-detektálással rokon, de attól független eljárás a \textbf{komponens-címkézés}. A módszer több néven is ismert, pl. régió-címkézés, blob-címkézés, komponens-analízis. A gépi látás terén komponens-címkézésen legtöbbször két dimenziós bináris képek összetartozó régióinak -- ezek a blobok -- felkutatását és elkülönítését értjük, de a későbbiekben bemutatott elvek kiterjeszthetők szürkeárnyalatos vagy színes képek, illetve akár többdimenziós adathalmazok elemzésére is.
 
 \bigskip
@@ -353,9 +360,14 @@ Az egyszerűség kedvéért a komponens-címkézés alapelvét két dimenziós k
 
 \bigskip
 
-A címkézés megkezdése előtt minden esetében fontos, hogy megszabjuk a használni kívánt \textbf{szomszédosság-mértéket}. Ez a címkézés során a legtöbbször 4- vagy 8-szomszédosságot jelent. A \textbf{4-szomszédossági} esetben egy pixel szomszédait a tőle $N$, $W$, $S$ és $E$ irányban lévő képpontok jelentik az égtájak angol elnevezései alapján. \textbf{8-szomszédosság} használatakor a képponthoz csak a sarkával illeszkedő pontokat is szomszédnak vesszük, tehát az óramutató járásával ellentétes irányban $N$, $NW$, $W$, $SW$, $S$, $SE$, $E$ és $NE$ szomszédokról beszélhetünk.
+A címkézés megkezdése előtt minden esetében fontos, hogy megszabjuk a használni kívánt \textbf{szomszédosság-mértéket}. Ez a címkézés során a legtöbbször 4- vagy 8-szomszédosságot jelent. A \textbf{4-szomszédossági} (Von Neumann-szomszédosság) esetben egy pixel szomszédait a tőle $N$, $W$, $S$ és $E$ irányban lévő képpontok jelentik az égtájak angol elnevezései alapján. \textbf{8-szomszédosság} (Moore-szomszédosság) használatakor a képponthoz csak a sarkával illeszkedő pontokat is szomszédnak vesszük, tehát az óramutató járásával ellentétes irányban $N$, $NW$, $W$, $SW$, $S$, $SE$, $E$ és $NE$ szomszédokról beszélhetünk (lásd \figref{connectivity} ábra).
 
-\bigskip
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/connectivity.png}
+\caption{a) 4-szomszédosság b) 8-szomszédosság}
+\label{fig:connectivity}
+\end{figure}
 
 A feladat tehát olyan algoritmust találni, amely lehetőleg minél kisebb számítási komplexitással képes adott szomszédosság-mérték mellett elkülöníteni képeken az összetartozó régiókat.
 
@@ -382,9 +394,14 @@ A klasszikus algoritmus \cite{rosenfeld} mindkét lépésben sorra veszi a képt
   \item 8-szomszédosság esetén az $NE$, $N$, $NW$ és $W$ szomszédok
 \end{itemize}
 
-vizsgálatával döntjük el. Az algoritmust 4-szomszédosságot feltételezve ismertetem.
+vizsgálatával döntjük el (lásd \figref{2pass_neighbours} ábra). Az algoritmust 4-szomszédosságot feltételezve ismertetem.
 
-\bigskip
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/2pass_neighbours.png}
+\caption{Kitüntetett szomszédok a Rosenfeld--Pfalz algoritmusnál \\ a) 4-szomszédosság b) 8-szomszédosság \\ esetén.}
+\label{fig:2pass_neighbours}
+\end{figure}
 
 Az \textbf{első lépés} során az algoritmus minden képpont esetén a következő négy feltétel vizsgálatát végzi el, és az eredménynek megfelelően látja el a pontot átmeneti címkével. Egy feltétel teljesülése esetén a vizsgálat leáll, egyébként a következő feltétel vizsgálata következik.
 
@@ -425,6 +442,14 @@ Az éppen vizsgálat alatt lévő pontot jelölje $P$, a képpont értékét meg
 
 \end{enumerate}
 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/labeling.png}
+\caption{A kétlépéses komponenscímkéző algoritmus néhány fázisa. \\ Forrás: \url{http://bit.ly/ZSuWQA}}
+\label{fig:labeling}
+\end{figure}
+
 A \textbf{második lépésben} az algoritmus újra végigiterál a képpontokon, és minden képpont címkéjét az ekvivalensnek jelzett címkék közül a legkisebbel helyettesíti.
 
 A megvalósítás során az algoritmus \emph{diszjunkt-halmaz erdő} (disjoint-set) adatszerkezetet használ, amely ideális a régiók közti ekvivalenciák tárolására és elérésére. 
@@ -464,6 +489,13 @@ Az egyesével, szinte egymástól függetlenül vizsgált képpontok feldolgozá
 Sok esetben a képen felismert blobok nem mindegyik tartalmaz a feldolgozás szempontjából hasznos információt. A blobok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blobokat valamely előre definiált kritérium alapján.
 
 A pupillakeresési feladatnál például az ember számára könnyen feldolgozható \emph{,,keressünk egy relatíve nagy, kör alakú objektumot''} feltételt kell a gépi látás által is megoldható problémává formalizálni.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=90mm, keepaspectratio]{figures/blob_jellemzok.png}
+\caption{Példa néhány blob jellemzőre: súlypont, Feret-átmérő, orientáció}
+\label{fig:blob_jellemzok}
+\end{figure}
 
 Nem feltétlenül kell azonban rögtön komplex mértékek felhasználásába bonyolódnunk. Jól megfogalmazott kritérium esetén sokszor a legegyszerűbb jellemzők is segítségünkre lehetnek: legyen szó akár egyszerű zajszűrésről, vagy a feldolgozás szempontjából fontos blobok azonosításáról.
 

@@ -27,12 +27,12 @@ Mielőtt a fejezet későbbi szakaszaiban részletekbe menőben bemutatom az elk
 
 Az alkalmazás legyen képes:
 
-\begin{enumerate}[(a)]
+\begin{enumerate}[a)]
   \item valósidejű \textbf{videofolyamot} olvasni a számítógépre kötött webkameráról (lásd \sectref{infracam} szakasz)
   \item a videofolyam feldolgozásával a \textbf{pupillapozíció meghatározására} a \sectref{pupillakov} szakaszban leírtak szerint.
   \item a tekintet \textbf{kalibrációjára} a \sectref{kalibracio} szakaszban ismertetett módszer felhasználásával.
   \item \textbf{munkamenetek} (session) rögzítésére a képernyő tartalmának mentésével együtt.
-  \item a korábbi munkamenetek listázására, rendezésére, törlésére.
+  \item a korábbi munkamenetek listázására, törlésére.
   \item munkamenetek \textbf{visszajátszására}.
   \item a munkamenetek alapján \textbf{hőtérképek} generálására (lásd \sectref{web} szakasz)
 \end{enumerate}
@@ -54,18 +54,48 @@ Az alkalmazás egyes funkcióit a videofolyam feldolgozásától egészen a hőt
 
 \begin{itemize}
   \item \texttt{MainWindow} -- az alkalmazás főablakát tartalmazó osztály, valamint ez szolgál általános kontrollerként is, lévén a felhasználói interakciók döntő része ide fut be
-  \item \texttt{VideoHandler} -- a 
+  \item \texttt{VideoHandler} -- a webkameráról beérkező videofolyam olvasásáért felelős
+  \item \texttt{ImageProcessor} -- a képkockák feldolgozását -- a pupillakeresést -- végzi
+  \item \texttt{Calibrator} -- a kalibrációt, majd kalibrált állapotban a \emph{pupilla-pozíció} $\Longrightarrow$ \emph{képernyő-pozíció} átszámítást végzi
+  \item \texttt{Recorder} -- a munkamenetek rögzítését végzi
+  \item \texttt{Player} -- a felvett munkamenetek visszajátszását teszi lehetővé ez az osztály
+  \item \texttt{Heatmapper} -- a hőtérképek generálása történik ebben az osztályban
+  \item \texttt{Session} -- konténerosztály egy-egy munkamenet futásidejű tárolása számára 
 \end{itemize}
+
+A továbbiakban sorra veszem az egyes osztályok interfészét, valamint belső működésüket, kicsit mélyebb betekintést engedve a felépítésükbe, egymással való összeköttetésükbe, valamint az esetleg érdekesnek ítélhető implementációs részletekbe.
 
 %............................................................................
 \subsection{A \texttt{MainWindow} osztály}\label{sect:mainwindow}
 %............................................................................
 
-blabla
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=50mm, keepaspectratio]{figures/class_mainwindow.png}
+\end{figure}
+
+A \texttt{MainWindow} osztály az alkalmazás általános kontrollereként működik. A nevéből is látszik, hogy ehhez az osztályhoz tartozik a program fő interfészablaka, ennek megfelelően a felhasználói interakciók lekezelése ezen osztály slotjaiban történik. Az osztályban tényleges feldolgozás nem történik, csak összefogja az egyes lépéseket elvégezni hivatott objektumokat.
+
+\bigskip
+
+Az \texttt{int PROCESS\_TIMEOUT} attribútum a \texttt{QTimer processTimer} időzítővel együtt a feldolgozás rögzített sebességgel történő elvégzését vezérli. Az előbbi ezredmásodpercben megadott értéke alapján hívódik a feldolgozást vezérlő \texttt{processTimeout()} függvény.
+
+A \texttt{sessions} lista az elmentett munkamenetek futásidejű tárolására szolgál, amely listát a \texttt{refreshSessionList()} függvény állítja elő.
+
+A \texttt{videoHandler}, \texttt{imageProcessor}, \texttt{calibrator}, \texttt{recorder}, \texttt{player} és \texttt{heatmapper} attribútumok tárolják a névből adódó típusú objektumpéldányokat, amelyek az alkalmazás egyes funkcióit valósítják meg.
+
+A metódusok közül a \texttt{startToggled()}, \texttt{calibrateToggled()} és \texttt{recordToggled()} metódusok sorra a videofolyam, kalibráció és a felvétel ki/bekapcsolását kezelik le.
+
+A lejátszás során megjelenítési módok váltását kezelik le az \texttt{equalizedClicked()} és a \texttt{pupilClicked()} között felsorolt függvények.
 
 %............................................................................
 \subsection{A \texttt{VideoHandler} osztály}\label{sect:videohandler}
 %............................................................................
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_videohandler.png}
+\end{figure}
 
 blabla
 
@@ -73,11 +103,21 @@ blabla
 \subsection{Az \texttt{ImageProcessor} osztály}\label{sect:imageprocessor}
 %............................................................................
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_imageprocessor.png}
+\end{figure}
+
 blabla
 
 %............................................................................
 \subsection{A \texttt{Calibrator} osztály}\label{sect:calibrator}
 %............................................................................
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_calibrator.png}
+\end{figure}
 
 blabla
 
@@ -85,11 +125,21 @@ blabla
 \subsection{A \texttt{Session} osztály}\label{sect:session}
 %............................................................................
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_session.png}
+\end{figure}
+
 blabla
 
 %............................................................................
 \subsection{A \texttt{Recorder} osztály}\label{sect:recorder}
 %............................................................................
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_recorder.png}
+\end{figure}
 
 blabla
 
@@ -97,11 +147,21 @@ blabla
 \subsection{A \texttt{Player} osztály}\label{sect:player}
 %............................................................................
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_player.png}
+\end{figure}
+
 blabla
 
 %............................................................................
 \subsection{A \texttt{Heatmapper} osztály}\label{sect:heatmapper}
 %............................................................................
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/class_heatmapper.png}
+\end{figure}
 
 blabla
 

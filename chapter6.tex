@@ -62,7 +62,8 @@ Az alkalmazás egyes funkcióit a videofolyam feldolgozásától egészen a hőt
   \item \texttt{Recorder} -- a munkamenetek rögzítését végzi
   \item \texttt{Player} -- a felvett munkamenetek visszajátszását teszi lehetővé ez az osztály
   \item \texttt{Heatmapper} -- a hőtérképek generálása történik ebben az osztályban
-  \item \texttt{Session} -- konténerosztály egy-egy munkamenet futásidejű tárolása számára 
+  \item \texttt{Session} -- konténerosztály egy-egy munkamenet futásidejű tárolása számára
+  \item kisegítő osztályok
 \end{itemize}
 
 A továbbiakban sorra veszem az egyes osztályok interfészét, valamint belső működésüket, kicsit mélyebb betekintést engedve a felépítésükbe, egymással való összeköttetésükbe, valamint az esetleg érdekesnek ítélhető implementációs részletekbe.
@@ -158,17 +159,17 @@ Az \texttt{ImageProcessor} osztályhoz hasonlóan itt is az interfész részét 
 
 A \texttt{Session} osztály az éppen felvétel alatt lévő, és már felvett munkamenetek futás közbeni tárolására szolgál.
 
-Tagváltozóként tartalmazza a munkameneteket jellemző tulajdonságokat: a munkamenet nevét (tetszőleges \texttt{std::string name}, a képet, amelyet a felvétel alatt az alany vizsgál (\texttt{QPixmap} objektumként), valamint a vizsgálat alatt felvett képernyő-koordinátákat (\texttt{std::vector<cv::Point> points} listaként).
+Tagváltozóként tartalmazza a munkameneteket jellemző tulajdonságokat: a munkamenet nevét (azonosítóját, tetszőleges \texttt{std::string name}, a képet, amelyet a felvétel alatt az alany vizsgál (\texttt{QPixmap} objektumként), valamint a vizsgálat alatt felvett képernyő-koordinátákat (\texttt{std::vector<cv::Point> points} listaként).
 
 \bigskip
 
-A publikus interfészen keresztül lehetőség van a munkamenet-objektum lementésére a \texttt{save} metódus használatával. A paraméterül adott névvel kerül lementésre munkamenet, a futtatási könyvtár \texttt{session\_<név>} formátumú alkönyvtárába. A munkamenet alkönyvtárán belül létrejön a \texttt{bg.png} képfájl, ami értelemszerűen a vizsgálat alatt használt képet tartalmazza, valamint a \texttt{points.txt} szöveges fájl, amely  soronként tartalmazza a rögzített pontok képernyő-koordinátáit.
+A publikus interfészen keresztül lehetőség van a munkamenet-objektum lementésére a \texttt{save} metódus használatával. A paraméterül adott azonosítóval kerül lementésre a munkamenet, a futtatási könyvtár \texttt{session\_<név>} formátumú alkönyvtárába. A munkamenet alkönyvtárán belül létrejön a \texttt{bg.png} képfájl, ami értelemszerűen a vizsgálat alatt használt képet tartalmazza, valamint a \texttt{points.txt} szöveges fájl, amely  soronként tartalmazza a rögzített pontok képernyő-koordinátáit.
 
 A mentés párjaként a \texttt{load} függvény tölti be a paraméterül kapott névvel lementett munkamenetet.
 
 \bigskip
 
-A fentieken kívül két statikus metódus is helyet kapott a \texttt{Session} osztályban. A \texttt{getNames} függvény a már lementett munkamenetek neveinek tömbjét adja vissza, a \texttt{remove} osztálymetódus pedig törli a háttértárról paraméterként megadott névvel rendelkező munkamenetet.
+A fentieken kívül két statikus metódus is helyet kapott a \texttt{Session} osztályban. A \texttt{getNames} függvény a már lementett munkamenetek neveinek tömbjét adja vissza, a \texttt{remove} osztálymetódus pedig visszavonhatatlanul törli a háttértárról paraméterként megadott névvel rendelkező munkamenetet.
 
 %............................................................................
 \subsection{A \texttt{Recorder} osztály}\label{sect:recorder}
@@ -176,10 +177,16 @@ A fentieken kívül két statikus metódus is helyet kapott a \texttt{Session} o
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_recorder.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_recorder.png}
 \end{figure}
 
-blabla
+A \texttt{Recorder} osztály felelős az új munkamenetek létrehozásáért. Tartozik hozzá egy, a megjelenítést végző ablak, a \texttt{RecordingWindow} osztály egy példánya. Emellett a belső állapot is nyilvántartásra kerül a \texttt{RecorderState} felsorolás értékei által.
+
+Az osztály publikus interfésze mondhatni magától értetődő. A \texttt{startRecording} függvény a meghívását követően azonnal képernyőképet (screenshot) készít az elsődleges kijelző tartalmáról, és elkezdi egy új munkamenet felvételét. A munkamenet azonosítója az alkalmazás jelenlegi állapotában automatikusan a felvétel indításának pillanatában érvényes UNIX időbélyeg (timestamp) értéke lesz.
+
+A \texttt{recordPoint} metódussal új mérési pontot lehet a munkamenethez fűzni. Az alkalmazás használata során a \texttt{recordPoint} függvény felvétel során minden képkocka feldolgozása után meghívódik, vagyis képkockánként egy mérési pont kerül tárolásra. Ennél sűrűbb mintavételnek nyilvánvalóan nincs értelme, de a ritkább pontregisztrálás lehetősége adott.
+
+A \texttt{stopRecording} függvény a felvétel befejeztével hívódik meg. A futása során eltünteti a felvételi ablakot, valamint le is menti az elkészült munkamenetet a háttértárra.
 
 %............................................................................
 \subsection{A \texttt{Player} osztály}\label{sect:player}
@@ -187,10 +194,16 @@ blabla
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_player.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_player.png}
 \end{figure}
 
-blabla
+A \texttt{Player} osztály a felvett munkamenetek lejátszásáért felelős. A lejátszást a dinamikusan foglalt \texttt{PlayerWindow} példány grafikus felületén végzi.
+
+A \texttt{startPlayback} metódus egy munkamenet-objektumra (\texttt{Session}) mutató referenciát vár paraméterként, ennek lejátszását kezdi el meghívása után azonnal.
+
+A visszajátszás futása közben a \texttt{processTimer} időzítő és a \texttt{process} függvény gondoskodik a megfelelő ütemben történő visszajátszásról, felhasználva a \texttt{MainWindow} osztály \texttt{PROCESS\_TIMEOUT} értékét. A feldolgozott képet a \texttt{PlayerWindow} osztály \texttt{setImage} metódusának meghívásával jeleníti meg.
+
+A \texttt{stopPlayback} függvény egyszerűen bezárja a használt (teljes képernyős) ablakot, ezzel egy időben leállítja a munkamenet visszajátszását.
 
 %............................................................................
 \subsection{A \texttt{Heatmapper} osztály}\label{sect:heatmapper}
@@ -198,13 +211,13 @@ blabla
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_heatmapper.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_heatmapper.png}
 \end{figure}
 
 blabla
 
 %............................................................................
-\subsection{Kisegítő osztályok}\label{sect:heatmapper}
+\subsection{Kisegítő osztályok}\label{sect:helper}
 %............................................................................
 
 blabla

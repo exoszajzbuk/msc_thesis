@@ -214,13 +214,23 @@ A \texttt{stopPlayback} függvény egyszerűen bezárja a használt (teljes kép
 \includegraphics[width=140mm, keepaspectratio]{figures/class_heatmapper.png}
 \end{figure}
 
-blabla
+A \texttt{Heatmapper} osztály a munkamenetekhez kapcsolódó hőtérképek (heatmap) generálására és megjelenítésére szolgál.
+
+Az osztály \texttt{generate} függvénye a paraméterül kapott \texttt{Sesssion} referencia alapján kezdi meg a működését. A generálás meglehetősen hosszú folyamat, ennek végeztével a \texttt{HeatmapperWindow} osztály grafikus felületén jelenik meg a munkamenet hőtérképes reprezentációja.
 
 %............................................................................
 \subsection{Kisegítő osztályok}\label{sect:helper}
 %............................................................................
 
-blabla
+Röviden szeretnék szót ejteni az osztálydiagram eddig mellőzött elemeiről is. Ezek az osztályok nem közvetlenül a specifikáció valamely pontjára nyújtanak megoldást, inkább ismétlődő feladatok megoldására adnak helyet.
+
+\paragraph{A \texttt{SessionItemWidget} osztály}
+
+Az osztály a megjelenítésben jut szerephez. A munkamenetek egy listában kerülnek megjelenítésre a főablak bal oldalán. A lista elemeinek egyedi megjelenítésük van, ennek a grafikus elemnek (widget) a felületét tartalmazza a \texttt{SessionItemWidget} osztály.
+
+\paragraph{A \texttt{Helper} osztály}
+
+A kódolás során több helyen is szükség volt különböző átalakítások elvégzésére. A \texttt{Helper} osztály statikus metódusai időbélyegek formázására, valamint a Qt és az OpenCV belső kép-reprezentációi közötti oda-vissza átalakításra szolgálnak.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Felhasználói felület}\label{sect:gui}

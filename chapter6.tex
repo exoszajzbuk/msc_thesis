@@ -42,6 +42,8 @@ Az alkalmazás legyen képes:
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   
   Az implementációt a \sectref{technologia} fejezetben bemutatott technológiák (OpenCV, Qt, Qt Creator) felhasználásával \textbf{C++ nyelven készítettem el} a Model--View--Controller (MVC) tervezési minta szem előtt tartásával. A kialakított osztályhierarchia a \figref{overview} ábrán látható módon épül fel. A kibővített osztálydiagram  -- a fontos változók és funkciók feltüntetésével -- megtalálható az \sectref{osztalydiagram} függelékben.
+  
+  Az átláthatóság kedvéért még a kibővített diagramról is lehagytam a kevésbé fontos tagváltozókat, és a nyilvánvaló funkcióval rendelkező függvényeket (pl. ,,getter'' vagy ,,setter'' metódusok). Emellett természetesen az információrejtés (information hiding) alapelvének megfelelően a tagváltozók amikor csak szükséges, privát változóként deklaráltak, és publikus interfész áll rendelkezésre az értékük lekérdezésére, vagy az értékadásra.
 
 \begin{figure}[!ht]
 \centering
@@ -135,11 +137,11 @@ Az osztályhoz tartozik egy \texttt{CalibrationWindow} objektum is, amely a fut�
 
 A \texttt{startCalibrating} és \texttt{dismissCalibration} függvények elnevezései magukért beszélnek. A \texttt{dismissCalibration} függvény elveti a meglévő kalibrációs paramétereket, a \texttt{startCalibrating} metódus esetében pedig új kalibrációt indítunk: megnyílik a \texttt{CalibratorWindow} osztály felhasználói felülete (teljes képernyős kalibrációs ablak), rajta az első kalibrációs ponttal.
 
-A kalibrációs ablakban az aktuális pontra kattintva (\texttt{targetClicked}) a \texttt{foundCalibrationPoint} függvény hívása történik meg, amelyben utasításra kerül a következő kalibrációs pont kirajzolása \texttt{setTargetPosition}, vagy az utolsó pont esetén a kalibráció lezárása.
+A kalibrációs ablakban tekintetünket az aktuális pontra irányítva, majd kattintva (\texttt{targetClicked}) a \texttt{foundCalibrationPoint} függvény hívása történik meg, amelyben utasításra kerül a következő kalibrációs pont kirajzolása \texttt{setTargetPosition}, vagy az utolsó pont esetén a kalibráció lezárása.
 
 \bigskip
 
-Kalibrált állapotban a \texttt{calculatePosition} függvény a \texttt{cv::Point} formában pupillakoordinátát képzi le a kalibrációs paraméterek felhasználásával képernyő-koordinátákba.
+Kalibrált állapotban a \texttt{calculatePosition} függvény a \texttt{cv::Point} formában paraméterül adott pupillakoordinátát képzi le a kalibrációs paraméterek felhasználásával képernyő-koordinátákba.
 
 \bigskip
 
@@ -151,10 +153,22 @@ Az \texttt{ImageProcessor} osztályhoz hasonlóan itt is az interfész részét 
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_session.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_session.png}
 \end{figure}
 
-blabla
+A \texttt{Session} osztály az éppen felvétel alatt lévő, és már felvett munkamenetek futás közbeni tárolására szolgál.
+
+Tagváltozóként tartalmazza a munkameneteket jellemző tulajdonságokat: a munkamenet nevét (tetszőleges \texttt{std::string name}, a képet, amelyet a felvétel alatt az alany vizsgál (\texttt{QPixmap} objektumként), valamint a vizsgálat alatt felvett képernyő-koordinátákat (\texttt{std::vector<cv::Point> points} listaként).
+
+\bigskip
+
+A publikus interfészen keresztül lehetőség van a munkamenet-objektum lementésére a \texttt{save} metódus használatával. A paraméterül adott névvel kerül lementésre munkamenet, a futtatási könyvtár \texttt{session\_<név>} formátumú alkönyvtárába. A munkamenet alkönyvtárán belül létrejön a \texttt{bg.png} képfájl, ami értelemszerűen a vizsgálat alatt használt képet tartalmazza, valamint a \texttt{points.txt} szöveges fájl, amely  soronként tartalmazza a rögzített pontok képernyő-koordinátáit.
+
+A mentés párjaként a \texttt{load} függvény tölti be a paraméterül kapott névvel lementett munkamenetet.
+
+\bigskip
+
+A fentieken kívül két statikus metódus is helyet kapott a \texttt{Session} osztályban. A \texttt{getNames} függvény a már lementett munkamenetek neveinek tömbjét adja vissza, a \texttt{remove} osztálymetódus pedig törli a háttértárról paraméterként megadott névvel rendelkező munkamenetet.
 
 %............................................................................
 \subsection{A \texttt{Recorder} osztály}\label{sect:recorder}
@@ -186,6 +200,12 @@ blabla
 \centering
 \includegraphics[width=100mm, keepaspectratio]{figures/class_heatmapper.png}
 \end{figure}
+
+blabla
+
+%............................................................................
+\subsection{Kisegítő osztályok}\label{sect:heatmapper}
+%............................................................................
 
 blabla
 

@@ -13,9 +13,11 @@ A fejezet \sectref{opencv} szakaszában az OpenCV gépi látás könyvtár, a \s
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 \begin{wrapfigure}{r}{0.3\textwidth}
+  \vspace{-20pt}
   \begin{center}
     \includegraphics[width=0.28\textwidth]{figures/opencv_logo.png}
   \end{center}
+  \vspace{-30pt}
 \end{wrapfigure}
 
 Az \textbf{OpenCV}\footnote{\url{http://opencv.org/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \textbf{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül. \cite{opencv_wiki}
@@ -147,11 +149,26 @@ Láthatjuk, hogy a fent felsorolt funkciókkal a gépi látás terén rengeteg e
 
 Az OpenCV régebbi verzióiban a számos előny mellett hátrányként volt megemlíthető, hogy segítségével a felhasználói felületet csak nagyon leegyszerűsített módon szabhattuk testre. Igaz, hogy a könyvtár feladata elsősorban a képfeldolgozás és nem a megjelenítés, így ebből a nézőpontból a beépített kép és videó megjelenítési lehetőség, billentyűzet- és egérkezelés valamint trackbarok (csúsztatható kezelőszerv értékek beállítására) létrehozásának lehetősége inkább hozzáadott értékként jelent meg, azonban ez nem változtat azon a tényen, hogy ha igény van felhasználóbarát kezelőfelület készítésére, az OpenCV-t mindenképpen integrálnunk kellett valamely elterjedt grafikus felhasználói felület toolkittel.
 
-A 2.1-es verziótól kezdődően megjelent egy némileg fejlettebb \textbf{Qt alapú felhasználói felület}. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszerveinek és megjelenítésének problémája már kielégítően elvégezhető egyéb eszköz használata nélkül.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm, keepaspectratio]{figures/opencv_qt.jpg}
+\caption{Az OpenCV beépített Qt-alapú ablaka a 2.1-es verziótól kezdve.\\Forrás: \url{http://bit.ly/YDigQ6}}
+\label{fig:opencv_qt}
+\end{figure}
+
+A 2.1-es verziótól kezdődően megjelent egy némileg fejlettebb \textbf{Qt alapú felhasználói felület}, lásd \figref{opencv_qt}. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszerveinek és megjelenítésének problémája már kielégítően elvégezhető egyéb eszköz használata nélkül.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{A Qt keretrendszer}\label{sect:qt}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+\begin{wrapfigure}{l}{0.3\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.28\textwidth]{figures/qt_logo.png}
+  \end{center}
+  \vspace{-10pt}
+\end{wrapfigure}
 
 A \textbf{Qt}\footnote{\url{http://qt.digia.com/}} (ejtsd az angol ,,cute'' szó mintájára: kjút) keretrendszer egy széles körben használt szoftver, amelyet egyrészt grafikus felhasználói felületek (Graphical User Interface -- GUI), másrészt parancssoros (Command Line Interface -- CLI) alkalmazások fejlesztésére is használnak. A grafikus felhasználói felületek fejlesztése során a Qt úgynevezett wiget-toolkitként funkcionál -- kis, önálló elemek (widgetek) felhasználását és összekötését teszi lehetővé, ezek összességéből áll össze az elkészült grafikus felület. A szoftver a  GPL~v3\footnote{\url{http://www.gnu.org/licenses/gpl.html}} illetve LGPL~v2\footnote{\url{http://www.gnu.org/licenses/lgpl-2.1.html}} licencek szerint szabadon elérhető. \cite{qt_wiki}
 
@@ -206,6 +223,13 @@ A Qt~5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fej
 
 A \textbf{Qt Creator} egy integrált fejlesztői környezet (Integreated Development Environment -- IDE) Qt alapú fejlesztésekhez. Használatával jelentősen megkönnyíthető mind a grafikus felületek kialakítása, mind az alkalmazások forráskódjának szerkesztése és fordítása. \cite{qtcreator_wiki}
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/qt_creator.png}
+\caption{A Qt Creator kezelőfelülete.\\Forrás: \url{http://bit.ly/13Re5B8}}
+\label{fig:qt_creator}
+\end{figure}
+
 \paragraph{Szerkesztő}
 
 A kódszerkesztő (editor) a kor követelményeinek megfelelően támogatja a szintaxis-kiemelést valamint az automatikus kódkiegészítést (code completion) több programozási nyelvre is. A szerkesztő hátrányának róható fel, hogy a megnyitott fájlokat nem a manapság elterjedt fülek (tab) használatával rendezi, hanem saját fejlesztésű listát használ erre a célra, amely más fejlesztői környezetekből érkezve kissé idegen.
@@ -240,9 +264,14 @@ A tekintetkövető rendszer fejlesztése közben hardveres technológiai kérdé
 \subsection{Eszközök}\label{sect:infracam_eszkozok}
 %............................................................................
 
-Költséghatékonysági okokból -- ezzel együtt demonstrálandó, hogy nem feltétlenül kellenek speciális eszközök működőképes tekintetkövető összeállításához -- a TODO ábrán látható \textbf{6 LED-es webkamerát}\footnote{megvásárolható: \url{http://bit.ly/15yoLJ3}} választottam.
+Költséghatékonysági okokból -- ezzel együtt demonstrálandó, hogy nem feltétlenül kellenek speciális eszközök működőképes tekintetkövető összeállításához -- a \figref{webcam} ábrán látható \textbf{6 LED-es webkamerát}\footnote{megvásárolható: \url{http://bit.ly/15yoLJ3}} választottam.
 
-TODO kamera
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=120mm, keepaspectratio]{figures/webcam.png}
+\caption{A fejlesztés során felhasznált webkamera.}
+\label{fig:webcam}
+\end{figure}
 
 A kamera gyártója ismeretlen (no-name), viszont jelen dolgozat írásának idején is mindössze 5 amerikai dollárért  -- 2013 májusi árfolyamon nagyjából 1\,200 forintos áron -- beszerezhető a lábjegyzetben szereplő hivatkozást meglátogatva.
 
@@ -256,9 +285,14 @@ A webkamera főbb paraméterei:
   \item \textbf{képfrissítés:} 30 FPS
 \end{itemize}
 
-Az átlagos webkamerák között egyedi tulajdonsága, hogy a \textbf{lencséje cserélhető}, helyére bármilyen szabvány \emph{M12x0.5} (CCTV biztonsági kamerák körében elterjedt) foglalattal rendelkező lencse beilleszthető. Érdemes is megvásárolni a TODO ábrán látható \textbf{lencsekészletet}\footnote{megvásárolható: \url{http://bit.ly/17TtCCg}}, amely $2,\!8$-tól $16$ mm-es fókusztávig tartalmaz lencséket. A cserélhető lencséknek köszönhetően kiválaszthatjuk azt a fókusztávot, amely a kamera elhelyezésének függvényében a legjobb képet adja, azaz a szemrégió a lehető legjobban kitölti a képet.
+Az átlagos webkamerák között egyedi tulajdonsága, hogy a \textbf{lencséje cserélhető}, helyére bármilyen szabvány \emph{M12x0.5} (CCTV biztonsági kamerák körében elterjedt) foglalattal rendelkező lencse beilleszthető. Érdemes is megvásárolni a \figref{lenses} ábrán látható \textbf{lencsekészletet}\footnote{megvásárolható: \url{http://bit.ly/17TtCCg}}, amely $2,\!8$-tól $16$ mm-es fókusztávig tartalmaz lencséket. A cserélhető lencséknek köszönhetően kiválaszthatjuk azt a fókusztávot, amely a kamera elhelyezésének függvényében a legjobb képet adja, azaz a szemrégió a lehető legjobban kitölti a képet.
 
-TOOD lencsek
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/lenses.png}
+\caption{Lencsekészlet \emph{M12x0.5} CCTV foglalattal.}
+\label{fig:lenses}
+\end{figure}
 
 A webkamera nagy hátrányaként említhető meg, hogy működőképes meghajtóprogramot (driver) \textbf{csak Windows~7 rendszerre} lehetséges találni hozzá, azt is csak rengeteg keresgélés után. Az eszközt azonos külső mellett többféle vezérlővel forgalmazzák, ezek meghajtóprogramjai egymással nem kompatibilisek. Ha kamerához csomagolt CD elveszik, megsérül, vagy -- mint ahogyan sajnos a szerző esetében is előfordult -- egyáltalán nincs is a csomagban, ember legyen a talpán, aki megtalálja az eszközhöz tartozó drivert.
 

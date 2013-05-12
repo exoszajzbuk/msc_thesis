@@ -74,19 +74,19 @@ A továbbiakban sorra veszem az egyes osztályok interfészét, valamint belső 
 \includegraphics[width=50mm, keepaspectratio]{figures/class_mainwindow.png}
 \end{figure}
 
-A \texttt{MainWindow} osztály az alkalmazás általános kontrollereként működik. A nevéből is látszik, hogy ehhez az osztályhoz tartozik a program fő interfészablaka, ennek megfelelően a felhasználói interakciók lekezelése ezen osztály slotjaiban történik. Az osztályban tényleges feldolgozás nem történik, csak összefogja az egyes lépéseket elvégezni hivatott objektumokat.
+A \texttt{MainWindow} osztály az alkalmazás általános kontrollereként működik. A nevéből is látszik, hogy ehhez az osztályhoz tartozik a program fő interfészablaka, ennek megfelelően a felhasználói interakciók lekezelése ezen osztály slotjaiban történik. Az osztályban tényleges feldolgozás nem történik, csak összefogja az egyes lépéseket elvégezni hivatott objektumokat, valamit biztosítja, hogy a felhasználói felület állapota mindig a program tényleges belső állapotát reprezentálja, és csak engedélyezett állapotátmenetek történhessenek.
 
 \bigskip
 
-Az \texttt{int PROCESS\_TIMEOUT} attribútum a \texttt{QTimer processTimer} időzítővel együtt a feldolgozás rögzített sebességgel történő elvégzését vezérli. Az előbbi ezredmásodpercben megadott értéke alapján hívódik a feldolgozást vezérlő \texttt{processTimeout()} függvény.
+Az \texttt{int PROCESS\_TIMEOUT} attribútum a \texttt{QTimer processTimer} időzítővel együtt a feldolgozás rögzített sebességgel történő elvégzését vezérli. Az előbbi ezredmásodpercben megadott értéke alapján hívódik a feldolgozást vezérlő \texttt{processTimeout} függvény.
 
-A \texttt{sessions} lista az elmentett munkamenetek futásidejű tárolására szolgál, amely listát a \texttt{refreshSessionList()} függvény állítja elő.
+A \texttt{sessions} lista az elmentett munkamenetek futásidejű tárolására szolgál, amely listát a \texttt{refreshSessionList} függvény állítja elő.
 
 A \texttt{videoHandler}, \texttt{imageProcessor}, \texttt{calibrator}, \texttt{recorder}, \texttt{player} és \texttt{heatmapper} attribútumok tárolják a névből adódó típusú objektumpéldányokat, amelyek az alkalmazás egyes funkcióit valósítják meg.
 
-A metódusok közül a \texttt{startToggled()}, \texttt{calibrateToggled()} és \texttt{recordToggled()} metódusok sorra a videofolyam, kalibráció és a felvétel ki/bekapcsolását kezelik le.
+A metódusok közül a \texttt{startToggled}, \texttt{calibrateToggled} és \texttt{recordToggled} metódusok sorra a videofolyam, kalibráció és a felvétel ki/bekapcsolását kezelik le.
 
-A lejátszás során megjelenítési módok váltását kezelik le az \texttt{equalizedClicked()} és a \texttt{pupilClicked()} között felsorolt függvények.
+A lejátszás során megjelenítési módok váltását kezelik le az \texttt{equalizedClicked} és a \texttt{pupilClicked} között felsorolt függvények.
 
 %............................................................................
 \subsection{A \texttt{VideoHandler} osztály}\label{sect:videohandler}
@@ -94,10 +94,14 @@ A lejátszás során megjelenítési módok váltását kezelik le az \texttt{eq
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_videohandler.png}
+\includegraphics[width=80mm, keepaspectratio]{figures/class_videohandler.png}
 \end{figure}
 
-blabla
+A \texttt{VideoHandler} az ,,alacsony szintű'' videokezelést végzi. A gyakorlatban ez úgy valósul meg, hogy \texttt{cv::VideoCapture cap} attribútumaként tartalmazza az OpenCV kamerakép-feldolgozásra szolgáló objektumának egy példányát.
+
+A \texttt{start} függvényét egy kameraindexszel paraméterezve inicializálhatjuk a fent említett objektumot, a \texttt{stop} függvény pedig a kamera szabályos leállítására szolgál.
+
+Elindított állapotban a \texttt{getFrame} függvénnyel kérhetjük le az adott pillanatban a kamera által érzékelt képet. A képet tartalmazó \texttt{cv::Mat} objektumpéldány szintén az osztály egy tagváltozójában kerül tárolásra, a \texttt{getFrame} függvény erre az objektumra mutató referenciát ad vissza. A megoldásnak nyilvánvalóan performanciabeli okai vannak: a tényleges objektumpéldány átadása felesleges számításokat róna a feldolgozási sorra.
 
 %............................................................................
 \subsection{Az \texttt{ImageProcessor} osztály}\label{sect:imageprocessor}
@@ -105,21 +109,41 @@ blabla
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_imageprocessor.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_imageprocessor.png}
 \end{figure}
 
-blabla
+Az \texttt{ImageProcessor} osztály végzi a képkockák feldolgozását, és a pupilla azonosítását. A pupillakeresést az alkalmazás előfeldolgozás után blobok detektálásával és változatos szűrésével végzi, a \sectref{pupillakov} szakaszban részletesen bemutatott módon.
 
+A \texttt{process} függvény végzi a felismerés, és a képen megtalált pupillaközépponttal tér vissza egy \texttt{cv::Point2f} változó használatával. A visszaadott középpont az érvénytelen $(-1, -1)$ koordinátákat kapja, ha nem sikerült a pupilla azonosítása.
+
+Szükség van még ezen kívül a feldolgozás valamely közbülső állapotának képét lekérésére, ezt tehetjük meg a \texttt{getDisplayImage} metódus használatával. A függvény az \texttt{ImageProcessor} belső \texttt{displayMode} állapotának megfelelően adja vissza a kívánt képet. Fontos megjegyezni, hogy mindez csak a megjelenítést befolyásolja. A \texttt{displayMode} állapottól függetlenül a pupillafelismerés folyamata minden esetben elejétől a végéig lefut, majd visszatér a megtalált pupillaközéppont koordinátáival.
+ 
 %............................................................................
 \subsection{A \texttt{Calibrator} osztály}\label{sect:calibrator}
 %............................................................................
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=100mm, keepaspectratio]{figures/class_calibrator.png}
+\includegraphics[width=140mm, keepaspectratio]{figures/class_calibrator.png}
 \end{figure}
 
-blabla
+A \texttt{Calibrator} osztály az alkalmazás kalibrálását, majd a pupilla-koordináta alapján a képernyőn éppen nézett pont koordinátájának kiszámítását végzi. A kalibráció folyamatát részletesen a \sectref{kalibracio} szakaszban ismertettem.
+
+Az osztályhoz tartozik egy \texttt{CalibrationWindow} objektum is, amely a futás során dinamikusan kerül lefoglalásra (ezért csak a rámutato pointert tároljuk). Emellett a kalibrálás állapotát is nyilvántartjuk, erre szolgálnak a \texttt{CalibratorState} felsorolás (enumeration) értékei: nincs kalibrálva (\texttt{None}), kalibrálás alatt (\texttt{Calibrating}), vagy kalibrálva (\texttt{Calibrated}).
+
+\bigskip
+
+A \texttt{startCalibrating} és \texttt{dismissCalibration} függvények elnevezései magukért beszélnek. A \texttt{dismissCalibration} függvény elveti a meglévő kalibrációs paramétereket, a \texttt{startCalibrating} metódus esetében pedig új kalibrációt indítunk: megnyílik a \texttt{CalibratorWindow} osztály felhasználói felülete (teljes képernyős kalibrációs ablak), rajta az első kalibrációs ponttal.
+
+A kalibrációs ablakban az aktuális pontra kattintva (\texttt{targetClicked}) a \texttt{foundCalibrationPoint} függvény hívása történik meg, amelyben utasításra kerül a következő kalibrációs pont kirajzolása \texttt{setTargetPosition}, vagy az utolsó pont esetén a kalibráció lezárása.
+
+\bigskip
+
+Kalibrált állapotban a \texttt{calculatePosition} függvény a \texttt{cv::Point} formában pupillakoordinátát képzi le a kalibrációs paraméterek felhasználásával képernyő-koordinátákba.
+
+\bigskip
+
+Az \texttt{ImageProcessor} osztályhoz hasonlóan itt is az interfész részét képezik olyan metódusok, amelyek nem feltétlenül a tekintetkövetés szempontjából elengedhetetlen számítási feladatokat végeznek, csak a megjelenítés miatt van szükség rájuk. A \texttt{Calibrator} osztály esetében ilyen a \texttt{drawCalibrationPoly} függvény, amely a paraméteréül kapott képre egyszerűen rárajzolja a kalibrációs pontok négyszögét.
 
 %............................................................................
 \subsection{A \texttt{Session} osztály}\label{sect:session}

@@ -16,13 +16,39 @@
 \section{Feldolgozási folyamat}\label{sect:feld_folyamat}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ milyen kepfeldolgozasi (elo)feldolgozas kell a detektalashoz? +++}
+A blob alapú követést választva ki kellett dolgoznom a tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamatot. Két feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupilla-pozíció képernyő-pozícióba történő leképezésére.
 
 %............................................................................
 \subsection{Pupillakövetés}\label{sect:pupillakov}
 %............................................................................
 
-\texttt{+++ feldolgozasi lepesek a koveteshez +++}
+A pupillakövetés megbízható működéséhez meg kellett találnom az elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt.
+
+Az előfeldolgozási műveleteket az OpenCV készen kínálja, azonban a függvények száma és paraméterezési lehetőségei miatt rengeteg alternatíva jöhetett szóba. A szakasz további részében a kiválasztott képfeldolgozási műveleteket szeretném dokumentálni, a folyamat egészének tekintetében lényegtelen részletek mellőzésével. A felhasznált függvények pontos paraméterezése megtalálható az \sectref{parameterezes} függelékben.
+
+\bigskip
+
+A szemrégió képét közvetítő webkamera a gyári orientációjához képest fejjel lefelé került felfüggesztésre. A látványosabb megjelenítés érdekében ezért \emph{első lépésként} \textbf{megtükröztem} a képet a vízszintes középtengely mentén a \texttt{cv::flip} függvény használatával. Jegyezzük meg azonban, hogy ez a lépés csak azért szükséges, hogy a felhasználó számára könnyebben emészthető, ,,álló'' képet tudjunk megjeleníteni az alkalmazás felületén. A kép tükrözött voltát a feldolgozás során végig figyelembe véve ez a lépés akár el is hagyható.
+
+A pupillakövetés szempontjából a színinformációnak nincs jelentősége, ezért a \emph{második lépés} a kép \textbf{szürkeárnyalatossá konvertálása} a \texttt{cv::cvtColor} metódus használatával.
+
+A \emph{harmadik lépésben} \textbf{hisztogram-kiegyenlítést} végeztem a képen az OpenCV \texttt{cv::equalizeHist} függvénye használatával. A kiegyenlítés eredményeképp a kép minden megvilágítási körülmény között kellően kontrasztos lesz, megkönnyítve ezzel a pupilla detektálását.
+
+TODO: hisztogram+kuszob
+
+A szürkeárnyalatos képet ezek után a \emph{negyedik lépésben} \textbf{küszöbözni} kellett, ehhez a \texttt{cv::threshold} függvény használatára volt szükség. A pontos küszöbérték beállítása általában nehéz feladat, minden megvilágításra működő univerzális érték megtalálása pedig sokszor nem is lehetséges. A \sectref{infracam_mod} szakaszban részletezett infra-fényforrás megvalósításával azonban abba a szerencsés helyzetbe kerültem, hogy a külső megvilágítás hatását gyakorlatilag sikerült teljesen kiküszöbölni: a tesztelés során végül meghatározott ideális küszöbérték a verőfényes napsütéstől kezdve a vaksötét szobáig minden esetben megfelelően binarizálja a szürkeárnyalatos képet.
+
+\bigskip
+
+A fenti négy lépés elég a kamerakép előfeldolgozásához, az \texttt{ötödik lépéstől} kezdve a tényleges felismerés megvalósítása következhet. Az előző, \sectref{modsz_osszehasonlitas} szakaszban kifejtettem, hogy a feldolgozás sebességét döntően befolyásolja a pixelszinten végzett feldolgozási lépések komplexitása és száma. A előfeldolgozás végén a kép még meglehetősen nagy zajjal terhelt: látható a pupilla viszonylag nagy, ovális foltja, azonban például a szempillák foltja zavaró hatásként jelentkezik.
+
+Sebesség szempontjából azonban sokkal jobban járunk, ha nem is próbáljuk az előfeldolgozási lépések után hátramaradó zajt pixelszintű eljárásokkal kiszűrni (pl. bináris morfológia). Ehelyett az előfeldolgozott képre rögtön ráereszthetünk egy hierarchikus \textbf{kontúrkeresési eljárást} a \texttt{cv::findContours} függvény meghívásával. A további lépések során elegendő a hierarchia legfelső szintjét használnunk: mivel a megtalálni kívánt pupilla konvex, a blobok belsejében található lyukak elhelyezkedése nem szolgál többletinformációval.
+
+\emph{Hatodik lépésben} meg is szabadulhatunk a \texttt{túl kis méretű objektumoktól}, mivel ezek nagy valószínűséggel csak mint zaj vannak jelen a képen. Egy kontúrpontjaival megadott objektum területét a \texttt{cv::contourArea} függvény segítségével határozhatjuk meg, ez alapján már kiszűrhetők a ,,túl kicsi'' objektumok.
+
+A kisméretű zajok eltávolítása után jó eséllyel csak néhány, nagyobb területű blobunk marad, köztük a megtalálni kívánt pupilla. A fennmaradó blobok között jó szűrési feltételként adja magát a blobok \textbf{körkörösségének} vizsgálata. A \emph{hetedik lépésben} ezért a \sectref{blob_analizis} szakaszban ismertetett módon kiszámolom a foltok körkörösségi faktorát, majd ezek közül a legerősebbet kiválasztva nagyon jó százalékban sikerül a pupilla azonosítása.
+
+Nincs más hátra, mint a \emph{nyolcadik lépésben} \textbf{ellipszist illeszteni} a pupilla kontúrjára, ehhez használható a \texttt{cv::fitEllipse} függvény. 
 
 %............................................................................
 \subsection{Kalibráció, leképezés}\label{sect:kalibracio}

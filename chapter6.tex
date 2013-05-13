@@ -233,7 +233,7 @@ Az osztály a megjelenítésben jut szerephez. A munkamenetek egy listában ker�
 A kódolás során több helyen is szükség volt különböző átalakítások elvégzésére. A \texttt{Helper} osztály statikus metódusai időbélyegek formázására, valamint a Qt és az OpenCV belső kép-reprezentációi közötti oda-vissza átalakításra szolgálnak.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{Felhasználói felület}\label{sect:gui}
+\section{Grafikus felhasználói felület}\label{sect:gui}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 \texttt{+++ leiras + kepek a felhasznalo feluletrol +++}
@@ -242,7 +242,42 @@ A kódolás során több helyen is szükség volt különböző átalakítások 
 \section{Felhasználói dokumentáció}\label{sect:docs}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ az alkalmazas pontos hasznalata (tobb monitor, stb) +++}
+Az alkalmazás indítása után a felhasználót a főablak fogadja. Az ablak bal oldalán a felvett munkamenetek megtekintésére, törlésére, lejátszására, illetve hőtérkép generálására van lehetőség. A főablak jobb oldalán van lehetőség új munkamenetek rögzítésére.
+
+\paragraph{Munkamenet felvétele}
+
+\begin{enumerate}
+  \item Adjuk fel a vizsgálandó alanyra a sapkát, amelyhez a webkamera rögzítve van!
+  \item Végezzük el a kamerakép bekapcsolását a \textbf{Start} gomb megnyomásával (gyorsbillenyű: \textbf{S})!
+  \item Győződjünk meg róla, hogy a kamera orientációja megfelelő: ha nem, irányítsuk a szemrégióra!
+  \item Szükség esetén állítsuk be a kamera fókuszát a lencse tekerésével úgy, hogy a pupilla a lehető legélesebben rajzolódjon ki!
+  \item Kérjük meg az alanyt, hogy a vizsgálat során csak a szemét mozgassa, a fejét ne! A pontosabb mérés érdekében használhatunk álltámaszt is.
+  \item Indítsuk a kalibrációt a \textbf{Calibrate} gomb megnyomásával (gyorsbillentyű: \textbf{C})!
+  \item A kalibráció során kérjük meg az alanyt, hogy tekintetét irányítsa a képernyő sarkain sorban megjelenő céltáblákra! A kalibrációs pont rögzítését a céltáblára kattintva, vagy az \textbf{Enter} gyorsbillentyű segítségével végezhetjük.
+  \item A háttérben jelenítsük meg a vizsgálni kívánt képet (pl. weboldal részlete).
+  \item A \textbf{Record} gomb megnyomásával indítsuk el a munkamenet felvételét (gyorsbillentyű: \textbf{R})
+  \item A felvételt a \textbf{Record} gomb újbóli megnyomásával, vagy az \texttt{Escape} gyorsbillentyűvel állíthatjuk le.
+\end{enumerate}
+
+\paragraph{Munkamenet visszajátszása}
+
+\begin{enumerate}
+  \item Válasszuk ki a bal oldali listából a visszajátszani kívánt munkamenetet!
+  \item Kattintsunk a \texttt{Play} gombra! A visszajátszás megkezdődik, és folyamatosan ismétlődik, amíg le nem állítjuk.
+  \item A visszajátszás leállításához nyomjuk meg az \textbf{Escape} billentyűt!
+\end{enumerate}
+
+\paragraph{Hőtérkép generálása}
+
+\begin{enumerate}
+  \item Válasszuk ki a bal oldali listából azt a munkamenetet, amelyhez hőtérképet szeretnénk generálni!
+  \item Kattintsunk a \textbf{Heatmap} gombra! A generálás megkezdődik, a folyamat állása a státuszsávon visszajelzésre kerül. A generálás végeztével a hőtérkép megjelenik a képernyőn.
+  \item Használjuk az \textbf{Escape} billentyűt a hőtérkép bezárásához.
+\end{enumerate}
+
+\paragraph{Többmonitoros használat}
+
+A program fel lett készítve a több monitorral történő használatra. Amennyiben nem a saját tekintetünket követjük, hanem egy másik alanyét, úgy a kétmonitoros elrendezés használata a legkényelmesebb. Az alkalmazás főablakát húzzuk a másodlagos monitorra, ez lesz a vizsgáló képernyője. Az elsődleges monitort használhatjuk 
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Tesztelés, eredmények}\label{sect:teszteles}

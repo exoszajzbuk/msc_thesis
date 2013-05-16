@@ -18,17 +18,19 @@
 
 A blob alapú követést választva ki kellett dolgoznom a tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamatot. Két feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupilla-pozíció képernyő-pozícióba történő leképezésére.
 
+Mindkét feladat önmagában van annyira összetett, hogy érdemes őket kitüntetett figyelemmel kezelni. 
+
 %............................................................................
 \subsection{Pupillakövetés}\label{sect:pupillakov}
 %............................................................................
 
-A pupillakövetés megbízható működéséhez meg kellett találnom az elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt.
+A pupillakövetés megbízható működéséhez meg kellett találnom azon elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését, amelyekkel lehetővé vált a pupilla azonosítása. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt.
 
 Az előfeldolgozási műveleteket az OpenCV készen kínálja, azonban a függvények száma és paraméterezési lehetőségei miatt rengeteg alternatíva jöhetett szóba. A szakasz további részében a kiválasztott képfeldolgozási műveleteket szeretném dokumentálni, a folyamat egészének tekintetében lényegtelen részletek mellőzésével. A felhasznált függvények pontos paraméterezése megtalálható az \sectref{parameterezes} függelékben.
 
 \bigskip
 
-A szemrégió képét közvetítő webkamera a gyári orientációjához képest fejjel lefelé került felfüggesztésre. A látványosabb megjelenítés érdekében ezért \emph{első lépésként} \textbf{megtükröztem} a képet a vízszintes középtengely mentén a \texttt{cv::flip} függvény használatával. Jegyezzük meg azonban, hogy ez a lépés csak azért szükséges, hogy a felhasználó számára könnyebben emészthető, ,,álló'' képet tudjunk megjeleníteni az alkalmazás felületén. A kép tükrözött voltát a feldolgozás során végig figyelembe véve ez a lépés akár el is hagyható.
+A szemrégió képét közvetítő webkamera a gyári orientációjához képest fejjel lefelé került felfüggesztésre. A könnyebben értelmezhető megjelenítés érdekében ezért \emph{első lépésként} \textbf{megtükröztem} a képet a vízszintes középtengely mentén a \texttt{cv::flip} függvény használatával. Jegyezzük meg azonban, hogy ez a lépés csak azért szükséges, hogy a felhasználó számára emészthetőbb, ,,álló'' képet tudjunk megjeleníteni az alkalmazás felületén. A kép tükrözött voltát a feldolgozás során végig figyelembe véve ez a lépés akár el is hagyható!
 
 A pupillakövetés szempontjából a színinformációnak nincs jelentősége, ezért a \emph{második lépés} a kép \textbf{szürkeárnyalatossá konvertálása} a \texttt{cv::cvtColor} metódus használatával.
 
@@ -48,6 +50,8 @@ Sebesség szempontjából azonban sokkal jobban járunk, ha nem is próbáljuk a
 
 A kisméretű zajok eltávolítása után jó eséllyel csak néhány, nagyobb területű blobunk marad, köztük a megtalálni kívánt pupilla. A fennmaradó blobok között jó szűrési feltételként adja magát a blobok \textbf{körkörösségének} vizsgálata. A \emph{hetedik lépésben} ezért a \sectref{blob_analizis} szakaszban ismertetett módon kiszámolom a foltok körkörösségi faktorát, majd ezek közül a legerősebbet kiválasztva nagyon jó százalékban sikerül a pupilla azonosítása.
 
+TODO: blobs + ellipse
+
 Nincs más hátra, mint a \emph{nyolcadik lépésben} \textbf{ellipszist illeszteni} a pupilla kontúrjára, ehhez használható a \texttt{cv::fitEllipse} függvény. A pupillát a ráillesztett ellipszis paramétereivel lehet jellemezni: középpontjával, kis- és nagytengelyének hosszával, valamint nagytengelyének irányszögével.
 
 \bigskip
@@ -58,7 +62,59 @@ A pupillakövetésnél gondolni kell azokra az esetekre is, amikor a követés f
 \subsection{Kalibráció, leképezés}\label{sect:kalibracio}
 %............................................................................
 
-\texttt{+++ kalibrálás + kepernyo-koordinataba kepzes +++}
+A pupillakövetés mellett a másik, összetettebb algoritmus használatát igénylő feladat a \textbf{tekintet kalibrációja} volt, annak érdekében, hogy a kameraképen detektált pupillapozíció és a képernyőn nézett pont között kapcsolatot teremthessek.
+
+A kalibráció során a képernyő négy sarkában rögzítem a pupilla pozícióját, majd minden képkockán ezek között a pontok között interpolálva számítom ki a képernyőn nézett pont koordinátáit.
+
+\bigskip
+
+A klasszikus \textbf{bilineáris interpoláció} estén az egységnégyzet $u = [0, 1]$ és $v = [0, 1]$ koordinátáit szeretnénk egy tetszőleges négyszögbe leképezni.
+
+TODO: interpolacio
+
+A TODO ábrán látható módon definiáljuk a négyszöget $A$, $B$, $C$ és $D$ sarkaival. Belátható, hogy a $P$ pont koordinátáit a következő módon kaphatjuk meg:
+
+\begin{itemize}
+  \item $E$ pont lineáris interpolációval adódik $A$ és $B$ között
+  \item $F$ pont lineáris interpolációval adódik $C$ és $D$ között
+  \item a $P$ pont szintén lineáris interpolációval adódik $E$ és $F$ között
+\end{itemize}
+
+A leképezési feladat megoldása során a fenti számítást kell ,,visszafelé'' elvégezni: a sarokpontok (pupillapozíciók a képernyő sarkain mérve) mellett szintén adott $P$ ponthoz (a pupilla aktuális képkockán vett pozíciója) kell meghatározni annak $u$ és $v$ koordinátáit. Az $u$ és $v$ koordináták, valamint a képernyő szélességének és magasságának ismeretében meghatározhatók az éppen fókuszált pont képernyő-koordinátái.
+
+A felírandó rendszer ugyan nem lineáris, de egyszerűen, analitikusan megoldható. Az $u$ koordináta az
+
+\begin{align}\label{eq:calib_1}
+u &= \frac{-b - \sqrt{b^2 - 4 \cdot a \cdot c}}{2 \cdot a}
+\end{align}
+
+másodfokú egyenlet megoldásaként számítható, ahol az együtthatókat a következő kifejezések adják meg:
+
+\begin{align}\label{eq:calib_2}
+a &= (B_y - A_y) \cdot (C_x - D_x) - (B_x - A_x) \cdot (C_y - D_y) \nonumber \\
+b &= (A_y - P_y) \cdot (C_x - D_x) + (B_y - A_y) \cdot (D_x - P_x) - \nonumber \\ 
+  & \qquad - (A_x - P_x) \cdot (C_y - D_y) - (B_x - A_x) \cdot (D_y - P_y) \nonumber \\
+c &= (A_y - P_y) \cdot (D_x - P_x) - (A_x - P_x) \cdot (D_y - P_y)
+\end{align}
+
+Az $u$ koordináta ismeretében már meghatározhatók $E$ és $F$, a
+
+\begin{align}\label{eq:calib_3}
+E &= A + (B-A) \cdot u \nonumber \\
+F &= D + (C-D) \cdot u
+\end{align}
+
+kifejezések kiszámításával. A hiányzó $v$ koordinátát ezek után a 
+
+\begin{align}\label{eq:calib_4}
+v &= (P_x - E_x) / (F_x - E_x)
+\end{align}
+
+képlettel határozhatjuk meg. Ezzel készen is vagyunk, meghatároztuk a $P$ pont egységnégyzetre leképzett koordinátáit.
+
+\bigskip
+
+blabla
 
 %............................................................................
 \section{Validáció}\label{sect:validacio}

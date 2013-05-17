@@ -80,7 +80,7 @@ A TODO ábrán látható módon definiáljuk a négyszöget $A$, $B$, $C$ és $D
   \item a $P$ pont szintén lineáris interpolációval adódik $E$ és $F$ között
 \end{itemize}
 
-A leképezési feladat megoldása során a fenti számítást kell ,,visszafelé'' elvégezni: a sarokpontok (pupillapozíciók a képernyő sarkain mérve) mellett szintén adott $P$ ponthoz (a pupilla aktuális képkockán vett pozíciója) kell meghatározni annak $u$ és $v$ koordinátáit. Az $u$ és $v$ koordináták, valamint a képernyő szélességének és magasságának ismeretében meghatározhatók az éppen fókuszált pont képernyő-koordinátái.
+A leképezési feladat megoldása során a fenti számítást kell ,,visszafelé'' elvégezni: a sarokpontok (pupillapozíciók a képernyő sarkain mérve) mellett szintén adott $P$ ponthoz (a pupilla aktuális képkockán vett pozíciója) kell meghatározni annak $u$ és $v$ koordinátáit. Az $u$ és $v$ koordináták, valamint a képernyő szélességének és magasságának ($w$ és $h$) ismeretében meghatározhatók az éppen fókuszált pont képernyő-koordinátái, $l$ és $m$.
 
 A felírandó rendszer ugyan nem lineáris, de egyszerűen, analitikusan megoldható. Az $u$ koordináta az
 
@@ -97,7 +97,7 @@ b &= (A_y - P_y) \cdot (C_x - D_x) + (B_y - A_y) \cdot (D_x - P_x) - \nonumber \
 c &= (A_y - P_y) \cdot (D_x - P_x) - (A_x - P_x) \cdot (D_y - P_y)
 \end{align}
 
-Az $u$ koordináta ismeretében már meghatározhatók $E$ és $F$, a
+Az $u$ koordináta ismeretében már meghatározhatók $E$ és $F$ pontok, a
 
 \begin{align}\label{eq:calib_3}
 E &= A + (B-A) \cdot u \nonumber \\
@@ -110,17 +110,61 @@ kifejezések kiszámításával. A hiányzó $v$ koordinátát ezek után a
 v &= (P_x - E_x) / (F_x - E_x)
 \end{align}
 
-képlettel határozhatjuk meg. Ezzel készen is vagyunk, meghatároztuk a $P$ pont egységnégyzetre leképzett koordinátáit.
+képlettel határozhatjuk meg. Az egységnégyzetet már csak a megfelelő méretre kell skálázni: az $l$ és $m$ képernyő-koordináták a következő triviális összefüggésekkel számíthatók.
 
-\bigskip
-
-blabla
+\begin{align}\label{eq:calib_5}
+l &= u \cdot w \nonumber \\
+m &= v \cdot h
+\end{align}
 
 %............................................................................
 \section{Validáció}\label{sect:validacio}
 %............................................................................
 
-asdf
+Az alapvető algoritmusok önálló implementációját követően, de még az architektúra kialakítása, valamint a felhasználói felületek fejlesztésének megkezdése előtt szerettem volna igazolni, hogy a kifejlesztett pupillakövetési módszer valóban alkalmas a rá szabott feladat elvégzésére.
+
+A validáció során méréseket végeztem a pupillakövető algoritmussal: a kijelző teljes területén sorban egy adott oldalhosszúságú négyzetháló pontjaira fókuszálva vettem fel a felismert ellipszisek paramétereit. A méréseket egy 1280$\times$1024 képpont felbontású monitorral végeztem el, a fej pozícióját álltámasszal rögzítve (a mérési elrendezés pontos paraméterei a \sectref{parameterezes} függelékben megtalálhatóak). A mérés során használt négyzetháló méretét és az ebből adódóan rögzített képpontok számát a \tabref{meresi_pontok} táblázat tartalmazza.
+
+\begin{table}[ht]
+	\centering
+	\caption{A validáció során rögzített mérések adatai.} \label{tab:meresi_pontok}
+	\begin{tabular}{ c | c }
+	rács mérete & rögzített pontok száma \\ \hline \hline
+	100$\times$100 képpont & 143 db \\
+	75$\times$75 képpont & 252 db \\
+	50$\times$50 képpont & 546 db \\
+	\end{tabular}
+\end{table}
+
+Mindhárom rácsméret esetén a rácspontokon balról jobbra, fentről lefelé haladva minden mérési pontban a következő adatokat rögzítettem a tesztpontra és a felismert ellipszisre vonatkozóan:
+
+\begin{itemize}
+  \item a tesztpont \textbf{képernyő-koordinátái} -- $T_x$ és $T_y$
+  \item az ellipszis \textbf{súlypontjának} pozíciója -- $C_x$ és $C_y$
+  \item az ellipszis \textbf{kis- és nagytengelyhossza} -- $k$ és $l$
+  \item az ellipszis \textbf{irányszöge} -- $\varphi$
+\end{itemize}
+
+\emph{Első lépésként} ábrázoltam a felismert ellipszis súlypontjának (középpontjának) koordinátáit a tesztpont koordinátáinak függvényében. Az eredmény a TODO ábrán látható, és a többnyire szabályos mintázat megjelenése jó kilátásokkal kecsegtetett a későbbi mérések, valamint a remélhetőleg helyes működés tekintetében is.
+
+TODO
+
+A \emph{második lépésben} a volt a célom, hogy meghatározzam, az ellipszis paraméterei közül melyek azok, amelyek a legszignifikánsabban vesznek részt a pupillapozíció és a képernyő-koordináta közötti kapcsolatban. A paraméterek ,,fontossági'' értékeit \textbf{korrelációs együtthatók} számításával vizsgáltam a \tabref{korrel} táblázatban megadott bemenetekkel és eredményekkel. 
+
+\begin{table}[ht]
+	\centering
+	\caption{Korrelációs együtthatók.} \label{tab:korrel}
+	\begin{tabular}{ c | c }
+	rács mérete & rögzített pontok száma \\ \hline \hline
+	100$\times$100 képpont & 143 db \\
+	75$\times$75 képpont & 252 db \\
+	50$\times$50 képpont & 546 db \\
+	\end{tabular}
+\end{table}
+
+Nem túl nagy meglepetésre, a legnagyobb korreláció minden esetben a pupilla súlypontjának koordinátái és a tesztpont koordinátái között mutatkozott. A $0,\!9$ feletti korrelációs együtthatók alapján bátran kijelenthető, hogy lehetséges a tekintetkövetést a pupillaként felismert ellipszis középpontjára alapuló eljárásokkal megvalósítani.
+
+Látható azonban, hogy a többi paraméter esetében sem túlzottan kicsik a korrelációs együtthatók: a további fejlesztések során ezen plusz információként szolgálhatnak, javítva a tekintetkövetés pontosságát.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Demonstráció}\label{sect:kiserletek}

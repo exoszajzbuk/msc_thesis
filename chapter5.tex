@@ -258,7 +258,7 @@ Munkám \sectref{felhasznalas} fejezetében többek között a pszichológiai é
 \subsection{Pszichológiai bemutató}\label{sect:pszicho}
 %............................................................................
 
-A rendszer magasabb szintű működését elsőként úgy próbáltam demonstrálni, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható a \figref{yarbus} ábrán.
+A rendszer magasabb szintű működését első esetben úgy próbáltam demonstrálni, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható a \figref{yarbus} ábrán.
 
 \begin{figure}[!ht]
 \centering
@@ -271,7 +271,7 @@ Látható, hogy a kísérlet végrehajtásához szükség volt a tekintet követ
 
 \bigskip
 
-Az általam tesztelt alanyoknak a következő kérdésekre kellett válaszolniuk a tesztkép (Repin: Váratlan utazó) rövid vizsgálata után. A vizsgálatot minden kérdésben 200 beérkezett érvényes mérési pontig folytattam, ez a felhasznált webkamera, illetve a feldolgozási sebesség mellett nagyjából kérdésenként 15--20 másodpercet vett igénybe.
+Az vizsgálatban résztvevő alanyoknak a következő kérdésekre kellett válaszolniuk a tesztkép (Repin: Váratlan utazó) rövid vizsgálata után. A vizsgálatot minden kérdésben 200 beérkezett érvényes mérési pontig folytattam, ez a felhasznált webkamera, illetve a feldolgozási sebesség mellett nagyjából kérdésenként 15--20 másodpercet vett igénybe.
 
 \begin{enumerate}
  \item szabad nézelődés
@@ -292,13 +292,15 @@ A kérdésekre nem volt jó, vagy rossz válasz, a kísérlet minden alanynál c
 \label{fig:eredmeny}
 \end{figure}
 
-Látható -- bár ez nem volt feltétel -- hogy a mérési eredmények ezen alany esetén meglehetősen jól fedik Yarbus tesztalanyának eredményeit. Az viszont mindenképpen kijelenthető, hogy szignifikáns különbség van az ábra első (szabad nézelődés), valamint többi része között. Nem célom a kísérlet pszichológiai eredményeit értékelni, az viszont bizonyos, hogy a rendszer hasonló kísérletek elvégzését támogatja.
+Látható -- bár ez nem volt feltétel -- hogy a mérési eredmények ezen alany esetén meglehetősen jól fedik Yarbus tesztalanyának eredményeit. Az viszont mindenképpen kijelenthető, hogy szignifikáns különbség van az ábra első (szabad nézelődés), valamint többi része között.
+
+Természetesen nem tudom, és nem is célom a kísérlet pszichológiai eredményeit értékelni, az viszont a kapott eredményekből leszűrhető, hogy a rendszer hasonló kísérletek elvégzését nagy valószínűséggel támogatja.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \subsection{Webergonómiai bemutató}\label{sect:web}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Ahogyan dolgozatom első fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem az pszichológiai kísérlet adatait hőtérképen (heatmap) megjelenítő funkciót is, ennek eredménye egy tesztképre a \figref{heatmap} ábrán látható.
+Ahogyan dolgozatom \sectref{felhasznalas} fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem az pszichológiai kísérlet adatait hőtérképen (heatmap) megjelenítő funkciót is, ennek eredménye egy tesztképre a \figref{heatmap} ábrán látható.
 
 \begin{figure}[!ht]
 \centering
@@ -307,14 +309,24 @@ Ahogyan dolgozatom első fejezetében már említettem, a tekintet követése a 
 \label{fig:heatmap}
 \end{figure}
 
-Minden vizsgálatban célszerű a lehető leginkább informatív megjelenítést választani a rendelkezésre álló adathalmaz alapján. A képen egyre pirosabb színnel jelöltem a kép frekventáltan vizsgált területeit, például egy webergonómiai vizsgálatban az adatok effajta vizualizációja lehet a legcélszerűbb.
+A webergonómia terén sokszor az értékes információ nem a tekintet dinamikus változásában keresendő (bár természetesen az is érdekes vizsgálatok tárgya lehet). A teljes vizsgálati periódus alatt aggregált értékek alapján például a kép egyes területeinek ,,érdekességét'' tudjuk meghatározni, 
+
+A hőtérképeken más-más színekkel jelöli a kép egyre érdekesebb régióit. A tesztképen én a legelterjedtebb (valóban hőmérsékleti adatok reprezentálásánál megszokott) megjelenítési módot választottam, azaz egyre ,,forróbb'', pirosabb színnel jelöltem a kép frekventáltan vizsgált területeit.
 
 \bigskip
 
-\texttt{+++ meg 1-2 bekezdes +++}
+A tesztképet nézve leszűrhető az eredmény: a rendszerrel viszonylag kevés erőfeszítés árán kinyerhető a nyers tekintetkövetési adatok olyan reprezentációja, amely az aktuális feladat szempontjából a leginkább látványos és hasznos megjelenítést biztosítja.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Összefoglalás}\label{sect:kiserlet_osszefoglalas}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ osszefoglalas a kiserletekrol +++}
+A megvalósítás első fázisában -- ahogy a fejezetben olvashattuk -- sikerült lefektetnem a tekintetkövető rendszer alapjait. Választ kaptam a kérdésekre, hogy
+
+\begin{enumerate}[a)]
+ \item melyik pupillakövetési módszert célszerű használnom?
+ \item milyen módon végezzem a rendszer kalibrációját?
+ \item alkalmas-e a rendszer mérések, és bemutató kísérletek alapján a kiszabott feladat elvégzésére?
+\end{enumerate} 
+
+A pupillakövetési és kalibrációs algoritmusok kidolgozása a fent említett kérdések megválaszolásán kívül sem volt hiábavaló. A tekintetkövetés alapját jelentő módszerek implementációja szinte egy az egyben felhasználható a végleges alkalmazásban.

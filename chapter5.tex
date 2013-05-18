@@ -66,26 +66,39 @@ A Hough-transzformáció kipróbálása során azt a következtetést tudtam lev
 \emph{Előnyök:}
 
 \begin{itemize}
-  \item 
+  \item \textbf{kevés előfeldolgozást} igényel relatíve zajos képen is a pupilla foltja blob-jellemzők szűrésével meghatározható
+  \item a kevés előfeldolgozási lépés, valamint a kontúrkeresés gyorsasága miatt ez a módszer nyújtott a \textbf{legjobb sebességet} -- a webkamera maximális 30 képkockás másodpercenkénti frissítését az algoritmus valós időben követni tudta
+  \item az algoritmus végén pupillát egy, a pupillakontúrra nagyon jól illeszkedő \textbf{ellipszissel} jellemezhetjük, így nagyon fontos lapultsági, orientációs információkat is kinyerhetünk, ami a tekintetkövetés szempontjából fontos lehet
 \end{itemize}
 
 \emph{Hátrányok:}
 
 \begin{itemize}
-  \item 
+  \item hátrányként említhető a másik két módszerhez képest \textbf{bonyolultabb implementáció} -- az eljárásból ,,készen'' csak az előfeldolgozási műveletek, valamint a kontúrkeresési eljárás érhető el, a blob-jellemző alapú szűrést egyedileg kell implementálni
 \end{itemize}
 
 \medskip
 
-Látható, hogy a blob-alapú követés
+Az \tabref{modsz} táblázatban foglaltam össze a módszerek összehasonlítása során szerzett tapasztalataimat. A táblázat adataiból látható, hogy a leggyorsabb feldolgozást és a legnagyobb pontosságot a három módszer közül a blob-alapú követés nyújtja, ezért a választásom erre esett.
+
+\begin{table}[ht]
+	\centering
+	\caption{Pupillakövetési módszerek összehasonlítása.} \label{tab:modsz}
+	\begin{tabular}{ l | c | c }
+	 & pontosság & sebesség \\ \hline \hline
+	\textbf{Hough-transzformáció} & zajra érzékeny, csak körök illesztése & $\sim$6-7 FPS \\
+	\textbf{objektumdetektálás} & pontatlan & $\sim$15 FPS  \\
+	\textbf{blob alapú követés} & pontos ellipszis illesztése & $\sim$30 FPS \\
+	\end{tabular}
+\end{table}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Feldolgozási folyamat}\label{sect:feld_folyamat}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A blob alapú követést választva ki kellett dolgoznom a tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamatot. Két feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupilla-pozíció képernyő-pozícióba történő leképezésére.
+A tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamat kidolgozása során két fő feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupilla-pozíció képernyő-pozícióba történő leképezésére. Mindkét feladat önmagában van annyira összetett, hogy érdemes őket kitüntetett figyelemmel kezelni.
 
-Mindkét feladat önmagában van annyira összetett, hogy érdemes őket kitüntetett figyelemmel kezelni. 
+A pupillakövetést az előző szakaszban írtaknak megfelelően több módszerrel is teszteltem, a végül kiválasztott blob alapú követési algoritmust azonban szeretném részletesebben is bemutatni a \sectref{pupillakov} szakaszban. A kalibrációt már a stabilan működő pupillakövetésre építettem fel, a felhasznált módszer bemutatására szenteltem dolgozatom \sectref{kalibracio} szakaszát.
 
 %............................................................................
 \subsection{Pupillakövetés}\label{sect:pupillakov}

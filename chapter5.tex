@@ -12,7 +12,72 @@ A fejezet \sectref{modsz_osszehasonlitas} szakaszában arra keresem a választ, 
 \section{Módszerek összehasonlítása}\label{sect:modsz_osszehasonlitas}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ miert BLOB-os keresest valasztottam Hough vagy Optical flow helyett? +++}
+A \sectref{elmeleti_alapok} fejezetben három módszer elméletét mutattam be, amelyekkel lehetséges a pupilla felismerése a kameraképen, ami az optikai elvű tekintetkövetés alapjául szolgál. Mindhárom követési elvet kipróbáltam működés közben, ebben a szakaszban a módszerek előnyeit és hátrányait foglalom össze.
+
+\paragraph{Hough-transzformáció}
+
+A transzformáció bemenetére egy élképet kell juttatnunk, ezt feldolgozva tudja az algoritmus az ismertetett szavazási eljárással megtalálni a legvalószínűbb körök paramétereit a képen. A módszer használata során a következő előnyökkel és hátrányokkal találkoztam.
+
+\medskip
+
+\emph{Előnyök:}
+
+\begin{itemize}
+  \item az előfeldolgozási lépések megvalósítása OpenCV környezetben meglehetősen \textbf{egyszerű}
+  \item maga a Hough-transzformáció egyetlen függvényhívással (\texttt{cv::HoughCircles}) elvégezhető
+\end{itemize}
+
+\emph{Hátrányok:}
+
+\begin{itemize}
+  \item a kép masszív pixel-szintű \textbf{előfeldolgozást igényel}, a képet terhelő zajok nagy mértékben hozzájárulhatnak egynél több kör megtalálásához, ezek között nehéz különbséget tenni
+  \item a \textbf{módszer sebessége} hagy némi kívánnivalót maga után: minden képkockán feldolgozást végezve a sebesség 6-7 képkocka másodpercenként
+  \item a pupilla formája is gyakran gondot okoz a felismerésben, a Hough-transzformáció OpenCV-beli implementációja csak körök keresésére alkalmas
+\end{itemize}
+
+\medskip
+\paragraph{Objektumdetektálás és -követés}
+
+A Viola--Jones objektumdetektor kipróbálásához jóval nagyobb látószögű objektívet használtam, mint a másik két esetben. A pupillapozíció becsléséhez az OpenCV-ben megtalálható szemrégiókra betanított osztályozót használtam. Az objektumdetektálást csak minden huszadik képkockán végeztem el, a közbülső képkockákon Lucas--Kanade optical flow eljárással követtem az előzőleg felismert pont mozgását.
+
+\medskip
+
+\emph{Előnyök:}
+
+\begin{itemize}
+  \item az objektumdetektálás és az optikai áramlás eljárás kettősének felhasználásával a Hough-transzformációhoz képest jelentősen \textbf{jobb feldolgozási sebességet} -- azonos számítógépen átlagosan 15 képkocka másodpercenként -- lehetett elérni
+\end{itemize}
+
+\emph{Hátrányok:}
+
+\begin{itemize}
+  \item a Viola--Jones objektumdetektor a használt konfigurációban a szemrégió detektálására volt kihegyezve, a pupilla régión belüli pozíciójának meghatározása \textbf{nem elég pontos}
+  \item igaz, én most előre betanított osztályozót használtam, de egyéb esetekben az \textbf{osztályozó betanítása} meglehetősen összetett feladat
+  \item az objektumdetektálás pozíció-hibáját az optical flow legjobb esetben is továbbviszi, de az újabb detektálási pontig tipikusan még több hiba rakódik a detektált pozícióra
+\end{itemize}
+
+\medskip
+\paragraph{Blob alapú követés}
+
+A Hough-transzformáció kipróbálása során azt a következtetést tudtam levonni, hogy a pixelszinten végzett előfeldolgozási lépések (pl. bináris morfológia, simítási eljárások) viszik el a szükséges számítási teljesítmény jelentős részét. Minél kevesebb előfeldolgozást kell alkalmazni, annál több kapacitást tudunk a tényleges feldolgozás elvégzésére szánni. Nem is beszélve arról, hogy a kép egészére vonatkozó feldolgozási lépések számításigénye természetesen a kamerakép felbontásának növekedésével együtt növekszik!
+
+\medskip
+
+\emph{Előnyök:}
+
+\begin{itemize}
+  \item 
+\end{itemize}
+
+\emph{Hátrányok:}
+
+\begin{itemize}
+  \item 
+\end{itemize}
+
+\medskip
+
+Látható, hogy a blob-alapú követés
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Feldolgozási folyamat}\label{sect:feld_folyamat}

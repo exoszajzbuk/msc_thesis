@@ -234,13 +234,38 @@ A kódolás során több helyen is szükség volt különböző átalakítások 
 \section{Grafikus felhasználói felület}\label{sect:gui}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ leiras + kepek a felhasznalo feluletrol +++}
+Az alkalmazás felhasználói felülete az előző szakaszban említetteknek megfelelően több ablakot is felhasznál (pl. kalibrációkor, felvételkor, visszajátszáskor), de ezek többnyire csak teljes képernyős képek megjelenítésére használatosak, felhasználói interakció nem történik rajtuk.
+
+A felhasználó -- legyen az a vizsgáló vagy az alany -- leginkább az alkalmazás \figref{app_gui} ábrán látható \textbf{főablakával} találkozik.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/app_gui.png}
+\caption{Az alkalmazás főablaka}
+\label{fig:app_gui}
+\end{figure}
+
+\bigskip
+
+Az főablak két részre oszlik. Az ablak bal oldalán a felvett \textbf{munkamenetek menedzselésére} nyílik lehetőség, míg a jobb oldalon a kalibrációt és az új munkamenetek felvételét végezhetjük.
+
+A bal oldal nagy részét elfoglaló listanézet a rögzített munkameneteket tartalmazza időrendben visszafelé. Ahogy az ábrán látható, az egyes munkamenetekhez tartozó sorokban az összes munkamenet szempontjából fontos információ -- a felvétel időpontja, a felvett pontok száma, valamint a felvétel során vizsgált kép előnézete -- kijelzésre kerül. A lista alatt található három gombbal nyílik lehetőség sorrendben a visszajátszásra, a hőtérkép generálására, illetve a munkamenet törlésére (a törléshez megerősítés szükséges).
+
+\bigskip
+
+A jobb oldal jelentős részét az \textbf{élő kamerakép} foglalja el. A kép alatti három gomb a kamera inicializálására, a kalibráció indítására, valamint új munkamenet rögzítésére szolgál. A kamerát inicializálva az élőképen elhelyezett rádiógombokkal tudjuk vezérelni, hogy a pupillakeresés melyik feldolgozási fázisa jelenjen meg az előnézeti képen.
+
+A kalibrációt elindítva teljes képernyős, homogén fehér hátterű ablak nyílik meg. A kalibrációs pontok rögzítését a sarkokban megjelenő gombokra kattintva érhetjük el. A kalibráció végeztével a rögzített sarokpontok kijelzésre kerülnek az élőképen (sárga négyszög). Új munkamenet rögzítése esetén szintén új, teljes képernyős ablak nyílik, a képernyő aktuális tartalmát mintegy ,,befagyasztva''.
+
+\bigskip
+
+A jobb oldalon található gombok mindegyike \textbf{két állapotú}. Bekapcsolt állapotukban újra megnyomva őket tudjuk a felvételt leállítani, az eddigi kalibrációt semmissé tenni, valamint a kamerát kikapcsolni. A jobb oldali gombok értelemszerűen csak meghatározott sorrendben használhatók: a funkciók balról jobbra haladva aktiválhatók.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Felhasználói dokumentáció}\label{sect:docs}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Az alkalmazás indítása után a felhasználót a főablak fogadja. Az ablak bal oldalán a felvett munkamenetek megtekintésére, törlésére, lejátszására, illetve hőtérkép generálására van lehetőség. A főablak jobb oldalán van lehetőség új munkamenetek rögzítésére.
+Az alkalmazás indítása után a felhasználót a főablak (lásd \figref{app_gui} ábra) fogadja. Az ablak bal oldalán a felvett munkamenetek megtekintésére, törlésére, lejátszására, illetve hőtérkép generálására van lehetőség. A főablak jobb oldalán történhet az új munkamenetek rögzítése.
 
 \paragraph{Munkamenet felvétele}
 
@@ -261,7 +286,7 @@ Az alkalmazás indítása után a felhasználót a főablak fogadja. Az ablak ba
 
 \begin{enumerate}
   \item Válasszuk ki a bal oldali listából a visszajátszani kívánt munkamenetet!
-  \item Kattintsunk a \texttt{Play} gombra! A visszajátszás megkezdődik, és folyamatosan ismétlődik, amíg le nem állítjuk.
+  \item Kattintsunk a \textbf{Play} gombra! A visszajátszás megkezdődik, és folyamatosan ismétlődik, amíg le nem állítjuk.
   \item A visszajátszás leállításához nyomjuk meg az \textbf{Escape} billentyűt!
 \end{enumerate}
 
@@ -271,6 +296,14 @@ Az alkalmazás indítása után a felhasználót a főablak fogadja. Az ablak ba
   \item Válasszuk ki a bal oldali listából azt a munkamenetet, amelyhez hőtérképet szeretnénk generálni!
   \item Kattintsunk a \textbf{Heatmap} gombra! A generálás megkezdődik, a folyamat állása a státuszsávon visszajelzésre kerül. A generálás végeztével a hőtérkép megjelenik a képernyőn.
   \item Használjuk az \textbf{Escape} billentyűt a hőtérkép bezárásához.
+\end{enumerate}
+
+\paragraph{Munkamenet törlése}
+
+\begin{enumerate}
+  \item Válasszuk ki a bal oldali listából a törölni kívánt munkamenetet!
+  \item Kattintsunk a \textbf{Delete} gombra! A törlés megerősítését kérő ablak ugrik fel.
+  \item Erősítsük meg törlési szándékunkat az \textbf{OK} gombra kattintva!
 \end{enumerate}
 
 \paragraph{Többmonitoros használat}
@@ -283,4 +316,4 @@ Az alkalmazás főablakát húzzuk a másodlagos monitorra, ez lesz a vizsgáló
 \section{Tesztelés, eredmények}\label{sect:teszteles}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ tesztelesi dokumentacio (ide mit?) +++}
+\texttt{+++ szubjektiv tesztek + kepek! +++}

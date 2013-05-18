@@ -116,7 +116,12 @@ A pupillakövetés szempontjából a színinformációnak nincs jelentősége, e
 
 A \emph{harmadik lépésben} \textbf{hisztogram-kiegyenlítést} végeztem a képen az OpenCV \texttt{cv::equalizeHist} függvénye használatával. A kiegyenlítés eredményeképp a kép minden megvilágítási körülmény között kellően kontrasztos lesz, megkönnyítve ezzel a pupilla detektálását.
 
-TODO: hisztogram+kuszob
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=110mm, keepaspectratio]{figures/eq_thresh.png}
+\caption{Hisztogram-kiegyenlítés és küszöbözés}
+\label{fig:eq_thresh}
+\end{figure}
 
 A szürkeárnyalatos képet ezek után a \emph{negyedik lépésben} \textbf{küszöbözni} kellett, ehhez a \texttt{cv::threshold} függvény használatára volt szükség. A pontos küszöbérték beállítása általában nehéz feladat, minden megvilágításra működő univerzális érték megtalálása pedig sokszor nem is lehetséges. A \sectref{infracam_mod} szakaszban részletezett infra-fényforrás megvalósításával azonban abba a szerencsés helyzetbe kerültem, hogy a külső megvilágítás hatását gyakorlatilag sikerült teljesen kiküszöbölni: a tesztelés során végül meghatározott ideális küszöbérték a verőfényes napsütéstől kezdve a vaksötét szobáig minden esetben megfelelően binarizálja a szürkeárnyalatos képet.
 
@@ -130,7 +135,12 @@ Sebesség szempontjából azonban sokkal jobban járunk, ha nem is próbáljuk a
 
 A kisméretű zajok eltávolítása után jó eséllyel csak néhány, nagyobb területű blobunk marad, köztük a megtalálni kívánt pupilla. A fennmaradó blobok között jó szűrési feltételként adja magát a blobok \textbf{körkörösségének} vizsgálata. A \emph{hetedik lépésben} ezért a \sectref{blob_analizis} szakaszban ismertetett módon kiszámolom a foltok körkörösségi faktorát, majd ezek közül a legerősebbet kiválasztva nagyon jó százalékban sikerül a pupilla azonosítása.
 
-TODO: blobs + ellipse
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=110mm, keepaspectratio]{figures/blob_pupil.png}
+\caption{Blobok és a pupilla ellipszise}
+\label{fig:blob_pupil}
+\end{figure}
 
 Nincs más hátra, mint a \emph{nyolcadik lépésben} \textbf{ellipszist illeszteni} a pupilla kontúrjára, ehhez használható a \texttt{cv::fitEllipse} függvény. A pupillát a ráillesztett ellipszis paramétereivel lehet jellemezni: középpontjával, kis- és nagytengelyének hosszával, valamint nagytengelyének irányszögével.
 
@@ -225,20 +235,25 @@ Mindhárom rácsméret esetén a rácspontokon balról jobbra, fentről lefelé 
   \item az ellipszis \textbf{irányszöge} -- $\varphi$
 \end{itemize}
 
-\emph{Első lépésként} ábrázoltam a felismert ellipszis súlypontjának (középpontjának) koordinátáit a tesztpont koordinátáinak függvényében. Az eredmény a TODO ábrán látható, és a többnyire szabályos mintázat megjelenése jó kilátásokkal kecsegtetett a későbbi mérések, valamint a remélhetőleg helyes működés tekintetében is.
+\emph{Első lépésként} ábrázoltam a felismert ellipszis súlypontjának (középpontjának) koordinátáit a tesztpont koordinátáinak függvényében. Az eredmény a \figref{calib_coords} ábrán látható, és a többnyire szabályos mintázat megjelenése jó kilátásokkal kecsegtetett a későbbi mérések, valamint a remélhetőleg helyes működés tekintetében is.
 
-TODO
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=150mm, keepaspectratio]{figures/calib_coords.png}
+\caption{Súlyponti koordináták a tesztpont koordinátáinak függvényében a) 100 b) 75 c) 50 képpontos rácstávolság esetén}
+\label{fig:calib_coords}
+\end{figure}
 
 A \emph{második lépésben} a volt a célom, hogy meghatározzam, az ellipszis paraméterei közül melyek azok, amelyek a legszignifikánsabban vesznek részt a pupillapozíció és a képernyő-koordináta közötti kapcsolatban. A paraméterek ,,fontossági'' értékeit \textbf{korrelációs együtthatók} számításával vizsgáltam a \tabref{korrel} táblázatban megadott bemenetekkel és eredményekkel. 
 
 \begin{table}[ht]
 	\centering
 	\caption{Korrelációs együtthatók.} \label{tab:korrel}
-	\begin{tabular}{ c | c }
-	rács mérete & rögzített pontok száma \\ \hline \hline
-	100$\times$100 képpont & 143 db \\
-	75$\times$75 képpont & 252 db \\
-	50$\times$50 képpont & 546 db \\
+	\begin{tabular}{ c | c | c | c | c | c }
+	rács mérete & $R(T_x, C_x)$ & $R(T_y, C_y)$ & $R(\sqrt{T_x^2+T_y^2}, k)$ & $R(\sqrt{T_x^2+T_y^2}, l)$ & $R(\sqrt{T_x^2+T_y^2}, \varphi)$ \\ \hline \hline
+	100$\times$100 képpont & 1 & 1 & 1 & 1 & 1  \\
+	75$\times$75 képpont & 1 & 1 & 1 & 1 & 1 \\
+	50$\times$50 képpont & 1 & 1 & 1 & 1 & 1 \\
 	\end{tabular}
 \end{table}
 
@@ -263,7 +278,7 @@ A rendszer magasabb szintű működését első esetben úgy próbáltam demonst
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=140mm, keepaspectratio]{figures/yarbus.jpg}
-\caption{Yarbus '67-es kísérletének eredménye}
+\caption{Yarbus '67-es kísérletének eredménye.}
 \label{fig:yarbus}
 \end{figure}
 

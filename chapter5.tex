@@ -158,11 +158,14 @@ A kalibráció során a képernyő négy sarkában rögzítem a pupilla pozíci�
 
 \bigskip
 
-A klasszikus \textbf{bilineáris interpoláció} estén az egységnégyzet $u = [0, 1]$ és $v = [0, 1]$ koordinátáit szeretnénk egy tetszőleges négyszögbe leképezni.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/interpol.png}
+\caption{A $P$ pupilla-középpont leképezése képernyő-koordinátákba.}
+\label{fig:interpol}
+\end{figure}
 
-TODO: interpolacio
-
-A TODO ábrán látható módon definiáljuk a négyszöget $A$, $B$, $C$ és $D$ sarkaival. Belátható, hogy a $P$ pont koordinátáit a következő módon kaphatjuk meg:
+A klasszikus \textbf{bilineáris interpoláció} estén az egységnégyzet $u = [0, 1]$ és $v = [0, 1]$ koordinátáit szeretnénk egy tetszőleges négyszögbe leképezni. A \figref{interpol} ábrán látható módon definiáljuk a négyszöget $A$, $B$, $C$ és $D$ sarkaival. Belátható, hogy a $P$ pont koordinátáit a következő módon kaphatjuk meg:
 
 \begin{itemize}
   \item $E$ pont lineáris interpolációval adódik $A$ és $B$ között
@@ -235,12 +238,12 @@ Mindhárom rácsméret esetén a rácspontokon balról jobbra, fentről lefelé 
   \item az ellipszis \textbf{irányszöge} -- $\varphi$
 \end{itemize}
 
-\emph{Első lépésként} ábrázoltam a felismert ellipszis súlypontjának (középpontjának) koordinátáit a tesztpont koordinátáinak függvényében. Az eredmény a \figref{calib_coords} ábrán látható, és a többnyire szabályos mintázat megjelenése jó kilátásokkal kecsegtetett a későbbi mérések, valamint a remélhetőleg helyes működés tekintetében is.
+\emph{Első lépésként} ábrázoltam a tesztpontok koordinátáit a felismert ellipszis súlypontjának (középpontjának)  koordinátái függvényében. Az eredmény a \figref{calib_coords} ábrán látható, és a többnyire szabályos mintázat megjelenése jó kilátásokkal kecsegtetett a későbbi mérések, valamint a remélhetőleg helyes működés tekintetében is.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=150mm, keepaspectratio]{figures/calib_coords.png}
-\caption{Súlyponti koordináták a tesztpont koordinátáinak függvényében a) 100 b) 75 c) 50 képpontos rácstávolság esetén}
+\caption{A tesztpontokon mért eredmények a súlypontok függvényében függvényében a) 100 b) 75 c) 50 képpontos rácstávolság esetén}
 \label{fig:calib_coords}
 \end{figure}
 
@@ -249,17 +252,17 @@ A \emph{második lépésben} a volt a célom, hogy meghatározzam, az ellipszis 
 \begin{table}[ht]
 	\centering
 	\caption{Korrelációs együtthatók, $D = \sqrt{T_x^2+T_y^2}$} \label{tab:korrel}
-	\begin{tabular}{ l | c | c | c }
-	 & \textbf{100$\times$100 & \textbf{75$\times$75} & \textbf{50$\times$50} \\ \hline \hline
-	$R(T_x, C_x)$    & 1 & 1 & 1 \\
-	$R(T_y, C_y)$    & 1 & 1 & 1 \\
-	$R(D, k)$        & 1 & 1 & 1 \\
-	$R(D, l)$        & 1 & 1 & 1 \\
-	$R(D, \varphi)$  & 1 & 1 & 1 \\
-	\end{tabular}
+	\begin{tabularx}{0.6\textwidth}{ l | S | S | S }
+	 & \textbf{100$\times$100} & \textbf{75$\times$75} & \textbf{50$\times$50} \\ \hline \hline
+	$R(T_x, C_x)$    & 0.9789    & 0.9587   & 0.9464 \\
+	$R(T_y, C_y)$    & 0.9898    & 0.9893   & 0.9854 \\
+	$R(D, k)$        & -0.4386   & -0.2427  & -0.1193 \\
+	$R(D, l)$        & 0.1603    & 0.1098   & 0.0776 \\
+	$R(D, \varphi)$  & -0.1537   & -0.2431  &  -0.1092 \\
+	\end{tabularx}
 \end{table}
 
-Nem teljesen váratlan módon a legnagyobb korreláció minden esetben az ellipszis súlypontjának koordinátái és a tesztpont koordinátái között mutatkozott. Az együtthatók alapján bátran kijelenthető, hogy lehetséges csak a súlypont koordinátáit felhasználni a leképezés során.
+Nem teljesen váratlan módon a legnagyobb korreláció minden esetben az ellipszis súlypontjának koordinátái és a tesztpont koordinátái között mutatkozott. Az együtthatók alapján bátran kijelenthető, hogy lehetséges a súlypont koordinátáira alapozni a leképezési algoritmust.
 
 A leképzés továbbfejlesztése esetén a többi paramétert esetleg járulékos információként felhasználva (pl. a szemgolyó középpontjától kifelé haladva a pupillát reprezentáló ellipszis lapultságának mértéke és iránya determinisztikusan változik) a tekintetkövetés pontossága növelhető lehet.
 

@@ -104,11 +104,16 @@ A pupillakövetést az előző szakaszban írtaknak megfelelően több módszerr
 \subsection{Pupillakövetés}\label{sect:pupillakov}
 %............................................................................
 
-A pupillakövetés megbízható működéséhez meg kellett találnom azon elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését, amelyekkel lehetővé vált a pupilla azonosítása. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt.
+A pupillakövetés megbízható működéséhez meg kellett találnom azon elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését, amelyekkel lehetővé vált a pupilla azonosítása. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt. A feldolgozás fő lépései a \figref{folyamat} folyamatábrán követhetők nyomon.
 
-Az előfeldolgozási műveleteket az OpenCV készen kínálja, azonban a függvények száma és paraméterezési lehetőségei miatt rengeteg alternatíva jöhetett szóba. A szakasz további részében a kiválasztott képfeldolgozási műveleteket szeretném dokumentálni, a folyamat egészének tekintetében lényegtelen részletek mellőzésével. A felhasznált függvények pontos paraméterezése megtalálható az \sectref{parameterezes} függelékben.
+Az előfeldolgozási műveleteket az OpenCV készen kínálja, azonban a függvények száma és paraméterezési lehetőségei miatt rengeteg alternatíva jöhetett szóba. A szakasz további részében a kiválasztott képfeldolgozási műveleteket szeretném dokumentálni, a folyamat egészének tekintetében lényegtelen részletek mellőzésével. A felhasznált függvények pontos paraméterezése megtalálható az \sectref{parameterezes} függelékben. 
 
-\bigskip
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=140mm, keepaspectratio]{figures/folyamat.png}
+\caption{A pupillakövetési lépések folyamatábrája.}
+\label{fig:folyamat}
+\end{figure}
 
 A szemrégió képét közvetítő webkamera a gyári orientációjához képest fejjel lefelé került felfüggesztésre. A könnyebben értelmezhető megjelenítés érdekében ezért \emph{első lépésként} \textbf{megtükröztem} a képet a vízszintes középtengely mentén a \texttt{cv::flip} függvény használatával. Jegyezzük meg azonban, hogy ez a lépés csak azért szükséges, hogy a felhasználó számára emészthetőbb, ,,álló'' képet tudjunk megjeleníteni az alkalmazás felületén. A kép tükrözött voltát a feldolgozás során végig figyelembe véve ez a lépés akár el is hagyható!
 

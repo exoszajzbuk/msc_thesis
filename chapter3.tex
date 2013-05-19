@@ -102,7 +102,7 @@ A tömbök indexelése egész számokkal történik ezért az $ r $ paramétert 
 Gyakorlati szabályként elmondható, hogy 1 fok pontosságnál többre ritkán van szükség. Túl vastag vonalak (amik pedig logikailag összefüggő egyenesek), zajos kép, vagy túl rövid vonalszakaszok esetén így is romlik a felismerés esélye. Hogy miért, arra a következő szakasz -- a szavazási mechanizmus ismertetése -- ad választ.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-\subsubsection{A keresés folyamata}\label{sect:kereses_folyamata}
+\subsubsection{A keresési folyamat}\label{sect:kereses_folyamata}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 A továbbiakban tételezzük fel, hogy a kép bináris, és megfelelően előfeldolgozott (pl. élkeresés, küszöbözés), azon már csak a felismerni kívánt egyenesek pontjai találhatóak. A háttér képpontjait jelölje a 0 érték, az érdekes pontokat tartalmazó előtér képpontjai legyenek 1 értékűek.
@@ -152,7 +152,7 @@ formára, ahol $ (x_{0}, y_{0}) $ szintén a kör középpontjának koordinátá
 \end{figure}
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-\subsubsection{A paramétertér körök esetében}\label{sect:korok_parameterter}
+\subsubsection{Paramétertér körök esetében}\label{sect:korok_parameterter}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Látható, hogy körök esetében már csak akkor elegendő két paraméter -- az $ (x_{0}, y_{0}) $ középpont-koordináták -- a forma leírásához, ha előre adott sugarú köröket keresünk, vagyis $ r $ konstans. Ez azonban csak bizonyos esetekben használható, általános esetben túl nagy megkötést jelent. Tehát a paramétertér dimenziószámát növelnünk kell: az $ r $ sugárparaméter dimenziójával együtt az már \textbf{három dimenziós lesz}.
@@ -180,41 +180,6 @@ A körkeresésre használt Hough-transzformáció további kiegészítéseivel t
 A \textbf{21HT} módszer a \cite{hough_21_davies} és \cite{hough_21_illingworth} számon hivatkozott cikkekben volt először használatos. A kiegészítés felhasználja a rendelkezésre álló gradiens-információt (lásd: \sectref{korok_keresese}), és ennek ismeretében pedig a problémát két részre osztja. Mivel a kör középpontjának a körvonalpontok normálisán kell feküdnie, ezen normálisok közös metszéspontja valójában tehát meghatározza a középpontot. Egy kétdimenziós akkumulátortömb pedig elég minden pont saját normálisára esõ szavazatainak nyilvántartásához. Ezután a sugár meghatározása a következő módszerrel történhet: meghatározzuk minden pont és az előző lépésben kiszámított középpont-jelölt távolságát, majd ezekből az információkból egy sugár-hisztogramot állítunk elő. Ennek vizsgálatával már meghatározhatjuk a középpontokhoz tartozó sugarakat is. A módszer tárigénye az eredeti megközelítéshez képest jóval kisebb, hiszen csak egy \textbf{2D akkumulátort} és egy \textbf{1D hisztogramot} kell használnunk -- innen a módszer ,,2-1'' elnevezése.
 
 Eredmények tekintetében az összehasonlító cikk szerint a 21HT módszer felveszi a versenyt a sztenderd megoldással. Igaz, hogy a kétfázisú számítás miatt az első fázisban összeszedett hiba szükségszerűen rárakódik a második fázisra, ezt a pontatlanságot ellensúlyozni tudja a módszer jelentősen kisebb tárigénye.
-
-%............................................................................
-\subsection{Kiegészítések}\label{sect:kiegeszitesek}
-%............................................................................
-
-A meglévõ módszer továbbfejlesztésekor két irányba is elindulhatunk:
-
-\begin{enumerate}
- \item egyrészt növelhetjük az algoritmus teljesítőképességét,
- \item másrészt bővíthetjük a felismerhető formák halmazát.
-\end{enumerate}
-
-Ebben a szakaszban mindkét lehetséges fejlesztési irány eredményeiről szeretnék röviden beszámolni a témában fellelhető szakirodalom felhasználásával.
-
-\bigskip
-
-Az elsõ irányba mutató fejlesztések közül néhánnyal már találkozhattunk jelen dolgozat keretein belül is. Az \sectref{korok_keresese} alszakaszban előkerült a gradiensinformáció felhasználása és az elõzetes tudás alapján történő megfelelő korlátok bevezetése a számítás gyorsítása végett. Ebben a témában mindenképp megemlítendõ még a kernel alapú Hough-transzformáció.
-
-A \textbf{kernel alapú megvalósítás} lehetőségét a szerzők -- Fernandes és Oliveira -- 2008-as cikkükben \cite{hough_fernandes} vetették fel, tehát a módszer meglehetősen friss. Állításuk szerint valósidejű működés érhető el viszonylag nagy képek esetén is a szavazási protokoll továbbfejlesztésének köszönhetően. A módszer egyeneskereséskor az $ (r, \theta) $ paraméterezésen nem változtat, de nem önmagukban álló pontokat, hanem körülbelül egy irányban álló pixelek klasztereit (csoportjait) veszi figyelembe. Minden klaszterben egy megfelelő irányba forgatott elliptikus Gauss-kernellel végzett konvolúció hivatott a csoportra vonatkozó bizonytalanságot modellezni. Ez a megközelítés nemcsak hogy a szavazatok számának csökkentésével képes az algoritmus sebességét növelni, hanem a protokollnak köszönhetően sokkal tisztább akkumulátort is eredményez. A háttérzajtól mentes tömbben pedig jóval könnyebben tudjuk a lokális maximumokat detektálni. Ezzel összességében az eddigieknél gyorsabb és pontosabb egyenesdetektálást tudunk kivitelezni.
-
-\bigskip
-
-Felismerhetõ formák tekintetében a módszer bővíthető az általános analitikus 2D görbék mellett 3D képeken testek felismerésére. Ezen kívül semmiképp nem hagyhatjuk szó nélkül a Ballard-féle általánosított Hough-transzformációt sem.
-
-Három dimenzióban a \textbf{testek felismerése} a két dimenziós esetekhez hasonlóan történik -- hasonló buktatókkal és legtöbbször további járulékos memória- és számításigénnyel. Síkoknál például az egyenesekhez hasonlóan a megszokott reprezentáció nem használható függőleges síkok keresésére. A megoldást ebben az esetben a gömbi koordinátarendszerre való átállás jelenti, ahol a sík már normálvektorával és az origótól való távolságával jellemezhető (a paramétertér tehát három dimenziósra adódik). Gömbök, hengerek, ellipszoidok keresése szintén a két dimenziós esetek tapasztalatainak felhasználásával történhet. Az új, akár térbeli formák keresése kombinálható az eddig megismert teljesítménynövelő eljárásokkal: a már megismer eljárások használhatók a keresés során, természetesen adott esetben három dimenzióra vonatkoztatva azokat.
-
-Dana H. Ballard általánosított transzformációja \cite{hough_ballard} -- amint az már jelen dolgozat keretein belül is előkerült -- lehetővé teszi modelljükkel reprezentált általános objektumok felismerését a \textbf{mintafelismerés} alapelvét kihasználva. A modell előfordulásainak keresése a képtérben -- ahogy Ballard megmutatta -- szintén megoldható paraméterek akkumulálásával. Válasszuk ezen paramétereknek a modellt a képtérbe átvivő transzformáció (vagy transzformációk) paramétereit! Például ha csak a modell pozícióját keressük, akkor mindössze eltolási paramétereket kell figyelembe vennünk, ezek akkumulálásával a megszokott módon és eredményességgel ismerhetjük fel az adott objektum helyzetét. Azonban a módszer a transzláció (eltolás) invariancia mellett rotáció (forgatás) és skálázás (méret) invariánssá is tehető, igaz a paramétertér dimenziószámának növelése árán. Láthatjuk, hogy a mintafelismerés és a szavazási mechanizmus előnyeinek ötvözésével ez az eljárás igazán komoly fegyver lehet a képfeldolgozási eszköztárunkban.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=67mm, keepaspectratio]{figures/generalhough_money_1.png}\hspace{1cm}
-\includegraphics[width=67mm, keepaspectratio]{figures/generalhough_money_2.png}
-\caption{Kép- és paramétertér az általánosított Hough-transzformáció használata közben.\\Forrás: \url{http://href.hu/x/c91m}}
-\label{fig:generalhough}
-\end{figure}
 
 %............................................................................
 \subsection{Összegzés}\label{sect:hough_osszefoglalas}

@@ -41,6 +41,13 @@ Ezek szerint az ideális tekintetkövető eszköznek a következő 12 pont álta
  \item tesztalanyok széles skáláján (pl. nem, kor, rassz szerint, vagy szemüvegesek és szemüveg nélküliek körében) használható legyen
 \end{enumerate}
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm, keepaspectratio]{figures/tracking_system.jpg}
+\caption{Tekintetkövető rendszer a \emph{Bournemouth University}-n.\\Forrás: \url{http://bit.ly/IZx3ii}}
+\label{fig:tracking_system}
+\end{figure}
+
 A fent felsorolt követelmények valóban az ideális esetet testesítik meg. Sokszor egy követelmény enyhítésével, vagy figyelmen kívül hagyásával más követelmények kielégítése jelentősen egyszerűsödik. Ha például a \emph{b.} pont szerinti fizikai kontaktust mégis megengedjük, rögzíthetjük a követésre használt kamerát a vizsgálni kívánt alany fejéhez (természetesen kellően diszkrét és kényelmes módon). Ebben az esetben a \emph{i.} pont szerinti invariancia biztosítása máris egyszerűbb feladat, mint külső nézőpontból geometriai transzformációk segítségével végezni ugyanezt.
 
 Több más, látszólag egymásnak ellentmondó követelményt is észrevehetünk az ideális tekintetkövető eszköz 12 pontja között. Komoly megoldandó mérnöki feladatot jelent az ütközések feloldásával az ideális eszközt különböző, valós életben használható megoldásokká alakítani.
@@ -81,6 +88,13 @@ Klasszikus esetben ez a követési technika a limbus \emph{relatív} fejhez kép
 
 A pupillakövetési technika hasonló az előbb említett limbuskövetéshez, de némi többlet előnyt is magában hordoz. Az egyik ilyen előny, hogy a pupilla közel sincs olyan nagy részben a szemhéjak takarásában, mint a limbus, ennek következtében függőleges irányú követés is megvalósítható lehet. A másik előny, hogy az írisz és a pupilla közti határvonal jóval élesebb, mint az írisz-ínhártya határa, ezért jobb felbontással, pontosabban tudjuk meghatározni a nézeti irányt.
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm, keepaspectratio]{figures/pupil_tracking.jpg}
+\caption{Pupilladetektálás.\\Forrás: \url{http://bit.ly/114AeHK}}
+\label{fig:pupiltrack}
+\end{figure}
+
 Az előző technikához képest azonban meg kell említeni a felmerülő nehézségeket is. A kontraszt ugyan lehet, hogy nagyobb az írisz-pupilla határon, azonban az intenzitáskülönbség nem olyan jelentős, mint a limbus környezetében. Az sem elhanyagolható szempont, hogy a pupilla átmérője is szükségszerűen kisebb, mint az íriszé, vagyis a forrásnak relatívan nagyobb felbontásúnak kell lennie, hogy azonos pixelnyi méretű pupillát és íriszt detektálhassunk; ellenkező esetben a kisebb abszolút méret a pontosság rovására mehet.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -92,7 +106,7 @@ A szemet (infravörös) fénnyel megvilágítva több tükröződés is megfigye
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=110mm, keepaspectratio]{figures/purkinje_kepek.png}
-\caption{A \emph{Purkinje-képek} elhelyezkedése. Forrás: \url{http://bit.ly/YnAowY}}
+\caption{A \emph{Purkinje-képek} elhelyezkedése.\\Forrás: \url{http://bit.ly/YnAowY}}
 \label{fig:purkinje}
 \end{figure}
 
@@ -129,7 +143,7 @@ Az eddigiektől a pupillakövetési probléma egy merőben eltérő megközelít
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=80mm, keepaspectratio]{figures/eog.png}
-\caption{Az EOG eljárás elektródái. Forrás: \url{http://bit.ly/13a7IcL}}
+\caption{Az EOG eljárás elektródái.\\Forrás: \url{http://bit.ly/13a7IcL}}
 \label{fig:eog}
 \end{figure}
 
@@ -181,7 +195,7 @@ A szemmozgások többsége -- így a későbbi vizsgálatok szempontjából font
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=100mm, keepaspectratio]{figures/eye_diagram.png}
-\caption{Az emberi szem felépítése. Forrás: \url{http://en.wikipedia.org/wiki/Eye}}
+\caption{Az emberi szem felépítése.\\Forrás: \url{http://en.wikipedia.org/wiki/Eye}}
 \label{fig:eyediag}
 \end{figure}
 
@@ -195,9 +209,16 @@ A szakasz első részében sorra veszem, és bemutatom a pozicionáló típusú 
 \subsection{Szakkádok}\label{sect:szakkadok}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A szakkád mindkét szem gyors, egyidejű, azonos irányú mozgását jelenti. Célja a fixáció áthelyezése az egyik tárgyról a másikra. A mozgás során észlelt jellegzetes ,,ugráló'' mintáról kapta a nevét: a francia \emph{saccader} szó jelentése ,,rángatás'', ,,ugrás''.
+A szakkád mindkét szem gyors, egyidejű, azonos irányú mozgását jelenti. Célja a fixáció áthelyezése az egyik tárgyról a másikra. A mozgás során észlelt jellegzetes ,,ugráló'' mintáról (lásd \figref{yarbus_saccadic} ábra) kapta a nevét: a francia \emph{saccader} szó jelentése ,,rángatás'', ,,ugrás''.
 
 A szakkádok lehetnek akaratlagosak és reflexszerűek is. Az egyensúlyszervből érkező jelre például reflexszerűen aktiválódhatnak, míg a tekintetünk, figyelmünk áthelyezése nyilvánvalóan akaratlagos cselekedet. Időtartamban a szakkádok körülbelül 10 és 100~ms közé tehetők. Ez kellően rövid ahhoz, hogy az agy a gyakorlatban ne észlelje, hogy a mozgás alatt nem történik információfelvétel -- vagyis a szakkádikus mozgás közben pár pillanatra effektíve vakok vagyunk. \cite{shebilske}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=100mm, keepaspectratio]{figures/yarbus_saccadic.jpg}
+\caption{Szakkádok emberi arc vizsgálata során -- Alfred L. Yarbus kísérletéből}
+\label{fig:yarbus_saccadic}
+\end{figure}
 
 A szakkádok végrehajtásáról megoszlanak a vélemények. Korábban a szakkádokat ballisztikusnak tartották, vagyis amint a következő fixációs pont helye kiszámításra kerül (nagyjából 200~ms idő alatt), a mozgás már nem megszakítható vagy megváltoztatható. \cite{carpenter_book} Ezt a feltevést támasztotta alá a tény, hogy a végrehajtás 10-100~ms-os időtartama alatt vizuális visszacsatolásra nincs elegendő idő. Léteznek feltevések azonban, amelyek szerint nincs szükség vizuális visszacsatolásra a végrehajtás közbeni megváltoztatáshoz, így a mozgás ballisztikussága (a nagy sebességek miatt) csak látszólagos. \cite{zee}
 

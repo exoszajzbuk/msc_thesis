@@ -14,7 +14,38 @@
 \section{Paraméterezés}\label{sect:parameterezes}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-blabla fv hogy van parameterzve
+\subsection{Pupillakeresés}
+
+\begin{itemize}
+  \item \textbf{küszöbözés} -- küszöbérték: 5
+  \item \textbf{kontúrméret} -- terület legalább 2500 egység
+  \item \textbf{körkörösség} -- 1,07-nél kisebb érték (1,0 a tökéletes kör)
+\end{itemize}
+
+\subsection{Validációs mérések}
+
+A validációs méréseket a következő elrendezésben hajtottam végre:
+
+\begin{itemize}
+  \item 1280$\times$1024 képpont felbontású monitor, 37,5$\times$30,5 cm fizikai mérettel
+  \item 33 cm magas álltámasz, középpontja a monitor közepétől 48 cm-re
+\end{itemize}
+
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+\section{Környezet}\label{sect:telepites}
+%,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+A rendszer fejlesztése a következő szoftververziók felhasználásával történt egy \emph{Microsoft Windows 7} operációs rendszert futtató notebookon (2,53 GHz-es Intel Core i5 processzor, 4 GB rendszermemória).
+
+Azonos, vagy kompatibilis verziók használatával a forráskód (lásd \sectref{mellekletek} függelék) bármely \emph{Qt} és \emph{OpenCV} által támogatott rendszerre fordítható.
+
+Az \emph{OpenCV} könyvtárat a \emph{MinGW} csomagban található eszközökkel kell lefordítani\footnote{hivatalos leírás: \url{http://opencv.willowgarage.com/wiki/WindowsInstallGuide}}, a \emph{Qt} rendszerrel való kompatibilitás miatt.  
+
+\begin{itemize}
+  \item \textbf{Qt} -- 4.7.4 (32 bit)
+  \item \textbf{Qt Creator} -- 2.4.1 (rev. 8cd370e163)
+  \item \textbf{OpenCV} -- 2.3.0
+\end{itemize}
 
 \newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -29,25 +60,48 @@ blabla fv hogy van parameterzve
 
 \newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-\section{Telepítés}\label{sect:telepites}
+\section{Mellékletek}\label{sect:mellekletek}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ forditas menete, szukseges szoftverek +++}
+\subsection{Az Interneten}
 
-%Az alkalmazás fordítása az alábbi verziójú programokkal történt:
+A fejlesztés során elkészült alkalmazás forráskódja szabadon hozzáférhető egy \emph{GitHub}\footnote{\url{http://www.github.com/}} projektben, a \textbf{\url{https://github.com/obrien/eyetracker}} címen.
 
-%\begin{itemize}
-%\item g++ --  4.4.5
-%\item OpenCV -- 2.1.0
-%\item wxWidgets -- 2.8.10
-%\end{itemize}
+A projekt nyitóoldala hivatkozásokat tartalmaz az elérhető mellékletekhez. 
 
-%A  2.1.0 verziójú \textit{OpenCV} könyvtár forráskódja az \url{http://opencv.willowgarage.com/wiki/} címről letölthető. Az ennél újabb verziók interfészébe nem került bele a működéshez elengedhetetlenül szükséges \texttt{cvSnakeImage} függvény, ezért az alkalmazás mindenképpen a fenti verziójú \textit{OpenCV} könyvtár meglétét igényli! A fordításhoz szükséges csomagok a használt disztribúció csomagkezelőjéből elérhetők az \listref{install} listában felsorolt (vagy ahhoz hasonló) néven.
+\begin{itemize}
+    \item \textbf{könyvtárak elérhetősége}
+    \begin{itemize}
+      \item az \textbf{OpenCV} könyvtár megfelelő verziója
+      \item a \textbf{Qt} keretrendszer és a \textbf{Qt} Creator megfelelő verziója
+    \end{itemize}
+    
+  \item \textbf{képgaléria}
+    \begin{itemize}
+      \item válogatás az alkalmazás tesztelése és használata során készített képekből
+    \end{itemize}
+    
+  \item \textbf{videógaléria}
+    \begin{itemize}
+      \item pupillakövetési algoritmus működésének bemutatása
+      \item videók a tekintetkövetés működéséről
+    \end{itemize}
 
-%\begin{lstlisting}[frame=single,float=!ht,caption=Az OpenCV fordításához szükséges csomagok telepítése,label=listing:install]
-%sudo apt-get install libgtk2.0-dev libunicap2-dev libucil2-dev libswscale-dev \\
-%libdc1394-22-dev libv4l-dev libxine-dev libavformat-dev libglut3-dev \\
-%libwxgtk2.8-dev
-%\end{lstlisting}
+  \item \textbf{dokumentáció}
+    \begin{itemize}
+      \item a diplomatervem szövegének \LaTeX{} nyelvű forráskódja
+      \item a diplomatervem PDF formátumban
+    \end{itemize}
+\end{itemize}
 
-%A \emph{Pupil Measure} alkalmazás fordítása ezek után a forráskód könyvtárában kiadott \texttt{make} paranccsal történhet. A lefordított bináris a \texttt{./pupilmeasure} parancs kiadásával indítható, de előtte az \texttt{LD\_LIBRARY\_PATH} környezeti változóba a \texttt{usr/local/lib} érték betöltendő!
+\subsection{CD-ROM-on}
+
+A fent felsorolt online elérhető kiegészítéseket a diplomatervem CD-ROM mellékletén is elérhetővé tettem. A lemez könyvtárszerkezete és tartalma a következő.
+
+\begin{itemize}
+  \item \texttt{docs} -- jelen diplomaterv PDF formátumban, és a hozzá tartozó \LaTeX{} forrás
+  \item \texttt{libs} -- a könyvtárak telepítőfájljai
+  \item \texttt{pictures} -- képgaléria
+  \item \texttt{source} -- az alkalmazás forráskódja
+  \item \texttt{videos} -- az alkalmazás működését bemutató videók
+\end{itemize}

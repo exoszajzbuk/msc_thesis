@@ -5,9 +5,13 @@
 
 Jelen dokumentum egy a Budapesti Műszaki és Gazdaságtudományi Egyetem Irányítástechnika és Informatika Tanszékén készített diplomaterv \emph{,,Tekintetkövető rendszer fejlesztése képfeldolgozási alapokon''} témában. 
 
-Diplomatervemben egy költséghatékony tekintetkövető rendszer kifejlesztését tűztem ki célul képfeldolgozási módszerekre alapozva. Összegyűjtöttem, hogy milyen a rendszer használatával milyen lehetséges felhasználási területek jöhetnek szóba. Ezután megvizsgáltam a Hough-transzformációt, a Viola--Jones objektumdetektort és a blob-alapú követést mint lehetséges megoldásokat, annak érdekében, hogy kiválaszthassam a leginkább megfelelő módszert.
+\bigskip
 
+Diplomatervemben egy költséghatékony tekintetkövető rendszer kifejlesztését tűztem ki célul képfeldolgozási módszerekre alapozva. Számos felhasználási területen bizonyulhat hasznosnak a tekintet követése. Első lépésben kutatási és gyakorlati területen vizsgáltam a rendszer felhasználhatóságát, annak érdekében, hogy megmutassam, nagy potenciál rejtőzik egy pontos és robusztus követési megoldás használatában.
 
+Ezután megvizsgáltam a Hough-transzformációt, a Viola--Jones objektumdetektort és a blob-alapú követést mint lehetséges megoldásokat, annak érdekében, hogy kiválaszthassam a leginkább megfelelő módszert a pupillakövetés megvalósításához, ami az optikai elvű követés alapja.
+
+Blobok detektálására és analízisére alapozva létrehoztam egy működő tekintetkövető rendszert, amelyben képfeldolgozási célokra az OpenCV gépi látás könyvtárat, a felhasználói felület kialakításához pedig a Qt keretrendszert használtam fel.
 
 
 \newpage
@@ -21,11 +25,9 @@ The current paper is a thesis from Department of Control Engineering and Informa
 
 \bigskip
 
-In my thesis research has been done on how to create an inexpensive gaze tracking system using image processing methods.
+In my thesis research has been done on how to create an inexpensive gaze tracking system using image processing methods. There are several fields of application where a gaze tracking system can be used. First I studied the two main fields --- research and practical --- to show the potential of an efficient and robust tracking solution.
 
-There are several fields of application where a gaze tracking system can be used. First I TODOstudied the two main fields --- academic and practical --- to show the potential of an efficient and robust tracking solution.
-
-Then I evaluated the Hough-transform, the Viola--Jones cascade classifier and blob-based methods. My objective was to find out which one is the best TODOfit for solving the problem of pupil tracking --- the cornerstone of this area.
+Then I evaluated the Hough-transform, the Viola--Jones cascade classifier and blob-based methods. My objective was to find out which one is the best fit for solving the problem of pupil tracking --- the cornerstone of this area.
 
 Based on blob analysis I've presented a solution for a working gaze tracking system using the OpenCV library for image processing, and the Qt framework for building the application's user interface. 
 

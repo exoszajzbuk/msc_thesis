@@ -2,4 +2,24 @@
 \chapter*{Értékelés}\label{sect:ertekeles}
 %----------------------------------------------------------------------------
 
-\texttt{+++ altalanos ertekeles ide +++}
+A diplomatervem elkészítése kétségkívül összetett és kihívásokkal teli feladat volt. A szakirodalom feldolgozásával és a megszerzett ismeretek összefoglalásával jó rálátásom nyílt a kutatási terület legfontosabb részeire, ennek köszönhetően magabiztosan tudtam belevágni a pupillakövetésre használható módszerek megismerésébe. Az egyes módszerek implementálásával és összehasonlításával -- útközben sok hasznos tanulságot leszűrve --, úgy gondolom, sikerült a feladat megoldásának legjobb módját kiválasztanom.
+
+A tervezés és megvalósítás során a rendelkezésemre álló hardver- és szoftvereszközök ötvözésével sikerült olyan rendszert sikerült implementálnom, amely már kezdeti formájában is eléri célját: megfelelő sebességgel és minőségben képes a tekintet követésére.
+
+\bigskip
+
+Az elkészített rendszer természetesen számos irányban továbbfejleszthető. A fejlesztések egyrészt irányulhatnak a hardvereszközök módosítására illetve cseréjére, valamint a szoftveres feldolgozás és leképezés javítására.
+
+Hardverszempontból az egyik fejlesztést igénylő pont magától értetődően a látóteret viszonylag nagy mértékben kitakaró webkamera problémájának megoldása lehet. A kamera szempontunkból ,,hasznos'' részei csak maga a lencse, az érzékelő, valamint a megvilágítást szolgáltató LED-ek. Ezek helyigénye más kamera beszerzésével, illetve akár egyedi hardver tervezésével minimalizálható lehet.
+
+A felhasználó számára jelenleg kényelmetlenséget jelent, hogy a tekintetkövetés során a fej nem mozgatható, a legpontosabb követés érdekében pedig ajánlott az álltámasz használata. A fejmozgás hat szabadságfokú követésével -- például ultrahangos vagy sztereó módszerek használatával -- a fejmozgás szabadsága biztosítható lehet. 
+
+A rendszer mostani megvalósításában a kamera képfrissítési sebessége szintén egy szűk keresztmetszet. A 30 képkockás másodpercenkénti sebességnél gyorsabb kamera használatával jóval finomabb szemmozgások is megfigyelhetőek lennének.
+
+\bigskip
+
+A feldolgozást végző szoftver fejlesztése is több irányban folytatható. A felhasználói aktivitás könnyebben mérhetővé válna, ha egy darab rögzített kép helyett a munkamenetek alatt a képernyő tartalmának változása is tárolásra kerülne. Ennek megvalósításában komoly feladatnak bizonyulhat a videofolyam élő rögzítése és tömörítése (a helyfoglalás optimalizálásának érdekében) úgy, hogy az a tekintetkövetés sebességét ne befolyásolja.
+
+A jelenlegi implementáció pontossági hibáját orvosolandó szükség lenne a kalibráció és a leképezési algoritmus finomítására. A javítás egy lehetséges módja, hogy a négypontos kalibráció helyett kár kilenc, tizenhat, huszonöt stb. kalibrációs pontot felhasználva próbáljuk kiküszöbölni a bilineáris interpoláció pontatlanságát. Esetleg szóba jöhet a felhasznált lineáris interpolációs módszer elvetése, és ahelyett a szemgolyó formáját és forgását pontosabban modellező leképezési módszer bevezetése.
+
+A szoftveres feldolgozás sebességének javítására igazából csak gyorsabb képfrissítésű kamera használata esetén lenne szükség. Ha felmerül az igény a nagyobb sebességű feldolgozásra, akkor a használt algoritmusok párhuzamosítása egy olyan irány, amelyben érdemes lehet a rendszert továbbfejleszteni. Modern hardverekkel (pl. GPU-gyorsítás használatával) az előfeldolgozási és követési lépések végrehajtása akár többszörös sebességre gyorsítható.

@@ -316,4 +316,12 @@ Az alkalmazás főablakát húzzuk a másodlagos monitorra, ez lesz a vizsgáló
 \section{Tesztelés, eredmények}\label{sect:teszteles}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-\texttt{+++ szubjektiv tesztek + kepek! +++}
+Az elkészített rendszer a tesztelés során meglehetősen jó eredményeket vonultatott fel. A pupilladetektálás \emph{robusztussága} miatt a követés ritkán akadozik, emellett a pislogások miatti kiesések időtartamát is sikerült jól meghatározni: a reflexszerű pislogás során az alkalmazás nem detektál fals eredményeket, a követés végig folyamatos marad.
+
+A rendszer \emph{sebesség} tekintetében is az implementált pupillakövetési algoritmustól elvárt gyorsasággal üzemel, a kamera által nyújtott 30 képkockás másodpercenkénti frissítést valós időben képes lekövetni. A kamera limitált képfrissítéséből adódóan jelen hardver-összeállításban nincs szükség sebesség szempontjából hatékonyabb algoritmusra, de jobb frissítési sebességű kamera használata esetén is javítható lenne a feldolgozási sebesség (pl. párhuzamosítással, GPU-használattal).
+
+A jelenlegi implementációban a \emph{leképezés pontossága} a rendszer egyik gyenge pontja. A pupilla a szemgolyó mozgása során nyilvánvalóan nem egy síkon mozog. A képernyő négy sarka közötti interpolációban viszont benne foglaltatik ez a feltételezés, ezért a nem teljes gömbfelületen történő mozgás leképezése hibával terhelt. Ez a hiba értelemszerűen a számított és a valóban nézett pont közötti eltérésben jelenik meg.
+
+\bigskip
+
+A TODO ábra az alkalmazás futtatása során készült képeket mutat be, kettőt kettőt a dinamikus követésről (zöld vonalakkal ábrázolva a pupilla előző 5 képkockán vett pozoícióját), valamint a generált hőtérképekről. Bár igaz a mondás: ,,egy kép többet ér ezer szónál'', azonban az elkészült alkalmazás bemutatására állóképek helyett mégis a mozgóképek a legalkalmasabbak. Az alkalmazás működését bemutató videók a \sectref{mellekletek} függelékben dokumentált címeken találhatóak meg, a kedves olvasó ezek megtekintésével alkothat még teljesebb képet az elkészített alkalmazásról.

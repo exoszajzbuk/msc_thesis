@@ -2,17 +2,17 @@
 \chapter{Megvalósítás I.}\label{sect:megvalositas_1}
 %----------------------------------------------------------------------------
 
-Megismerkedve a szükséges elméleti alapokkal, valamint kiválasztva a felhasználandó szoftveres és hardveres technológiákat, elkezdhettem a tekintetkövetés megvalósítását. A rendszer fejlesztésének első fázisában nem kezdtem bele rögtön komoly architektúra vagy grafikus felhasználói felület tervezésébe. Mielőtt ugyanis ezekre sor kerülhet, fontos döntések meghozatalára, alap algoritmusok fejlesztésére, majd a helyes működés igazolására van szükség. Ezekről a döntésekről, algoritmusokról és validációról szól dolgozatom \sectref{megvalositas_1} fejezete.
+Megismerkedve a szükséges elméleti alapokkal, valamint kiválasztva a felhasználandó szoftveres és hardveres technológiákat, elkezdhettem a tekintetkövetés megvalósítását. A rendszer fejlesztésének első fázisában nem kezdtem bele rögtön a pontos architektúra vagy a felhasználói felület tervezésébe. Mielőtt ugyanis ezekre sor kerülhet, fontos döntések meghozatalára, alapvető algoritmusok fejlesztésére, majd a helyes működés igazolására volt szükség. Ezekről a döntésekről, algoritmusokról és validációról szól dolgozatom \sectref{megvalositas_1} fejezete.
 
 \bigskip
 
-A fejezet \sectref{modsz_osszehasonlitas} szakaszában arra keresem a választ, hogy \sectref{elmeleti_alapok} fejezetben ismertetett módszerek közül melyikkel lehetséges a leginkább pontos és robusztus pupillakövetés megvalósítása. A kiválasztott módszerre alapozva a feldolgozási folyamat részeként két, önmagában is fontos algoritmus kifejlesztésére volt szükség: a \sectref{pupillakov} szakaszban a pupillakövetési, míg  a \sectref{kalibracio} szakaszban a kalibrációs algoritmus részletes bemutatását találhatja az olvasó. Az implementáció első részének lezárása előtt, az \sectref{validacio} szakasz a követés validációjáról szól, az \sectref{demonstracio} szakaszban pedig gyakorlati problémákon mutatom be a rendszer működőképességét.
+A fejezet \sectref{modsz_osszehasonlitas} szakaszában arra keresem a választ, hogy a \sectref{elmeleti_alapok} fejezetben ismertetett módszerek közül melyikkel lehetséges a leginkább pontos és robusztus pupillakövetés megvalósítása. A kiválasztott módszerre alapozva a feldolgozási folyamat részeként két, önmagában is fontos algoritmus kifejlesztésére volt szükség: az \sectref{pupillakov} szakaszban a pupillakövetési, míg az \sectref{kalibracio} szakaszban a kalibrációs algoritmus részletes bemutatását találkozhat az olvasó. Az implementáció első részének lezárása előtt, az \sectref{validacio} szakasz a követés validációjáról szól, az \sectref{demonstracio} szakaszban pedig gyakorlati problémákon mutatom be a rendszer működőképességét.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Módszerek összehasonlítása}\label{sect:modsz_osszehasonlitas}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A \sectref{elmeleti_alapok} fejezetben három módszer elméletét mutattam be, amelyekkel lehetséges a pupilla felismerése a kameraképen, ami az optikai elvű tekintetkövetés alapjául szolgál. Mindhárom követési elvet kipróbáltam működés közben, ebben a szakaszban a módszerek előnyeit és hátrányait foglalom össze.
+Diplomatervem \sectref{elmeleti_alapok} fejezetében három módszer elméletét mutattam be, amelyekkel lehetséges a pupilla felismerése a kameraképen, ami az optikai elvű tekintetkövetés alapjául szolgál. Mindhárom követési elvet kipróbáltam működés közben, ebben a szakaszban a módszerek előnyeit és hátrányait foglalom össze.
 
 \paragraph{Hough-transzformáció}
 
@@ -52,16 +52,18 @@ A Viola--Jones objektumdetektor kipróbálásához jóval nagyobb látószögű 
 
 \begin{itemize}
   \item a Viola--Jones objektumdetektor a használt konfigurációban a szemrégió detektálására volt kihegyezve, a pupilla régión belüli pozíciójának meghatározása \textbf{nem elég pontos}
-  \item igaz, én most előre betanított osztályozót használtam, de egyéb esetekben az \textbf{osztályozó betanítása} meglehetősen összetett feladat
-  \item az objektumdetektálás pozíció-hibáját az optical flow legjobb esetben is továbbviszi, de az újabb detektálási pontig tipikusan még több hiba rakódik a detektált pozícióra
+  \item igaz, én egy előre betanított osztályozót használtam, de egyéb esetekben az \textbf{osztályozó betanítása} meglehetősen összetett feladat
+  \item az objektumdetektálás pozícióhibáját az optical flow legjobb esetben is továbbviszi, de az újabb detektálási pontig tipikusan még több hiba rakódik a detektált pozícióra
 \end{itemize}
 
 \medskip
 \paragraph{Blob alapú követés}
 
-A Hough-transzformáció kipróbálása során azt a következtetést tudtam levonni, hogy a pixelszinten végzett előfeldolgozási lépések (pl. bináris morfológia, simítási eljárások) viszik el a szükséges számítási teljesítmény jelentős részét. Minél kevesebb előfeldolgozást kell alkalmazni, annál több kapacitást tudunk a tényleges feldolgozás elvégzésére szánni. Nem is beszélve arról, hogy a kép egészére vonatkozó feldolgozási lépések számításigénye természetesen a kamerakép felbontásának növekedésével együtt növekszik!
+A Hough-transzformáció kipróbálása során azt a következtetést tudtam levonni, hogy a pixelszinten végzett előfeldolgozási lépések (pl. bináris morfológia, simítási eljárások) viszik el a szükséges számítási teljesítmény jelentős részét. Minél kevesebb előfeldolgozást kell alkalmazni, annál több kapacitást tudunk a tényleges feldolgozás elvégzésére szánni. Nem is beszélve arról, hogy a kép egészére vonatkozó feldolgozási lépések számításigénye természetesen a kamerakép felbontásának növekedésével együtt növekszik! Ezeket a szempontokat figyelembe véve végeztem a blob-alapú követés implementációját, és értékeltem a módszer előnyeit illetve hátrányait.
 
-\medskip
+\bigskip
+\bigskip
+\bigskip
 
 \emph{Előnyök:}
 
@@ -96,15 +98,15 @@ Az \tabref{modsz} táblázatban foglaltam össze a módszerek összehasonlítás
 \section{Feldolgozási folyamat}\label{sect:feld_folyamat}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamat kidolgozása során két fő feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupilla-pozíció képernyő-pozícióba történő leképezésére. Mindkét feladat önmagában van annyira összetett, hogy érdemes őket kitüntetett figyelemmel kezelni.
+A tekintetkövetés működéséhez szükséges képfeldolgozási illetve számítási folyamat kidolgozása során két fő feladatra kellett robusztus megoldást találnom: a pupilla követésére, valamint a pupillapozíció képernyő-pozícióba történő leképezésére. Mindkét feladat önmagában van annyira összetett, hogy érdemes őket kitüntetett figyelemmel kezelni.
 
-A pupillakövetést az előző szakaszban írtaknak megfelelően több módszerrel is teszteltem, a végül kiválasztott blob alapú követési algoritmust azonban szeretném részletesebben is bemutatni a \sectref{pupillakov} szakaszban. A kalibrációt már a stabilan működő pupillakövetésre építettem fel, a felhasznált módszer bemutatására szenteltem dolgozatom \sectref{kalibracio} szakaszát.
+A pupillakövetést az előző szakaszban írtaknak megfelelően több módszerrel is teszteltem, a végül kiválasztott blob alapú követési algoritmust azonban szeretném részletesebben is bemutatni az \sectref{pupillakov} szakaszban. A kalibrációt már a stabilan működő pupillakövetésre építettem fel, a felhasznált módszer bemutatására szenteltem dolgozatom \sectref{kalibracio} szakaszát.
 
 %............................................................................
 \subsection{Pupillakövetés}\label{sect:pupillakov}
 %............................................................................
 
-A pupillakövetés megbízható működéséhez meg kellett találnom azon elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését, amelyekkel lehetővé vált a pupilla azonosítása. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt. A feldolgozás fő lépései a \figref{folyamat} folyamatábrán követhetők nyomon.
+A pupillakövetés megbízható működéséhez meg kellett találnom azon elemi képfeldolgozási műveletek megfelelő sorrendjét és paraméterezését, amelyekkel lehetővé vált a pupilla azonosítása. A pontos folyamat kialakítása nagyrészt intuíciók alapján, a részmegoldások folyamatos tesztelésével történt. A feldolgozás fő lépései az \figref{folyamat} folyamatábrán követhetők nyomon.
 
 Az előfeldolgozási műveleteket az OpenCV készen kínálja, azonban a függvények száma és paraméterezési lehetőségei miatt rengeteg alternatíva jöhetett szóba. A szakasz további részében a kiválasztott képfeldolgozási műveleteket szeretném dokumentálni, a folyamat egészének tekintetében lényegtelen részletek mellőzésével. A felhasznált függvények pontos paraméterezése megtalálható az \sectref{parameterezes} függelékben. 
 
@@ -132,9 +134,9 @@ A szürkeárnyalatos képet ezek után a \emph{negyedik lépésben} \textbf{küs
 
 \bigskip
 
-A fenti négy lépés elég a kamerakép előfeldolgozásához, az \emph{ötödik lépéstől} kezdve a tényleges felismerés megvalósítása következhet. Az előző, \sectref{modsz_osszehasonlitas} szakaszban kifejtettem, hogy a feldolgozás sebességét döntően befolyásolja a pixelszinten végzett feldolgozási lépések komplexitása és száma. A előfeldolgozás végén a kép még meglehetősen nagy zajjal terhelt: látható a pupilla viszonylag nagy, ovális foltja, azonban például a szempillák foltja zavaró hatásként jelentkezik.
+A fenti négy lépés elég a kamerakép előfeldolgozásához, az \emph{ötödik lépéstől} kezdve a tényleges felismerés megvalósítása következhet. Az előző, \sectref{modsz_osszehasonlitas} szakaszban kifejtettem, hogy a feldolgozás sebességét döntően befolyásolja a pixelszinten végzett feldolgozási lépések komplexitása és száma. A előfeldolgozás végén a kép még meglehetősen nagy zajjal terhelt: látható a pupilla viszonylag nagy, ovális foltja, azonban például a szempillák vagy a szemöldök foltjai zavaró hatásként jelentkeznek.
 
-Sebesség szempontjából azonban sokkal jobban járunk, ha nem is próbáljuk az előfeldolgozási lépések után hátramaradó zajt pixelszintű eljárásokkal kiszűrni (pl. bináris morfológia). Ehelyett az előfeldolgozott képre rögtön ráereszthetünk egy hierarchikus \textbf{kontúrkeresési eljárást} a \texttt{cv::findContours} függvény meghívásával. A további lépések során elegendő a hierarchia legfelső szintjét használnunk: mivel a megtalálni kívánt pupilla konvex, a blobok belsejében található lyukak elhelyezkedése nem szolgál többletinformációval.
+Sebesség szempontjából azonban sokkal jobban járunk, ha nem is próbáljuk az előfeldolgozási lépések után hátramaradó zajt pixelszintű eljárásokkal kiszűrni (pl. bináris morfológia használatával). Ehelyett az előfeldolgozott képre rögtön ráereszthetünk egy hierarchikus \textbf{kontúrkeresési eljárást} a \texttt{cv::findContours} függvény meghívásával. A további lépések során elegendő a hierarchia legfelső szintjét használnunk: mivel a megtalálni szándékozott pupilla konvex, a blobok belsejében található lyukak elhelyezkedése nem szolgál többletinformációval.
 
 \emph{Hatodik lépésben} meg is szabadulhatunk a \textbf{túl kis méretű objektumoktól}, mivel ezek nagy valószínűséggel csak mint zaj vannak jelen a képen. Egy kontúrpontjaival megadott objektum területét a \texttt{cv::contourArea} függvény segítségével határozhatjuk meg, ez alapján már kiszűrhetők a ,,túl kicsi'' objektumok.
 
@@ -195,7 +197,7 @@ b &= (A_y - P_y) \cdot (C_x - D_x) + (B_y - A_y) \cdot (D_x - P_x) - \nonumber \
 c &= (A_y - P_y) \cdot (D_x - P_x) - (A_x - P_x) \cdot (D_y - P_y)
 \end{align}
 
-Az $u$ koordináta ismeretében már meghatározhatók $E$ és $F$ pontok, a
+Az $u$ koordináta ismeretében már meghatározhatók $E$ és $F$ pontok, az
 
 \begin{align}\label{eq:calib_3}
 E &= A + (B-A) \cdot u \nonumber \\
@@ -219,7 +221,7 @@ m &= v \cdot h
 \section{Validáció}\label{sect:validacio}
 %............................................................................
 
-Az alapvető algoritmusok önálló implementációját követően, de még az architektúra kialakítása, valamint a felhasználói felületek fejlesztésének megkezdése előtt szerettem volna igazolni, hogy a kifejlesztett pupillakövetési módszer valóban alkalmas a rá szabott feladat elvégzésére.
+Az alapvető algoritmusok önálló implementációját követően, de még az architektúra kialakítása, valamint a felhasználói felületek fejlesztésének megkezdése előtt szerettem volna igazolni, hogy a kifejlesztett pupillakövetési algoritmus valóban alkalmas a kitűzött feladat elvégzésére -- azaz a tekintet követésére.
 
 A validáció során méréseket végeztem a pupillakövető algoritmussal: a kijelző teljes területén sorban egy adott oldalhosszúságú négyzetháló pontjaira fókuszálva vettem fel a felismert ellipszisek paramétereit. A méréseket egy 1280$\times$1024 képpont felbontású monitorral végeztem el, a fej pozícióját álltámasszal rögzítve (a mérési elrendezés pontos paraméterei a \sectref{parameterezes} függelékben megtalálhatóak). A mérés során használt négyzetháló méretét és az ebből adódóan rögzített képpontok számát a \tabref{meresi_pontok} táblázat tartalmazza.
 
@@ -275,15 +277,15 @@ A leképzés továbbfejlesztése esetén a többi paramétert esetleg járuléko
 \section{Demonstráció}\label{sect:demonstracio}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A számszerűsített validáció mellett -- még mindig csak a lehető legegyszerűbben implementált pupillakövetési és leképezési algoritmusok felhasználásával -- szükségét éreztem annak is, hogy megmutassam: a rendszer maximálisan valós problémák megoldására is alkalmas lehet.
+A számszerűsített validáció mellett -- még mindig csak a lehető legegyszerűbben implementált pupillakövetési és leképezési algoritmusok felhasználásával -- szükségét éreztem annak is, hogy megmutassam: a rendszer a való életből vett problémák megoldására is alkalmas lehet.
 
-Munkám \sectref{felhasznalas} fejezetében többek között a pszichológiai és a webergonómiai felhasználási lehetőségekről ejtettem szót. A szakaszban további részében lássunk tehát e két témában egy-egy egyszerű kísérletet, a rendszer gyakorlati használhatóságát igazolandó. 
+Munkám \sectref{felhasznalas} fejezetében többek között a pszichológiai és a webergonómiai felhasználási lehetőségekről ejtettem szót. A szakasz további részében lássunk tehát e két témában egy-egy egyszerű kísérletet, a rendszer gyakorlati használhatóságát igazolandó. 
 
 %............................................................................
 \subsection{Pszichológiai bemutató}\label{sect:pszicho}
 %............................................................................
 
-A rendszer magasabb szintű működését első esetben úgy próbáltam demonstrálni, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható a \figref{yarbus} ábrán.
+A rendszer magasabb szintű működését első esetben úgy próbáltam demonstrálni, hogy végrehajtottam Alfred L. Yarbus orosz pszichológus 1967-es tanulmánya egy részletét. A kísérletben a kutatók azt bizonyították be, hogy a tesztalanyoknak előzetesen különböző kérdéseket feltéve, a kérdések jelentősen befolyásolták egy kép részleteinek vizsgálatát ahhoz képest, ha csak ,,szabadon'' nézegették azt. A teszteredményeket összefoglaló kép -- mint az egyik első a témával foglalkozó eredmény -- jól ismert a tekintetkövetéssel foglalkozók körében, ez látható az \figref{yarbus} ábrán.
 
 \begin{figure}[!ht]
 \centering
@@ -292,11 +294,15 @@ A rendszer magasabb szintű működését első esetben úgy próbáltam demonst
 \label{fig:yarbus}
 \end{figure}
 
-Látható, hogy a kísérlet végrehajtásához szükség volt a tekintet követésére. Ekkor még a kornak megfelelően nem álltak rendelkezésre kifinomult módszerek: az alanyokat egy meglehetősen kényelmetlen acélszerkezethez rögzítve vizsgálták. A bemutató alkalmazásomban arra kerestem a választ, hogy lehetséges-e hasonló méréseket elvégezni az általam fejlesztett rendszerrel.
+Nyilvánvaló, hogy a kísérlet végrehajtásához szükség volt a tekintet követésére. Ekkor még a kornak megfelelően nem álltak rendelkezésre kifinomult módszerek: az alanyokat egy meglehetősen kényelmetlen acélszerkezethez rögzítve vizsgálták. A bemutató alkalmazásomban arra kerestem a választ, hogy lehetséges-e hasonló méréseket elvégezni az általam fejlesztett rendszerrel.
 
 \bigskip
 
 Az vizsgálatban résztvevő alanyoknak a következő kérdésekre kellett válaszolniuk a tesztkép (Repin: Váratlan utazó) rövid vizsgálata után. A vizsgálatot minden kérdésben 200 beérkezett érvényes mérési pontig folytattam, ez a felhasznált webkamera, illetve a feldolgozási sebesség mellett nagyjából kérdésenként 15--20 másodpercet vett igénybe.
+
+\bigskip
+\bigskip
+
 
 \begin{enumerate}
  \item szabad nézelődés
@@ -313,7 +319,7 @@ A kérdésekre nem volt jó, vagy rossz válasz, a kísérlet minden alanynál c
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=140mm, keepaspectratio]{figures/yarbus_eredmeny.png}
-\caption{Eredmények a saját rendszerrel}
+\caption{Eredmények a saját rendszerrel.}
 \label{fig:eredmeny}
 \end{figure}
 
@@ -325,12 +331,12 @@ Természetesen nem tudom, és nem is célom a kísérlet pszichológiai eredmén
 \subsection{Webergonómiai bemutató}\label{sect:web}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Ahogyan dolgozatom \sectref{felhasznalas} fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem az pszichológiai kísérlet adatait hőtérképen (heatmap) megjelenítő funkciót is, ennek eredménye egy tesztképre a \figref{heatmap} ábrán látható.
+Ahogyan dolgozatom \sectref{felhasznalas} fejezetében már említettem, a tekintet követése a webergonómia területén is fontos kísérletek elvégzésére ad lehetőséget. A rendszer ilyen irányú képességeit demonstrálandó, elkészítettem a pszichológiai kísérlet adatait hőtérképen (heatmap) megjelenítő funkciót is, ennek egy tesztképre vett eredménye a \figref{heatmap} ábrán látható.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=100mm, keepaspectratio]{figures/heatmap.jpg}
-\caption{Hőtérképes megjelenítés a pszichológiai teszt egy adathalmazára (,,Adja meg a szereplők életkorát!'')}
+\caption{Hőtérképes megjelenítés a pszichológiai teszt egy adathalmazára (,,Adja meg a szereplők életkorát!'').}
 \label{fig:heatmap}
 \end{figure}
 
@@ -354,4 +360,4 @@ A megvalósítás első fázisában -- ahogy a fejezetben olvashattuk -- sikerü
  \item alkalmas-e a rendszer mérések, és kísérletek alapján a kiszabott feladat elvégzésére?
 \end{enumerate} 
 
-A pupillakövetési és kalibrációs algoritmusok kidolgozása a fent említett kérdések megválaszolásán kívül sem volt hiábavaló. A tekintetkövetés alapját jelentő módszerek implementációja szinte egy az egyben felhasználható a végleges alkalmazásban.
+A pupillakövetési és kalibrációs algoritmusok kidolgozása a fent említett kérdések megválaszolásán kívül sem volt hiábavaló. A tekintetkövetés alapját jelentő módszerek implementációját szinte egy az egyben fel tudtam használni a végleges alkalmazásban.

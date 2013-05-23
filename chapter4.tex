@@ -2,11 +2,11 @@
 \chapter{Technológiák}\label{sect:technologia}
 %----------------------------------------------------------------------------
 
-Diplomatervem készítése során többféle szoftveres és hardveres technológiával kellett megismerkednem. Jelen fejezet megírásával az a célom, hogy az olvasó képet kapjon a felhasznált szoftver- és hardvereszközök fejlődéséről, valamint jelenlegi állapotukról; együttesen hogy megindokoljam, miért ezeket a technológiákat választottam a dolgozatom témáját feldolgozó alkalmazás megírásakor.
+Diplomatervem készítése során többféle szoftveres és hardveres technológiával kellett megismerkednem. Jelen fejezet megírásával az volt a célom, hogy az olvasó képet kapjon a felhasznált szoftver- és hardvereszközök fejlődéséről, valamint jelenlegi állapotukról; együttesen hogy megindokoljam, miért ezeket a technológiákat választottam a dolgozatom témáját feldolgozó alkalmazás kifejlesztésekor.
 
 \bigskip
 
-A fejezet \sectref{opencv} szakaszában az OpenCV gépi látás könyvtár, a \sectref{qt} szakaszában pedig a Qt keretrendszer rövid, összefoglaló jellegű bemutatására vállalkozom. A fejezet utolsó harmadában a projekthez felhasznált webkamera kiválasztását, összeállítását, illetve előnyeit/hátrányait dokumentálom. 
+A fejezet \sectref{opencv} szakaszában az OpenCV gépi látás könyvtár, a \sectref{qt} szakaszában pedig a Qt keretrendszer rövid, összefoglaló jellegű bemutatására vállalkozom. A fejezet utolsó harmadában a projekthez felhasznált webkamera kiválasztását, összeállítását, valamint előnyeit és hátrányait dokumentálom. 
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Az OpenCV könyvtár}\label{sect:opencv}
@@ -20,21 +20,21 @@ A fejezet \sectref{opencv} szakaszában az OpenCV gépi látás könyvtár, a \s
   \vspace{-30pt}
 \end{wrapfigure}
 
-Az \textbf{OpenCV}\footnote{\url{http://opencv.org/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \textbf{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül. \cite{opencv_wiki}
+Az \textbf{OpenCV}\footnote{\url{http://opencv.org/}} egy nyílt forráskódú gépi látás (computer vision) könyvtár. Elsődleges célja, keretet nyújtani \emph{valósidejű} képfeldolgozási alkalmazások fejlesztésére. A könyvtár szabadon letölthető és felhasználható a BSD licenc\footnote{\url{http://www.linfo.org/bsdlicense.html}} keretein belül. \cite{opencv_wiki}
 
 \bigskip
 
-Az OpenCV projekt hivatalosan 1999-ben indult az Intel kezdeményezésében. A nagyközönségnek a 2000. évi \textit{,,IEEE Conference on Computer Vision and Pattern Recognition''} konferencián mutatkozott be, majd öt béta-verziót követően 2006-ban jutott el az 1.0-ás hivatalos kiadásig. A fejlesztése itt úgy tűnt, hogy megáll, de végül a projektet a Willow Garage\footnote{\url{http://www.willowgarage.com/}} robotikai kutatólabor vette szárnyai alá. Az ő irányításuk alatt 2008 októberében elkészült az 1.1-es verzióval közel egy időben látott napvilágot az elsõ hivatalos OpenCV-vel foglalkozó könyv \textit{,,Learning OpenCV: Computer Vision with the OpenCV Library''} címmel Gary Bradski és Adrian Kaehler fejlesztők tollából \cite{opencv_book}. Az egy évvel később, 2009 októberében megjelent 2.0-ás verzióval a projekt nagy fejlődésen esett át. Ebben a verzióban található meg először a C++ és Python interfész (ez a meglévő C mellett már három hivatalosan fejlesztett interfészt jelentett), amely az egyszerűbb kezelhetőség, új függvények mellett a meglévő eljárások teljesítmény tekintetében -- különösen többmagos rendszereken -- jobb implementációját kínálta a felhasználóknak.
+Az OpenCV projekt hivatalosan 1999-ben indult az Intel kezdeményezésében. A nagyközönségnek a 2000. évi \textit{,,IEEE Conference on Computer Vision and Pattern Recognition''} konferencián mutatkozott be, majd öt béta-verziót követően 2006-ban jutott el az 1.0-ás hivatalos kiadásig. A fejlesztése itt úgy tűnt, hogy megáll, de végül a projektet a Willow Garage\footnote{\url{http://www.willowgarage.com/}} robotikai kutatólabor vette szárnyai alá. Az ő irányításuk alatt 2008 októberében elkészült 1.1-es verzióval közel egy időben látott napvilágot az elsõ hivatalos OpenCV-vel foglalkozó könyv \textit{,,Learning OpenCV: Computer Vision with the OpenCV Library''} címmel Gary Bradski és Adrian Kaehler fejlesztők tollából \cite{opencv_book}. Az egy évvel később, 2009 októberében megjelent 2.0-ás verzióval a projekt nagy fejlődésen esett át. Ebben a verzióban volt megtalálható először a C++ és Python interfész (ez a meglévő C mellett már három hivatalosan fejlesztett interfészt jelentett), amely az egyszerűbb kezelhetőség, új függvények mellett a meglévő eljárások teljesítmény tekintetében -- különösen többmagos rendszereken -- jobb implementációját kínálta a felhasználóknak.
 
 \bigskip
 
 A projekt életében a következő mérföldkő 2012 augusztusa volt. Ekkor az OpenCV támogatását és fejlesztését az erre a célra alapított \emph{OpenCV.org} non-profit alapítvány vette át. A 2.5-ös verzió kiadásával tovább bővült a támogatott programozási nyelvek listája: innentől már a Java és a MATLAB/OCTAVE is felkerült az elérhető interfészek listájára. Nem hivatalos támogatással, de további wrapper-ek is elérhetők a könyvtárhoz, például C\# vagy Ruby nyelven, ezzel is elősegítve a széleskörű elterjedését. 
 
-Az elmúlt években a GPU-gyorsítás támogatása terén is komoly előrelépésekre került sor. 2010 szeptemberétől érhető el a CUDA, 2012 októberétől pedig az OpenCL interfész.
+Az elmúlt években a GPU-gyorsítás támogatása terén is komoly előrelépésekre került sor. 2010 szeptemberétől érhető el a CUDA, 2012 októberétől pedig az OpenCLk programozási interfész.
 
 \bigskip
 
-A fejlesztést különböző platformokra párhuzamosan (\textbf{cross-platform}) történik. Mivel a könyvtár alapvetően a C nyelvre épül, ezért a számos rendszeren működésre bírható. A dolgozat írásának idején elérhető 2.5-ös stabil verzió a következő operációs rendszerekre elérhető:
+A fejlesztés különböző platformokra párhuzamosan (\emph{cross-platform} módon) történik. Mivel a könyvtár alapvetően a C nyelvre épül, ezért a számos rendszeren működésre bírható. A dolgozat írásának idején elérhető 2.5-ös stabil verzió a következő operációs rendszerekre elérhető:
 
 \begin{itemize}
   \item asztali (desktop) rendszerek
@@ -147,7 +147,7 @@ Láthatjuk, hogy a fent felsorolt funkciókkal a gépi látás terén rengeteg e
 
 \bigskip
 
-Az OpenCV régebbi verzióiban a számos előny mellett hátrányként volt megemlíthető, hogy segítségével a felhasználói felületet csak nagyon leegyszerűsített módon szabhattuk testre. Igaz, hogy a könyvtár feladata elsősorban a képfeldolgozás és nem a megjelenítés, így ebből a nézőpontból a beépített kép és videó megjelenítési lehetőség, billentyűzet- és egérkezelés valamint trackbarok (csúsztatható kezelőszerv értékek beállítására) létrehozásának lehetősége inkább hozzáadott értékként jelent meg, azonban ez nem változtat azon a tényen, hogy ha igény van felhasználóbarát kezelőfelület készítésére, az OpenCV-t mindenképpen integrálnunk kellett valamely elterjedt grafikus felhasználói felület toolkittel.
+Az OpenCV régebbi verzióiban a számos előny mellett hátrányként volt megemlíthető, hogy segítségével a felhasználói felületet csak nagyon leegyszerűsített módon szabhattuk testre. Igaz, hogy a könyvtár feladata elsősorban a képfeldolgozás és nem a megjelenítés, így ebből a nézőpontból a beépített kép és videó megjelenítési lehetőség, billentyűzet- és egérkezelés lehetősége inkább hozzáadott értékként jelent meg, azonban ez nem változtat azon a tényen, hogy ha igény mutatkozott felhasználóbarát kezelőfelület készítésére, az OpenCV-t mindenképpen integrálnunk kellett valamely elterjedt grafikus felhasználói felület toolkittel.
 
 \begin{figure}[!ht]
 \centering
@@ -156,7 +156,7 @@ Az OpenCV régebbi verzióiban a számos előny mellett hátrányként volt mege
 \label{fig:opencv_qt}
 \end{figure}
 
-A 2.1-es verziótól kezdődően megjelent egy némileg fejlettebb \textbf{Qt alapú felhasználói felület}, lásd \figref{opencv_qt}. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszerveinek és megjelenítésének problémája már kielégítően elvégezhető egyéb eszköz használata nélkül.
+A 2.1-es verziótól kezdődően megjelent egy némileg fejlettebb \emph{Qt alapú felhasználói felület}, lásd \figref{opencv_qt}. Teljes szabadságot még ez sem ad a felületek kialakításában, de az egyszerűbb projektek kezelőszervei már kielégítően megjeleníthetők egyéb eszköz használata nélkül.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{A Qt keretrendszer}\label{sect:qt}
@@ -180,7 +180,7 @@ A Qt projekt első hivatalos kiadása a Nokia \emph{Qt Development Frameworks} c
 
 Ezt követően a Nokia megvált a rendszer kereskedelmi jogaitól, és azok a Digia\footnote{\url{http://www.digia.com/}} vállalathoz kerültek, amely azóta is a projekt karbantartója, bár a tényleges fejlesztői munka nagy részét továbbra is a Nokia mérnökei végzik. A tranzakció után az új tulajdonos közvetlen célnak tűzte ki, hogy aktualizálják a Qt által támogatott platformok listáját az időközben népszerűvé vált rendszerekkel.
 
-A dolgozat írásakor támogatott fontosabb operációs rendszerek:
+A dolgozat írásakor támogatott fontosabb asztali és mobil operációs rendszerek:
 
 \begin{itemize}
   \item Windows (XP és 7)
@@ -207,15 +207,15 @@ A Qt-ot használó alkalmazások programozási nyelve alapvetően a sztenderd C+
    
 \end{itemize}
 
-A Qt a GUI események célba juttatását a \textbf{signals/slots} rendszer segítségével végzi. A módszer az \emph{Observer}\footnote{\url{http://en.wikipedia.org/wiki/Observer_pattern}} (Megfigyelő) tervezési minta megvalósítására nyújt egyszerű és szabványosított lehetőséget. A felhasználói felület elemei (widgetek) jelzéseket (signal) bocsátanak ki -- pl. ,,a X gombot megnyomták'', ,,a beviteli mező értéke Y-ra változott'' -- amelyeket más elemek ,,foglalataihoz'' (slot) köthetünk, ahol az eseményt lekezelhetjük. Látható, hogy ez a struktúra remekül illeszkedik a grafikus felhasználói felülete eseménykezelésére, de ezen kívül időzítések és értesítések kézbesítésére is alkalmas.
+A Qt a GUI események célba juttatását a \textbf{signals/slots} rendszer segítségével végzi. A módszer az \emph{Observer}\footnote{\url{http://en.wikipedia.org/wiki/Observer_pattern}} (Megfigyelő) tervezési minta megvalósítására nyújt egyszerű és szabványosított lehetőséget. A felhasználói felület elemei (widgetek) jelzéseket (signal) bocsátanak ki -- pl. \emph{,,az X gombot megnyomták''}, \emph{,,a beviteli mező értéke Y-ra változott''} -- amelyeket más elemek ,,foglalataihoz'' (slot) köthetünk, ahol az eseményt lekezelhetjük. Látható, hogy ez a struktúra remekül illeszkedik a grafikus felhasználói felülete eseménykezelésére, de ezen kívül időzítések és értesítések kézbesítésére is alkalmas.
 
-A signalok és slotok a megvalósításukat tekintve speciális  függvények, melyeket deklarálásukkor a két bekezdéssel előbb említett \emph{moc} (Meta Object Compiler) automatikusan generál, elkerülve ezzel a feleslegesen ismétlődő kódrészletek elburjánzását (boilerplate kód).
+A signalok és slotok a megvalósításukat tekintve speciális  függvények, melyeket deklarálásukkor a két bekezdéssel előbb említett \emph{moc} (Meta Object Compiler) automatikusan generál, elkerülve ezzel a feleslegesen ismétlődő kódrészletek (ún. boilerplate kód) elburjánzását.
 
 \bigskip
 
-A Qt~4-es verziójához nagyjából 6 éven át érkeztek a kisebb/nagyobb frissítések, egészen a 4.8-as kiadásig. Ezt követően a koncepcionális változásokat hozó \textbf{Qt 5} fejlesztése folytatódik tovább. Az 5-ös verzió funkciói között között a hardveres gyorsítású megjelenítés, a QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} és a JavaScript támogatása jelentik a legfontosabb újdonságokat.
+A Qt~4-es verziójához nagyjából 6 éven át érkeztek a kisebb/nagyobb frissítések, egészen a 4.8-as kiadásig. Ezt követően a koncepcionális változásokat hozó \textbf{Qt~5} fejlesztése folytatódik tovább. Az 5-ös verzió funkciói között között a hardveres gyorsítású megjelenítés, a QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} és a JavaScript támogatása jelentik a legfontosabb újdonságokat.
 
-A Qt~5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fejlesztés irányába: a \textbf{Qt~Project}\footnote{\url{http://qt-project.org/}} néven futó projektbe már külsős fejlesztők is delegálhatják javításaikat vagy új funkciókat, amelyeket a Digia és a Nokia csapata elbírál, és ha megfelelőnek találtatnak, bekerülhetnek a soron következő verzióba.
+A Qt~5 kiadásával a keretrendszer tett egy lépést a nyílt (open source) fejlesztés irányába: a \textbf{Qt~Project}\footnote{\url{http://qt-project.org/}} néven futó projektbe már külsős fejlesztők is delegálhatják javításaikat vagy új funkciókat, amelyeket a Digia és a Nokia csapata elbírál, és ha a hozzáadott részek megfelelőnek találtatnak, bekerülhetnek a soron következő verzióba.
 
 %............................................................................
 \subsection{A Qt Creator fejlesztői környezet}\label{sect:qt_creator}
@@ -238,11 +238,11 @@ A kódszerkesztő (editor) a kor követelményeinek megfelelően támogatja a sz
 
 A felhasználó felületek kialakításában nélkülözhetetlen segítséget nyújt a beépített Qt Designer eszköz. Használatával WYSIWYG (What You See Is What You Get) módon végezhetjük az alkalmazás grafikus felületének kialakítását. Választhatunk a számtalan beépített widget közül, de saját elemek létrehozását is támogatja a rendszer -- a widgetek fejlesztési konvencióit betartva az egyedi elemek is grafikusan jelennek meg a szerkesztőfelületen.
 
-A felületek integrálása a kóddal az \sectref{qt} szakaszban említett signal-slot mechanizmus segítségével történhet, amelynek megvalósítása szintén nagyon felhasználóbarát módon sikerült.
+A felületek integrálása a kóddal a \sectref{qt} szakaszban említett signal-slot mechanizmus segítségével történhet, amelynek megvalósítása szintén nagyon felhasználóbarát módon sikerült.
 
 \paragraph{Qt Quick Designer}
 
-Ez az eszköz animációk fejlesztésére szolgál, amelyeket QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} nyelvű leírásukkal adhatunk meg. A Qt natívan támogatja a nagyfrekvenciás (60 FPS) animációk készítését és lejátszását, ezáltal a 2D vagy 3D animációk ,,simák'', akadás mentesek lehetnek.
+Ez az eszköz animációk fejlesztésére szolgál, amelyeket QML\footnote{\url{http://en.wikipedia.org/wiki/QML}} nyelvű leírásukkal adhatunk meg. A Qt natívan támogatja a nagyfrekvenciás (60 FPS) animációk készítését és lejátszását, ezáltal a 2D vagy 3D animációk ,,simák'', akadásmentesek lehetnek.
 
 \paragraph{Verziókezelő-integráció}
 
@@ -252,7 +252,7 @@ A fejlesztői környezet képes a legnépszerűbb verziókezelő rendszerek tám
 
 Az alkalmazás nyitóképernyőjén rögtön számtalan példaprogram fogadja a felhasználót. A példák százas nagyságrendben érhetők el, és a legegyszerűbb feladatoktól (,,Hello World'') az egészen összetettekig próbálják lefedni a fejlesztés során esetlegesen felmerülő problémákat.
 
-Letöltésük nem igényel többet néhány kattintásnál, és integrált megoldás lévén a kód betöltődik a szerkesztőbe -- azonnal futtathatjuk és elkezdhetjük megérteni a működését. Maga az ötlet, és a megvalósítás is példaértékű lehet más fejlesztőkörnyezetek számára, igazi kincsesbányát jelent a Qt működésében elmélyedni kívánó fejlesztők számára.
+Letöltésük nem igényel többet néhány kattintásnál, és integrált megoldás lévén a kód betöltődik a szerkesztőbe -- azonnal futtathatjuk és elkezdhetjük megérteni a működését. Maga az ötlet, és a megvalósítás is példaértékű lehet más fejlesztőkörnyezetek számára, a funkció igazi kincsesbányát jelent a Qt működésében elmélyedni kívánó fejlesztők számára.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Fejkamera}\label{sect:infracam}
@@ -264,7 +264,7 @@ A tekintetkövető rendszer fejlesztése közben hardveres technológiai kérdé
 \subsection{Eszközök}\label{sect:infracam_eszkozok}
 %............................................................................
 
-Költséghatékonysági okokból -- ezzel együtt demonstrálandó, hogy nem feltétlenül kellenek speciális eszközök működőképes tekintetkövető összeállításához -- a \figref{webcam} ábrán látható \textbf{6 LED-es webkamerát}\footnote{megvásárolható: \url{http://bit.ly/15yoLJ3}} választottam.
+Költséghatékonysági okokból -- ezzel együtt demonstrálandó, hogy nem feltétlenül kellenek speciális eszközök működőképes tekintetkövető összeállításához -- a \figref{webcam} ábrán látható \textbf{6 LED-es webkamerát}\footnote{\emph{USB PC Webcam}, megvásárolható: \url{http://bit.ly/15yoLJ3}} választottam ki.
 
 \begin{figure}[!ht]
 \centering
@@ -285,7 +285,7 @@ A webkamera főbb paraméterei:
   \item \textbf{képfrissítés:} 30 FPS
 \end{itemize}
 
-Az átlagos webkamerák között egyedi tulajdonsága, hogy a \textbf{lencséje cserélhető}, helyére bármilyen szabvány \emph{M12x0.5} (CCTV biztonsági kamerák körében elterjedt) foglalattal rendelkező lencse beilleszthető. Érdemes is megvásárolni a \figref{lenses} ábrán látható \textbf{lencsekészletet}\footnote{megvásárolható: \url{http://bit.ly/17TtCCg}}, amely $2,\!8$-tól $16$ mm-es fókusztávig tartalmaz lencséket. A cserélhető lencséknek köszönhetően kiválaszthatjuk azt a fókusztávot, amely a kamera elhelyezésének függvényében a legjobb képet adja, azaz a szemrégió a lehető legjobban kitölti a képet.
+Az átlagos webkamerák között egyedi tulajdonsága, hogy a \textbf{lencséje cserélhető}, helyére bármilyen szabvány \emph{M12x0.5} (CCTV biztonsági kamerák körében elterjedt) foglalattal rendelkező lencse beilleszthető. Érdemes is megvásárolni a \figref{lenses} ábrán látható \textbf{lencsekészletet}\footnote{\emph{Fixed IRIS Lens Set}, megvásárolható: \url{http://bit.ly/17TtCCg}}, amely $2,\!8$-tól $16$ mm-es fókusztávig tartalmaz lencséket. A cserélhető lencséknek köszönhetően kiválaszthatjuk azt a fókusztávot, amely a kamera elhelyezésének függvényében a legjobb képet adja, azaz a szemrégió a lehető legjobban kitölti a képet.
 
 \begin{figure}[!ht]
 \centering
@@ -294,7 +294,7 @@ Az átlagos webkamerák között egyedi tulajdonsága, hogy a \textbf{lencséje 
 \label{fig:lenses}
 \end{figure}
 
-A webkamera nagy hátrányaként említhető meg, hogy működőképes meghajtóprogramot (driver) \textbf{csak Windows~7 rendszerre} lehetséges találni hozzá, azt is csak rengeteg keresgélés után. Az eszközt azonos külső mellett többféle vezérlővel forgalmazzák, ezek meghajtóprogramjai egymással nem kompatibilisek. Ha kamerához csomagolt CD elveszik, megsérül, vagy -- mint ahogyan sajnos a szerző esetében is előfordult -- egyáltalán nincs is a csomagban, ember legyen a talpán, aki megtalálja az eszközhöz tartozó drivert.
+A webkamera nagy hátrányaként említhető meg, hogy működőképes meghajtóprogramot (driver) \emph{csak Windows~7 rendszerre} lehetséges találni hozzá, azt is csak rengeteg keresgélés után. Az eszközt azonos külső mellett többféle vezérlővel forgalmazzák, ezek meghajtóprogramjai egymással nem kompatibilisek. Ha kamerához csomagolt CD elveszik, megsérül, vagy -- mint ahogyan sajnos a szerző esetében is előfordult -- egyáltalán nincs is a csomagban, ember legyen a talpán, aki megtalálja az eszközhöz tartozó drivert.
 
 Azonban ha sikerül is, a kizárólagos \emph{Windows~7}-kompatibilitás miatt nem használhatjuk ki a \sectref{opencv} szakaszban bemutatott OpenCV, és a \sectref{qt} szakaszban bemutatott Qt cross-platform mivoltát.
 
@@ -310,7 +310,7 @@ A tükör hiányának jelen esetben viszont maximálisan pozitív következmény
 
 \bigskip
 
-A webkamera műanyag borítását leszerelve tudtam hozzáférni a nyomtatott áramkörhöz. A 6 db. LED-ből kettőt kiforrasztottam a helyéről, majd megfelelő fizikai méretekkel és elektronikai paraméterekkel rendelkező \textbf{infra LED-ekkel helyettesítettem} őket. Az új LED-ek beforrasztása és a kamera összeszerelése után a fennmaradó 4 normál LED-et letakartam, hogy fényük ne zavarja az infra-megvilágítást.
+A webkamera műanyag borítását leszerelve tudtam hozzáférni a nyomtatott áramkörhöz. A hat darab LED-ből kettőt kiforrasztottam a helyéről, majd megfelelő fizikai méretekkel és elektronikai paraméterekkel rendelkező \textbf{infra LED-ekkel helyettesítettem} őket. Az új LED-ek beforrasztása és a kamera összeszerelése után a fennmaradó 4 normál LED-et letakartam, hogy fényük ne zavarja az infra-megvilágítást.
 
 \begin{figure}[!ht]
 \centering

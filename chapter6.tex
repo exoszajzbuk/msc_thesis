@@ -10,10 +10,10 @@ Az alkalmazás fejlesztését tehát az OOP paradigmáinak szem előtt tartásá
   \item \textbf{absztrakció (abstraction):} a probléma valós világbeli objektumok mintájára történő modellezése, a lényegtelen részletek elhagyásával, a lényeges tulajdonságok kiemelésével
   \item \textbf{egységbe zárás (encapsulation):} az egyes osztályok és objektumpéldányok saját maguk rendelkezzenek a futások során szükséges adatok és metódusok felett
   \item \textbf{öröklődés (inheritance):} lehetséges egy általános ősosztály tetszőleges kiegészítése, specializálása a közös elemek megtartásával
-  \item \textbf{polimorfizmus (polymorphism):} az egyes műveleteket képesek legyünk bemeneti paraméterek széles skáláján végrehajtani (metódus- vagy operátor-felüldefiniálás)
+  \item \textbf{polimorfizmus (polymorphism):} legyünk képesek az egyes műveleteket bemeneti paraméterek széles skáláján végrehajtani (metódus- vagy operátor-felüldefiniálás)
 \end{itemize}
 
-A fejezet \sectref{kovetelmenyek} szakaszában összefoglalom a feladat specifikációját, majd a \sectref{architektura} szakaszban részletesen dokumentálom a rendszer architektúrájával és implementációs részleteivel kapcsolatos tudnivalókat. A \sectref{gui} szakaszban a grafikus felhasználói felületet mutatom be, a \sectref{docs} szakasz pedig a felhasználói dokumentációnak ad helyet. A fejezet lezárásaként a \sectref{teszteles} szakaszban a rendszer kipróbálása során megfigyelt eredményeket és általános tapasztalatokat foglalom össze.
+A fejezet \sectref{kovetelmenyek} szakaszában áttekintem az alkalmazás specifikációját, majd a \sectref{architektura} szakaszban részletesen dokumentálom a rendszer architektúrájával és implementációs részleteivel kapcsolatos tudnivalókat. A \sectref{gui} szakaszban a grafikus felhasználói felületet mutatom be, a \sectref{docs} szakasz pedig a felhasználói dokumentációnak ad helyet. A fejezet lezárásaként a \sectref{teszteles} szakaszban a rendszer kipróbálása során megfigyelt eredményeket és általános tapasztalatokat foglalom össze.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Követelmények}\label{sect:kovetelmenyek}
@@ -26,27 +26,27 @@ Mielőtt a fejezet későbbi szakaszaiban részletekbe menőben bemutatom az elk
 Az alkalmazás legyen képes:
 
 \begin{enumerate}[a)]
-  \item valósidejű \textbf{videofolyamot} olvasni a számítógépre kötött webkameráról (lásd \sectref{infracam} szakasz)
+  \item valósidejű \textbf{videofolyamot} olvasni a számítógépre kötött webkameráról (lásd \sectref{infracam} szakasz).
   \item a videofolyam feldolgozásával a \textbf{pupillapozíció meghatározására} a \sectref{pupillakov} szakaszban leírtak szerint.
   \item a tekintet \textbf{kalibrációjára} a \sectref{kalibracio} szakaszban ismertetett módszer felhasználásával.
   \item \textbf{munkamenetek} (session) rögzítésére a képernyő tartalmának mentésével együtt.
   \item a korábbi munkamenetek listázására, törlésére.
   \item munkamenetek \textbf{visszajátszására}.
-  \item a munkamenetek alapján \textbf{hőtérképek} generálására (lásd \sectref{web} szakasz)
+  \item a munkamenetek során rögzített adatok felhasználásával \textbf{hőtérképek} generálására (lásd \sectref{web} szakasz).
 \end{enumerate}
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Architektúra}\label{sect:architektura}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   
-  Az implementációt a \sectref{technologia} fejezetben bemutatott technológiák (OpenCV, Qt, Qt Creator) felhasználásával \textbf{C++ nyelven készítettem el} a Model--View--Controller (MVC) tervezési minta szem előtt tartásával. A kialakított osztályhierarchia a \figref{overview} ábrán látható módon épül fel. A kibővített osztálydiagram  -- a fontos változók és funkciók feltüntetésével -- megtalálható az \sectref{osztalydiagram} függelékben.
+  Az implementációt a \sectref{technologia} fejezetben bemutatott technológiák (OpenCV, Qt) felhasználásával \textbf{C++ nyelven készítettem el} a Model--View--Controller (MVC) tervezési minta szem előtt tartásával. A kialakított osztályhierarchia a \figref{overview} ábrán látható módon épül fel. A kibővített osztálydiagram  -- a fontos változók és funkciók feltüntetésével -- megtalálható az \sectref{osztalydiagram} függelékben.
   
   Az átláthatóság kedvéért még a kibővített diagramról is lehagytam a kevésbé fontos tagváltozókat, és a nyilvánvaló funkcióval rendelkező függvényeket (pl. ,,getter'' vagy ,,setter'' metódusok). Emellett természetesen az információrejtés (information hiding) alapelvének megfelelően a tagváltozók amikor csak szükséges, privát változóként deklaráltak, és publikus interfész áll rendelkezésre az értékük lekérdezésére, vagy az értékadásra.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=140mm, keepaspectratio]{figures/overview_aa.png}
-\caption{Az alkalmazás osztályhierarchiája}
+\caption{Az alkalmazás osztályhierarchiája.}
 \label{fig:overview}
 \end{figure}
 
@@ -56,12 +56,12 @@ Az alkalmazás egyes funkcióit a videofolyam feldolgozásától egészen a hőt
   \item \texttt{MainWindow} -- az alkalmazás főablakát tartalmazó osztály, valamint ez szolgál általános kontrollerként is, lévén a felhasználói interakciók döntő része ide fut be
   \item \texttt{VideoHandler} -- a webkameráról beérkező videofolyam olvasásáért felelős
   \item \texttt{ImageProcessor} -- a képkockák feldolgozását -- a pupillakeresést -- végzi
-  \item \texttt{Calibrator} -- a kalibrációt, majd kalibrált állapotban a \emph{pupilla-pozíció} $\Longrightarrow$ \emph{képernyő-pozíció} átszámítást végzi
+  \item \texttt{Calibrator} -- a kalibrációt, majd kalibrált állapotban a \emph{pupillapozíció} $\Longrightarrow$ \emph{képernyő-pozíció} átszámításáért felelős
   \item \texttt{Recorder} -- a munkamenetek rögzítését végzi
-  \item \texttt{Player} -- a felvett munkamenetek visszajátszását teszi lehetővé ez az osztály
+  \item \texttt{Player} -- a felvett munkamenetek visszajátszását teszi lehetővé
   \item \texttt{Heatmapper} -- a hőtérképek generálása történik ebben az osztályban
   \item \texttt{Session} -- konténerosztály egy-egy munkamenet futásidejű tárolása számára
-  \item kisegítő osztályok
+  \item egyéb kisegítő osztályok
 \end{itemize}
 
 A továbbiakban sorra veszem az egyes osztályok interfészét, valamint belső működésüket, kicsit mélyebb betekintést engedve a felépítésükbe, egymással való összeköttetésükbe, valamint az esetleg érdekesnek ítélhető implementációs részletekbe.
@@ -87,7 +87,7 @@ A \texttt{videoHandler}, \texttt{imageProcessor}, \texttt{calibrator}, \texttt{r
 
 A metódusok közül a \texttt{startToggled}, \texttt{calibrateToggled} és \texttt{recordToggled} metódusok sorra a videofolyam, kalibráció és a felvétel ki/bekapcsolását kezelik le.
 
-A lejátszás során megjelenítési módok váltását kezelik le az \texttt{equalizedClicked} és a \texttt{pupilClicked} között felsorolt függvények.
+A lejátszás során megjelenítési módok váltását kezelik le az \texttt{equalizedClicked} és a \texttt{pupilClicked} sorok között felsorolt függvények.
 
 %............................................................................
 \subsection{A \texttt{VideoHandler} osztály}\label{sect:videohandler}
@@ -113,9 +113,9 @@ Elindított állapotban a \texttt{getFrame} függvénnyel kérhetjük le az adot
 \includegraphics[width=140mm, keepaspectratio]{figures/class_imageprocessor.png}
 \end{figure}
 
-Az \texttt{ImageProcessor} osztály végzi a képkockák feldolgozását, és a pupilla azonosítását. A pupillakeresést az alkalmazás előfeldolgozás után blobok detektálásával és változatos szűrésével végzi, a \sectref{pupillakov} szakaszban részletesen bemutatott módon.
+Az \texttt{ImageProcessor} osztály végzi a képkockák feldolgozását, és a pupilla azonosítását. A pupillakeresést az alkalmazás előfeldolgozás után blobok detektálásával és változatos szűrésével végzi, az \sectref{pupillakov} szakaszban részletesen bemutatott módon.
 
-A \texttt{process} függvény végzi a felismerés, és a képen megtalált pupillaközépponttal tér vissza egy \texttt{cv::Point2f} változó használatával. A visszaadott középpont az érvénytelen $(-1, -1)$ koordinátákat kapja, ha nem sikerült a pupilla azonosítása.
+A \texttt{process} függvény végzi a felismerést, és a képen megtalált pupillaközépponttal tér vissza egy \texttt{cv::Point2f} változó használatával. A visszaadott középpont az érvénytelen $(-1, -1)$ koordinátákat kapja, ha nem sikerült a pupilla azonosítása.
 
 Szükség van még ezen kívül a feldolgozás valamely közbülső állapotának képét lekérésére, ezt tehetjük meg a \texttt{getDisplayImage} metódus használatával. A függvény az \texttt{ImageProcessor} belső \texttt{displayMode} állapotának megfelelően adja vissza a kívánt képet. Fontos megjegyezni, hogy mindez csak a megjelenítést befolyásolja. A \texttt{displayMode} állapottól függetlenül a pupillafelismerés folyamata minden esetben elejétől a végéig lefut, majd visszatér a megtalált pupillaközéppont koordinátáival.
  
@@ -128,9 +128,9 @@ Szükség van még ezen kívül a feldolgozás valamely közbülső állapotána
 \includegraphics[width=140mm, keepaspectratio]{figures/class_calibrator.png}
 \end{figure}
 
-A \texttt{Calibrator} osztály az alkalmazás kalibrálását, majd a pupilla-koordináta alapján a képernyőn éppen nézett pont koordinátájának kiszámítását végzi. A kalibráció folyamatát részletesen a \sectref{kalibracio} szakaszban ismertettem.
+A \texttt{Calibrator} osztály az tekintetkövetés kalibrálását, majd a pupillakoordináta alapján a képernyőn éppen nézett pont koordinátájának kiszámítását végzi. A kalibráció folyamatát részletesen az \sectref{kalibracio} szakaszban ismertettem.
 
-Az osztályhoz tartozik egy \texttt{CalibrationWindow} objektum is, amely a futás során dinamikusan kerül lefoglalásra (ezért csak a rámutato pointert tároljuk). Emellett a kalibrálás állapotát is nyilvántartjuk, erre szolgálnak a \texttt{CalibratorState} felsorolás (enumeration) értékei: nincs kalibrálva (\texttt{None}), kalibrálás alatt (\texttt{Calibrating}), vagy kalibrálva (\texttt{Calibrated}).
+Az osztályhoz tartozik egy \texttt{CalibrationWindow} objektum is, amely a futás során dinamikusan kerül lefoglalásra (ezért csak a rámutato pointert tároljuk). Emellett a kalibrálás állapotát szintén nyilvántartjuk, erre szolgálnak a \texttt{CalibratorState} felsorolás (enumeration) értékei: nincs kalibrálva (\texttt{None}), kalibrálás alatt (\texttt{Calibrating}), vagy kalibrálva (\texttt{Calibrated}).
 
 \bigskip
 
@@ -157,11 +157,11 @@ Az \texttt{ImageProcessor} osztályhoz hasonlóan itt is az interfész részét 
 
 A \texttt{Session} osztály az éppen felvétel alatt lévő, és már felvett munkamenetek futás közbeni tárolására szolgál.
 
-Tagváltozóként tartalmazza a munkameneteket jellemző tulajdonságokat: a munkamenet nevét (azonosítóját, tetszőleges \texttt{std::string name}, a képet, amelyet a felvétel alatt az alany vizsgál (\texttt{QPixmap} objektumként), valamint a vizsgálat alatt felvett képernyő-koordinátákat (\texttt{std::vector<cv::Point> points} listaként).
+Tagváltozóként tartalmazza a munkameneteket jellemző tulajdonságokat: a munkamenet nevét (azonosítóját\texttt{std::string name} karakterláncként), a képet, amelyet a felvétel alatt az alany vizsgál (\texttt{QPixmap} objektumként), valamint a vizsgálat alatt felvett képernyő-koordinátákat (\texttt{std::vector<cv::Point> points} listaként).
 
 \bigskip
 
-A publikus interfészen keresztül lehetőség van a munkamenet-objektum lementésére a \texttt{save} metódus használatával. A paraméterül adott azonosítóval kerül lementésre a munkamenet, a futtatási könyvtár \texttt{session\_<név>} formátumú alkönyvtárába. A munkamenet alkönyvtárán belül létrejön a \texttt{bg.png} képfájl, ami értelemszerűen a vizsgálat alatt használt képet tartalmazza, valamint a \texttt{points.txt} szöveges fájl, amely  soronként tartalmazza a rögzített pontok képernyő-koordinátáit.
+A publikus interfészen keresztül lehetőség van a munkamenet-objektum lementésére a \texttt{save} metódus használatával. A munkamenet a paraméterül adott azonosítóval kerül lementésre, a futtatási könyvtár \texttt{session\_<név>} formátumú alkönyvtárába. Az alkönyvtáron belül létrejön a \texttt{bg.png} képfájl, ami értelemszerűen a vizsgálat alatt használt képet tartalmazza, valamint a \texttt{points.txt} szöveges fájl, amely  soronként tartalmazza a rögzített pontok képernyő-koordinátáit.
 
 A mentés párjaként a \texttt{load} függvény tölti be a paraméterül kapott névvel lementett munkamenetet.
 
@@ -197,7 +197,7 @@ A \texttt{stopRecording} függvény a felvétel befejeztével hívódik meg. A f
 
 A \texttt{Player} osztály a felvett munkamenetek lejátszásáért felelős. A lejátszást a dinamikusan foglalt \texttt{PlayerWindow} példány grafikus felületén végzi.
 
-A \texttt{startPlayback} metódus egy munkamenet-objektumra (\texttt{Session}) mutató referenciát vár paraméterként, ennek lejátszását kezdi el meghívása után azonnal.
+A \texttt{startPlayback} metódus egy munkamenet-objektumra (\texttt{Session}) mutató referenciát vár paraméterként, ennek lejátszását kezdi el nyomban a meghívása után.
 
 A visszajátszás futása közben a \texttt{processTimer} időzítő és a \texttt{process} függvény gondoskodik a megfelelő ütemben történő visszajátszásról, felhasználva a \texttt{MainWindow} osztály \texttt{PROCESS\_TIMEOUT} értékét. A feldolgozott képet a \texttt{PlayerWindow} osztály \texttt{setImage} metódusának meghívásával jeleníti meg.
 
@@ -224,11 +224,11 @@ Röviden szeretnék szót ejteni az osztálydiagram eddig mellőzött elemeiről
 
 \paragraph{A \texttt{SessionItemWidget} osztály}
 
-Az osztály a megjelenítésben jut szerephez. A munkamenetek egy listában kerülnek megjelenítésre a főablak bal oldalán. A lista elemeinek egyedi megjelenítésük van, ennek a grafikus elemnek (widget) a felületét tartalmazza a \texttt{SessionItemWidget} osztály.
+Az osztály a megjelenítésben jut szerephez. A munkamenetek egy listában kerülnek megjelenítésre a főablak bal oldalán. A lista elemeinek egyedi megjelenítésük van, ezt a grafikus elemet (widget) tartalmazza a \texttt{SessionItemWidget} osztály.
 
 \paragraph{A \texttt{Helper} osztály}
 
-A kódolás során több helyen is szükség volt különböző átalakítások elvégzésére. A \texttt{Helper} osztály statikus metódusai időbélyegek formázására, valamint a Qt és az OpenCV belső kép-reprezentációi közötti oda-vissza átalakításra szolgálnak.
+A programkód írása során több helyen is szükség volt különböző átalakítások elvégzésére. A \texttt{Helper} osztály statikus metódusai időbélyegek formázására, valamint a Qt és az OpenCV belső képreprezentációi közötti oda-vissza átalakításra szolgálnak.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Grafikus felhasználói felület}\label{sect:gui}
@@ -236,7 +236,7 @@ A kódolás során több helyen is szükség volt különböző átalakítások 
 
 Az alkalmazás felhasználói felülete az előző szakaszban említetteknek megfelelően több ablakot is felhasznál (pl. kalibrációkor, felvételkor, visszajátszáskor), de ezek többnyire csak teljes képernyős képek megjelenítésére használatosak, felhasználói interakció nem történik rajtuk.
 
-A felhasználó -- legyen az a vizsgáló vagy az alany -- leginkább az alkalmazás \figref{app_gui} ábrán látható \textbf{főablakával} találkozik.
+A felhasználó -- legyen az vizsgáló vagy alany -- leginkább az alkalmazás \figref{app_gui} ábrán látható \textbf{főablakával} találkozik.
 
 \begin{figure}[!ht]
 \centering
@@ -261,6 +261,7 @@ A kalibrációt elindítva teljes képernyős, homogén fehér hátterű ablak n
 
 A jobb oldalon található gombok mindegyike \textbf{két állapotú}. Bekapcsolt állapotukban újra megnyomva őket tudjuk a felvételt leállítani, az eddigi kalibrációt semmissé tenni, valamint a kamerát kikapcsolni. A jobb oldali gombok értelemszerűen csak meghatározott sorrendben használhatók: a funkciók balról jobbra haladva aktiválhatók.
 
+\newpage
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Felhasználói dokumentáció}\label{sect:docs}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -310,7 +311,7 @@ Az alkalmazás indítása után a felhasználót a főablak (lásd \figref{app_g
 
 A program fel lett készítve a több monitorral történő használatra. Amennyiben nem a saját tekintetünket követjük, hanem egy másik felhasználóét (alany), úgy a kétmonitoros elrendezés használata a legkényelmesebb.
 
-Az alkalmazás főablakát húzzuk a másodlagos monitorra, ez lesz a vizsgáló képernyője. Az elsődleges monitort használjuk az alany képernyőjeként, azon jelenítsük meg a vizsgálni kívánt ábrákat, képeket, weboldal-részleteket stb. A másodlagos monitoron a vizsgáló a mérés teljes időtartama alatt szemmel tarthatja az alkalmazás főablakát. Ennek köszönhetően például azt is figyelemmel kísérheti, hogy a kamera vagy a fej elmozdulásából kifolyólag a kalibráció a mérés során (vagy két mérés között) helytelenné válik-e. Amennyiben igen, kérheti új kalibráció elvégzését és a mérés megismétlését.
+Az alkalmazás főablakát húzzuk a másodlagos monitorra, ez lesz a vizsgáló képernyője. Az elsődleges monitort használjuk az alany képernyőjeként, azon jelenítsük meg a vizsgálni kívánt ábrákat, képeket, weboldal-részleteket stb. A másodlagos monitoron a vizsgáló a mérés teljes időtartama alatt szemmel tarthatja az alkalmazás főablakát. Ennek köszönhetően például azt is figyelemmel kísérheti, hogy a kamera vagy a fej elmozdulásából kifolyólag a kalibráció a mérés során (vagy két mérés között) helytelenné válik-e. Amennyiben igen, kérheti új kalibráció elvégzését, valamint a mérés megismétlését.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Tesztelés, eredmények}\label{sect:teszteles}
@@ -326,25 +327,28 @@ A jelenlegi implementációban a \emph{leképezés pontossága} a rendszer egyik
 
 A \figref{vegleges_vonal} \figref{vegleges_heat1} és \figref{vegleges_heat2} ábrák az alkalmazás futtatása során készült képeket mutatnak be, A \figref{vegleges_vonal} ábra a munkamenet visszajátszására mutat két példát, zöld vonalakkal ábrázolva a pupilla utolsó öt képkockán vett pozícióját. A \figref{vegleges_heat1} illetve \figref{vegleges_heat2} ábrákon a hőtérkép-generálás eredménye látható, az egyszerű összehasonlíthatóság végett az eredeti képeket is mellékelve.
 
-Bár igaz a mondás: \emph{,,egy kép többet ér ezer szónál''}; azonban az elkészült alkalmazás bemutatására állóképek helyett mégis a mozgóképek a legalkalmasabbak. A tekintetkövető rendszer működését demonstráló videók megtalálhatóak a diplomaterv CD-ROM mellékletén, valamint az \sectref{interneten} függelékben dokumentált címen, ezek megtekintésével lehetséges még teljesebb képet alkotni az elvégzett munka eredményéről.
+Bár igaz a mondás: \emph{,,egy kép többet ér ezer szónál''} -- azonban az elkészült alkalmazás bemutatására állóképek helyett mégis a mozgóképek a legalkalmasabbak. A tekintetkövető rendszer működését demonstráló videók megtalálhatóak a diplomaterv CD-ROM mellékletén, valamint az \sectref{interneten} függelékben dokumentált címen, ezek megtekintésével lehetséges a legteljesebb képet alkotni az elvégzett munka eredményéről.
+
+\newpage
 
 \begin{figure}[!ht]
+\vspace{65pt}
 \centering
 \includegraphics[width=150mm, keepaspectratio]{figures/vegleges_vonal.png}
-\caption{Képek a ,,visszajátszás'' funkció használata közben}
+\caption{Képek a ,,visszajátszás'' funkció használata közben.}
 \label{fig:vegleges_vonal}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=150mm, keepaspectratio]{figures/vegleges_heat1.png}
-\caption{A hőtérkép-generálás eredménye (1)}
+\caption{A hőtérkép-generálás eredménye (1).}
 \label{fig:vegleges_heat1}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=150mm, keepaspectratio]{figures/vegleges_heat2.png}
-\caption{A hőtérkép-generálás eredménye (2)}
+\caption{A hőtérkép-generálás eredménye (2).}
 \label{fig:vegleges_heat2}
 \end{figure}

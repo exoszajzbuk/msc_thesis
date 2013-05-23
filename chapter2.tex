@@ -2,11 +2,11 @@
 \chapter{A tekintetkövetésről}\label{sect:tekintetkovetes}
 %----------------------------------------------------------------------------
 
-A tekintetkövető rendszer fejlesztésének megkezdése előtt számos elméleti és gyakorlati szempont veendő figyelembe, hogy a rendszer által nyújtott kritériumok a lehető legjobban közelítsék az elvártat. Nem kerülhető meg az általános technikák, vagy már meglévő megoldások áttekintése a szakirodalomból, aminek segítségével képet alkothatunk a kutatási téma jelenlegi állásáról, és a gyakorlati szempontok figyelembe vételével dönthetjük el, hogy mely módszer mellett tesszük le végül a voksunkat.
+A tekintetkövető rendszer fejlesztésének megkezdése előtt számos elméleti és gyakorlati szempont veendő figyelembe, hogy a rendszer által nyújtott lehetőségek a lehető legjobban közelítsék az elvártat. Nem kerülhető meg az általános technikák, vagy már meglévő megoldások áttekintése a szakirodalom feldolgozásával, aminek segítségével képet alkothatunk a kutatási téma jelenlegi állásáról, és a gyakorlati szempontok figyelembe vételével dönthetjük el, hogy mely módszer mellett tesszük le végül a voksunkat.
 
 \bigskip
 
-A fejezet \sectref{modszerek} szakaszában mindenekelőtt a jelenleg elérhető tekintetkövetési módszereket veszem górcső alá, majd hasonlítom össze őket, hogy kellően megalapozott döntést hozhassak a később felhasználni kívánt technikával kapcsolatban. 
+A fejezet \sectref{modszerek} szakaszában mindenekelőtt a jelenleg elérhető tekintetkövetési módszereket veszem górcső alá, majd hasonlítom össze őket, hogy kellően megalapozott döntést hozhassak a később felhasználni kívánt technikával kapcsolatban. A \sectref{osztalyozas} szakaszban a szemmozgások osztályozását mutatom be, a fejezet lezárásaként pedig a \sectref{hw_optikai} szakaszban a felmerülő optikai megfontolásokról nyújtok rövid összefoglalást.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \section{Tekintetkövetési módszerek}\label{sect:modszerek}
@@ -64,7 +64,7 @@ A gyakorlatban használható tekintetkövetési megoldások egy lehetséges csop
 
 Már csekély megfontolással látszik, hogy minden csoportnak vannak előnyei és hátrányai. Például az \emph{1.} csoportba tartozó megoldások igénylik a legkevésbé -- többnyire egyáltalán nem -- a fizikai kontaktust a vizsgált személlyel. Azonban elképzelhető, hogy ennek az az ára, hogy az ebbe a csoportba tartozó megoldások nem veszik fel a versenyt a másik két alapelv szerint fejlesztett rendszerekkel pl. a pontosság, vagy valamely más kritérium tekintetében.
 
-Ennek megfelelően szükség van a lehetőségek számba vételére, értékelésére, majd összehasonlítására, hogy a legmegfelelőbb technikát tudjuk kiválasztani, ha tekintetkövető eszköz (alkalmazás) fejlesztésébe fogunk. A következő szakaszokban ezért röviden ismertetem a fenti kategóriákba eső megoldások alapjait, majd összehasonlítom jellemző tulajdonságaikat, valamint a használatukkal elérhető fontos pontossági- és sebességértékeket.
+Ennek megfelelően szükség van a lehetőségek számba vételére, értékelésére, majd összehasonlítására, hogy a legmegfelelőbb technikát tudjuk kiválasztani, ha tekintetkövető eszköz (alkalmazás) fejlesztésébe fogunk. A következő szakaszokban ezért röviden ismertetem a fenti kategóriákba sorolható megoldások alapjait, majd összehasonlítom jellemző tulajdonságaikat, valamint a használatukkal elérhető fontos pontossági- és sebességértékeket.
 
 %............................................................................
 \subsection{Optikai elvű követés}\label{sect:optikai}
@@ -72,7 +72,7 @@ Ennek megfelelően szükség van a lehetőségek számba vételére, értékelé
 
 Az optikai elvű követés során -- a nevéből adódóan -- optikai úton próbáljuk meghatározni a tekintet irányát. Ez történhet speciális megvilágítás nélkül, pl. az írisz (pontosabban az írisz és az ínhártya közti határvonal, a limbus), vagy a pupilla követésével.
 
-A másik lehetséges megoldásra a szem speciális, többnyire infravörös fénnyel történő megvilágítása, majd a szemgolyó felületén megjelenő tükröződések, visszaverődések vizsgálata kínálkozik. Az infravörös megvilágítás előnye a látható fénnyel szemben egyrészt az, hogy nem zavarja a vizsgált személyt, nem vonja el a figyelmét, másrészt pedig infraszűrők használatával a látható fény tartományába eső változásokkal a megfelelő körülmények között (lehetőleg kevés napfény a magas infratartalma miatt) invariánssá tehető.
+A másik lehetséges megoldásra a szem speciális, többnyire infravörös fénnyel történő megvilágítása, majd a szemgolyó felületén megjelenő tükröződések, visszaverődések vizsgálata kínálkozik. Az infravörös megvilágítás előnye a látható fénnyel szemben egyrészt az, hogy nem zavarja a vizsgált személyt, nem vonja el a figyelmét, másrészt pedig infraszűrők használatával a látható fény tartományába eső változásokkal szemben a megfelelő körülmények között (lehetőleg kevés napfény a magas infratartalma miatt) invariánssá tehető.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Limbuskövetés}\label{sect:limbusz}
@@ -95,7 +95,7 @@ A pupillakövetési technika hasonló az előbb említett limbuskövetéshez, de
 \label{fig:pupiltrack}
 \end{figure}
 
-Az előző technikához képest azonban meg kell említeni a felmerülő nehézségeket is. A kontraszt ugyan lehet, hogy nagyobb az írisz-pupilla határon, azonban az intenzitáskülönbség nem olyan jelentős, mint a limbus környezetében. Az sem elhanyagolható szempont, hogy a pupilla átmérője is szükségszerűen kisebb, mint az íriszé, vagyis a forrásnak relatívan nagyobb felbontásúnak kell lennie, hogy azonos pixelnyi méretű pupillát és íriszt detektálhassunk; ellenkező esetben a kisebb abszolút méret a pontosság rovására mehet.
+Az előző technikához képest azonban meg kell említeni a felmerülő nehézségeket is. A kontraszt ugyan lehet, hogy nagyobb az írisz-pupilla határon, azonban az intenzitáskülönbség nem olyan jelentős, mint a limbus környezetében. Az sem elhanyagolható szempont, hogy a pupilla átmérője is szükségszerűen kisebb, mint az íriszé, vagyis a forrásnak relatívan nagyobb felbontásúnak kell lennie, hogy azonos képpontnyi területű pupillát és íriszt detektálhassunk; ellenkező esetben a kisebb abszolút méret a pontosság rovására mehet.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Visszaverődés-alapú követés}\label{sect:visszaverodes}
@@ -112,7 +112,7 @@ A szemet (infravörös) fénnyel megvilágítva több tükröződés is megfigye
 
 Ezen visszavert képek intenzitása sorrendben egyre csökken, az első azonban (közkeletű nevén az úgynevezett \emph{,,csillanás''}, angolul \emph{glint}) még viszonylag egyszerűen detektálható. Infravörös megvilágításban ugyancsak egyszerű a megfelelő kamerával a pupilláról visszavert fény detektálása -- a pupilla a környezeténél jóval nagyobb mértékben veri vissza az infravörös fényt, az infraképen egy ,,fényes'', kontrasztos objektumot alkotva.
 
-A fenti két objektum egymáshoz viszonyított \emph{relatív} helyzetéből következtethetünk a tekintet irányára, ugyanis az első Purkinje-kép világos pontja, illetve a pupilla kontrasztos ellipszise egymással összefüggésben mozdulnak el a fej vagy a szem mozgatásának következtében.
+A fenti két objektum egymáshoz viszonyított \emph{relatív helyzetéből} következtethetünk a tekintet irányára, ugyanis az első Purkinje-kép világos pontja, illetve a pupilla kontrasztos ellipszise egymással összefüggésben mozdulnak el a fej vagy a szem mozgatásának következtében.
 
 Az előző bekezdésben foglaltakból látszik, hogy a technika nem igényeli a fej mozdulatlanságát, vagy a képfelvevő eszköz fejhez rögzítését. Ezen előnye azonban egy megkötést is magával hordoz: egyszerű algoritmusok segítségével kb. $\pm12$--$15$ foknyi szabadsága van a felhasználónak a fejmozgásokra \cite{scott}, nagyobb mértékű mozgások esetén ugyanis komplexebb matematikai számítások szükségesek a követett objektumok mozgásának modellezéséhez.
 
@@ -122,7 +122,7 @@ A visszaverődés-alapú megoldásokkal rokonítható még az a módszer, amikor
 
 A neurális hálózatot természetesen be kell tanítani a használhatóság érdekében. A betanítási procedúra első lépéseként tanítóképeket kell generálni, általános esetben pár percet vesz igénybe, ami alatt a követnie kell egy, a képernyőn megjelenő jelzést. A tanítóképek birtokában ezután a hálózat betanítható, ez a jelenlegi technikai szint mellett kb. tíz perces nagyságrendű időt vesz igénybe. Azonban azonos körülmények és tesztszemély esetén a tanítást nem kell máskor újra elvégezni.
 
-A neurális hálózat előnye a betanítás után, használat közben mutatkozik meg leginkább: felépítéséből adódóan a háló nagyon rövid idő alatt ,,döntést tud hozni'', így a valósidejű feldolgozási sebesség kritériuma mindenképpen kielégített lesz. A döntés eredménye ráadásul akár közvetlenül felhasználható: mindössze úgy kell megterveznünk a rendszert, hogy a neurális háló kimenet közvetlenül egy kétdimenziós koordinátát szolgáltasson a felhasznált képernyő koordináta-rendszerében.
+A neurális hálózat előnye a betanítás után, használat közben mutatkozik meg leginkább: felépítéséből adódóan a háló nagyon rövid idő alatt ,,döntést tud hozni'', így a valósidejű feldolgozási sebesség kritériuma mindenképpen kielégítésre kerül. A döntés eredménye ráadásul akár közvetlenül felhasználható: mindössze úgy kell megterveznünk a rendszert, hogy a neurális háló kimenet közvetlenül egy kétdimenziós koordinátát szolgáltasson a képernyő koordináta-rendszerében.
 
 A módszer egy másik előnye, hogy nem igényel közeli, nagy felbontású képet a szemrégióról, egy átlagos felbontású kamerával, pl. kartávolságból is elegendő nagyságú lesz a szemrégió. Ennek egyik folyományaként -- hogy nagyobb látószögű képek használhatók -- adódik, hogy viszonylag nagy mozgási szabadsága lehetséges a vizsgált személy fejének tekintetében, anélkül, hogy a kamerát újra kéne pozicionálnunk.
 
@@ -138,7 +138,7 @@ Egy további lehetséges optikai elven működő tekintetkövetési technikát m
 \subsection{Elektromos potenciál-alapú követés}\label{sect:potencial}
 %............................................................................
 
-Az eddigiektől a pupillakövetési probléma egy merőben eltérő megközelítése az \emph{elektro-okulográfia} (EOG). Az eljárásból nyerhető elektro-okulogram rögzítése pl. megismerési és kognitív folyamatok, a vizuális információfeldolgozás, vagy az alvásvizsgálat terén szokásos.
+Az eddigiektől a pupillakövetési probléma egy merőben eltérő megközelítése az \emph{elektro-okulográfia} (EOG). Az eljárásból nyerhető elektro-okulogram rögzítése pl. megismerési és kognitív folyamatok, a vizuális információfeldolgozás, vagy az alvásvizsgálat terén bevett folyamat.
 
 \begin{figure}[!ht]
 \centering
@@ -147,15 +147,15 @@ Az eddigiektől a pupillakövetési probléma egy merőben eltérő megközelít
 \label{fig:eog}
 \end{figure}
 
-A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkülönbség mérésén alapul, amellyel mind függőleges, mind vízszintes irányban követhető a szem mozgása, de csak körülbelül $1$--$2$ fok pontossággal. A használata azonban korántsem mondható egyszerűnek: az potenciálváltozást érzékelő elektródák (lásd \figref{eog}) miatt szükséges fizikai kontaktuson kívül a rendszer kalibrációja rendkívül hosszadalmas, és hozzáértést igénylő feladat.
+A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkülönbség mérésén alapul, amellyel mind függőleges, mind vízszintes irányban követhető a szem mozgása, de csak körülbelül $1$--$2$ fok pontossággal. A használata azonban korántsem mondható egyszerűnek: az potenciálváltozást érzékelő elektródák (lásd \figref{eog} ábra) miatt szükséges fizikai kontaktuson kívül a rendszer kalibrációja rendkívül hosszadalmas, és hozzáértést igénylő feladat.
 
 %............................................................................
 \subsection{Követés speciális kontaktlencse használatával}\label{sect:kontakt}
 %............................................................................
 
-A szem helyzetének, ebből közvetve a tekintet irányának számításához speciális kontaktlencséket is használhatunk. Az egyik lehetséges megoldás, hogy a lencse anyagában olyan véseteket alakítanak ki (tipikusan valamilyen könnyen felismerhető mintázatot), amelyek a fénytörés felhasználásával megkönnyítik a szem helyzetének meghatározását.
+A szem helyzetének, ebből közvetve a tekintet irányának számításához speciális kontaktlencséket is használhatunk. Az egyik lehetséges megoldás, hogy a lencse anyagában olyan véseteket alakítanak ki (tipikusan valamilyen könnyen felismerhető mintázatot), amelyek a fénytörés jelenségének felhasználásával megkönnyítik a szem helyzetének meghatározását.
 
-Ha azonban egy megfelelően kis méretű indukciós tekercset is sikerült a kontaktlencse anyagába ágyazni, akkor a fej körül generált nagyfrekvenciás elektromágneses mezőkkel az tekercs helyzete közvetlenül is könnyen meghatározható. Az eljárás körülményessége azonban kétségessé teszi a technika laboratóriumokon kívüli felhasználását.
+Ha azonban egy megfelelően kis méretű indukciós tekercset is sikerült a kontaktlencse anyagába ágyazni, akkor a fej körül generált nagyfrekvenciás elektromágneses mezőkkel az tekercs helyzete közvetlenül is könnyen meghatározható. Az eljárás körülményessége azonban kétségessé teszi a technika laboratóriumokon kívüli felhasználhatóságát.
 
 
 %............................................................................
@@ -190,7 +190,7 @@ A \tabref{osszehas} táblázat tartalmazza az ebben a szakaszban felsorolt tekin
 %\end{flushright}
 %\end{verse}
 
-A szemmozgások többsége -- így a későbbi vizsgálatok szempontjából fontosak is -- a retinán elhelyezkedő sárgafolt (\emph{fovea centralis}, lásd \figref{eyediag} ábra) helyzetének megváltoztatására szolgál. A látóideg kivezetése mellett elhelyezkedő sárgafolton csak tömötten egymás mellé rendeződött csapok találhatók. A csapok jó fényviszonyok mellett nagyon magas felbontásban képesek színek gazdag skáláját feldolgozni, ezért a legélesebb látás a sárgafoltra vetített kép esetén lehetséges. Érthető tehát, hogy a sárgafoltot olyan pozícióba célszerű mozgatni, hogy a figyelem tárgyának képe ide vetüljön. Az ehhez szükséges pozicionáló típusú szemmozgások közé tartoznak a \emph{szakkádok}, a \emph{lassú követések}, és -- bár meglepőnek tűnik -- a \emph{fixációk} is, ezekkel a fejezet további szakaszaiban részletesebben foglalkozok.
+A szemmozgások többsége -- így a későbbi vizsgálatok szempontjából fontosak is -- a retinán elhelyezkedő sárgafolt (\emph{fovea centralis}, lásd \figref{eyediag} ábra) helyzetének megváltoztatására szolgál. A látóideg kivezetése mellett elhelyezkedő sárgafolton csak tömötten egymás mellé rendeződött csapok találhatók. A csapok jó fényviszonyok mellett nagyon magas felbontásban képesek színek gazdag skáláját feldolgozni, ezért a legélesebb látás a sárgafoltra vetített kép esetén lehetséges. Érthető tehát, hogy a sárgafoltot olyan pozícióba célszerű mozgatni, hogy a figyelem tárgyának képe ide vetüljön. Az ehhez szükséges pozicionáló típusú szemmozgások közé tartoznak a \emph{szakkádok}, a \emph{lassú követések}, és -- bár meglepőnek tűnik -- a \emph{fixációk} is, ezekkel a szakasz további részeiben részletesebben foglalkozok.
 
 \begin{figure}[!ht]
 \centering
@@ -209,14 +209,14 @@ A szakasz első részében sorra veszem, és bemutatom a pozicionáló típusú 
 \subsection{Szakkádok}\label{sect:szakkadok}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A szakkád mindkét szem gyors, egyidejű, azonos irányú mozgását jelenti. Célja a fixáció áthelyezése az egyik tárgyról a másikra. A mozgás során észlelt jellegzetes ,,ugráló'' mintáról (lásd \figref{yarbus_saccadic} ábra) kapta a nevét: a francia \emph{saccader} szó jelentése ,,rángatás'', ,,ugrás''.
+A szakkád mindkét szem gyors, egyidejű, azonos irányú mozgását jelenti. Célja a fixáció áthelyezése az egyik tárgyról a másikra. A mozgás során észlelt jellegzetes ugráló mintáról (lásd \figref{yarbus_saccadic} ábra) kapta a nevét: a francia \emph{saccader} szó jelentése ,,rángatás'', ,,ugrás''.
 
 A szakkádok lehetnek akaratlagosak és reflexszerűek is. Az egyensúlyszervből érkező jelre például reflexszerűen aktiválódhatnak, míg a tekintetünk, figyelmünk áthelyezése nyilvánvalóan akaratlagos cselekedet. Időtartamban a szakkádok körülbelül 10 és 100~ms közé tehetők. Ez kellően rövid ahhoz, hogy az agy a gyakorlatban ne észlelje, hogy a mozgás alatt nem történik információfelvétel -- vagyis a szakkádikus mozgás közben pár pillanatra effektíve vakok vagyunk. \cite{shebilske}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=90mm, keepaspectratio]{figures/yarbus_saccadic.jpg}
-\caption{Szakkádok emberi arc vizsgálata során -- Alfred L. Yarbus kísérletéből}
+\caption{Szakkádok emberi arc vizsgálata során. -- Alfred L. Yarbus kísérletéből}
 \label{fig:yarbus_saccadic}
 \end{figure}
 
@@ -228,7 +228,7 @@ A szakkádok végrehajtásáról megoszlanak a vélemények. Korábban a szakká
 
 A lassú követés (\emph{smooth pursuit}) mozgó tárgyak vizuális követésére szolgál. Az ilyen típusú mozgás könnyen modellezhető egy negatív visszacsatolású szabályozóval. \cite{carpenter_book}
 
-Egy bizonyos sebességig a szem képes tisztán lassú követést használni a fixáció tárgyon tartására, azonban a 30$^{\circ}$/s sebességnél gyorsabban mozgó tárgyak esetén a megfelelő követéshez általában szakkádok beiktatása szükséges. Itt jegyzendő meg, hogy a lassú követés vízszintes és függőleges irányban nem szimmetrikus: a legtöbb ember a vízszintes mozgásokat jobban, míg a függőleges mozgásokat kevésbé tudja lekövetni (ahol ,,jó'' követésen azt értjük, hogy nem szükséges szakkádok beiktatása). A szakkádokkal ellentétben a lassú követést egyértelműen megváltoztathatja az érzékelt vizuális visszacsatolás, a mozgás nem ballisztikus.
+Egy bizonyos sebességig a szem képes tisztán lassú követést használni a fixáció tárgyon tartására, azonban a 30$^{\circ}$/s sebességnél gyorsabban mozgó tárgyak esetén a megfelelő követéshez általában szakkádok beiktatása szükséges. Itt jegyzendő meg, hogy a lassú követés vízszintes és függőleges irányban nem szimmetrikus: a legtöbb ember a vízszintes mozgásokat jobban, míg a függőleges mozgásokat kevésbé tudja lekövetni (ahol ,,jó'' követésen azt értjük, hogy nem szükséges szakkádok beiktatása). A szakkádokkal ellentétben a lassú követést egyértelműen megváltoztathatja az érzékelt vizuális visszacsatolás, azaz a mozgás nem ballisztikus jellegű.
 
 Érdekesség, hogy a legtöbben vizuális stimuláció (tényleges mozgó tárgy) nélkül nem tudnak lassú követéses szemmozgást előidézni, csak rövid szakkádok gyors egymásutánját. Szintén megemlítendő, hogy a lassú követés bár hasonlónak tűnik ahhoz, amikor a fej mozgását ,,kompenzálva'' egy álló tárgy képét fixáljuk a látómezőn, a két mozgás alapvetően különbözik: már abban is, hogy míg az egyik akaratlagos, a másik reflexszerűen hajtódik végre.
 
@@ -250,7 +250,7 @@ A nystagmus szakkádok és lassú követések egymásutánja, nem akaratlagos sz
 \subsection{Összegzés}\label{sect:mozg_osszegzes}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-A fejezet első szakaszában röviden bemutattam a \emph{fovea} pozicionálására szolgáló szemmozgásokat, amelyek alapszintű megismerése elengedhetetlen a tekintetkövető rendszer fejlesztése során. A rendszernek -- ahogy ez a mozgások tulajdonságaiból kitűnik -- mind a gyorsaság, mind a pontosság tekintetében komoly követelményeket kell teljesítenie.
+A szakasz első részében röviden bemutattam a \emph{fovea} pozicionálására szolgáló szemmozgásokat, amelyek alapszintű megismerése elengedhetetlen a tekintetkövető rendszer fejlesztése során. A rendszernek -- ahogy ez a mozgások tulajdonságaiból kitűnik -- mind a gyorsaság, mind a pontosság tekintetében komoly követelményeket kell teljesítenie.
 
 Az elérendő \textit{gyorsasághoz} a szakkádok, mint a leggyorsabb sebességű mozgások időtartama (10-100~ms) adhat támpontot. Egy átlagos kamerakép 60~Hz-es frissítése legjobb esetben 16~ms időközönkénti vizsgálatot tesz lehetővé. Ez az eredmény egy tipikus drágább, digitális webkamera 30 képkocka/másodperces képfrissítésével máris 33~ms-ra csökken, nem is beszélve a 30~FPS-nél gyengébb teljesítményű kamerákról. Tisztában kell lennünk tehát azzal, hogy átlagos képrögzítő hardver használatával előfordulhat olyan szituáció, hogy fizikailag képtelenek vagyunk a nagyon gyors szakkádok pontos követésére.
 
@@ -261,20 +261,20 @@ A \textit{pontosság} tekintetében azt kell figyelembe vennünk, hogy (pl. olva
 \section{Optikai megfontolások}\label{sect:hw_optikai}
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-Az optikai megfontolások közül az első a tekintetkövetés során felhasznált fénytartomány, ami lehet a látható fény tartománya, valamint az infratartomány. A második fontos szempont pedig a kamera látószöge, ami alapjaiban határozza meg a felhasználótól megkívánt beavatkozás mértékét, valamint a szem felbontását (ezzel közvetve az elérhető maximális pontosságot).
+Az optikai megfontolások közül az első a tekintetkövetés során felhasznált fénytartomány, ami lehet a látható fény tartománya, valamint az infratartomány. A második fontos szempont pedig a kamera látószöge, ami alapjaiban határozza meg a felhasználótól megkívánt beavatkozás mértékét, valamint a szemrégió felbontását (ezzel közvetve az elérhető maximális pontosságot).
 
 \bigskip
 
-A \textbf{látható fényben} történő követés egyértelmű előnye, hogy nem igényel speciális hardvert, a legtöbb, a piacon kapható analóg vagy digitális (web)kamera ebben a tartományban ,,lát''. Sőt, a digitális eszközökben a CMOS/CCD érzékelő elé szinte minden esetben ún. infratükröt (felülvágó szűrőt, amely kirekeszti a látható fény feletti spektrumot) helyeznek, ezeket az eszközöket tehát sikerrel csak látható fényben használhatjuk. A látható fény használatakor azonban nem feledkezhetünk meg annak hátrányairól sem: a követéshez analizálandó kép meglehetősen érzékeny lesz a megfelelő megvilágításra. A fényviszonyok változásának kiküszöbölése komolyabb előfeldolgozást kíván, és extrém esetekben nem is mindig teljesíthető.
+A \textbf{látható fényben} történő követés egyértelmű előnye, hogy nem igényel speciális hardvert, a legtöbb, a piacon kapható analóg vagy digitális (web)kamera ebben a tartományban ,,lát''. Sőt, a digitális eszközökben a CMOS/CCD érzékelő elé szinte minden esetben ún. infratükröt (felülvágó szűrőt, amely kirekeszti a látható fény feletti spektrumot) helyeznek, ezeket az eszközöket tehát csakis látható fényben használhatjuk sikerrel. A látható fény használatakor azonban nem feledkezhetünk meg annak hátrányairól sem: a feldolgozandó kép meglehetősen érzékeny lesz a megfelelő megvilágításra. A fényviszonyok változásának kiküszöbölése komolyabb előfeldolgozást kíván, és extrém esetekben nem is mindig teljesíthető.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=100mm, keepaspectratio]{figures/infra_eye.png}
-\caption{Az emberi szem képe infravörös fényben. Forrás: \url{http://bit.ly/aKwzsZ}}
+\caption{Az emberi szem képe infravörös fényben.\\Forrás: \url{http://bit.ly/aKwzsZ}}
 \label{fig:eyepic}
 \end{figure}
 
-Az \textbf{infratartománynak} a látható fénnyel szemben vannak előnyei, és hátrányai is. Az előnyök közé tartozik, hogy a pupilla képe a infra megvilágításban nagyon kontrasztos (lásd \figref{eyepic} ábra), jóval könnyebben szegmentálható az írisztől (különösen sötétebb szemű alany esetén), mint látható fényben. Az infrás megvalósítás hátránya azonban, hogy a megfelelő működéshez sötétet igényel (igaz, ezzel összhangban a látható megvilágítási változásokra invariáns), de sötétben, a tisztán infra megvilágítás megvalósítása nehéz feladat, különösen a piacon kapható egyszerűbb infra LED-ekkel, vagy LED-es reflektorokkal.
+Az \textbf{infratartománynak} a látható fénnyel szemben vannak előnyei, de hátrányai is. Az előnyök közé tartozik, hogy a pupilla képe a infra megvilágításban nagyon kontrasztos (lásd \figref{eyepic} ábra), emiatt jóval könnyebben szegmentálható az írisztől (különösen sötétebb szemű alany esetén), mint látható fényben. Az infrás megvalósítás hátránya azonban, hogy a megfelelő működéshez sötétet igényel (igaz, ezzel összhangban a látható megvilágítási változásokra invariáns), de sötétben, a tisztán infra megvilágítás megvalósítása nehéz feladat, különösen a piacon kapható egyszerűbb infra LED-ekkel, vagy LED-es reflektorokkal.
 
 \bigskip
 

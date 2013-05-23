@@ -22,7 +22,7 @@ A valóságban a kontúrok pontjai azonban csak többé-kevésbé illeszkednek i
 \centering
 \includegraphics[width=67mm, keepaspectratio]{figures/houghline_building_1.png}\hspace{1cm}
 \includegraphics[width=67mm, keepaspectratio]{figures/houghline_building_2.png}
-\caption{Egyenesek keresése Hough-transzformáció használatával.\\Forrás: \url{http://href.hu/x/c91h}}
+\caption{Egyenesek keresése Hough-transzformáció használatával.\\Forrás: \url{http://bit.ly/13N0rfK}}
 \label{fig:houghlines}
 \end{figure}
 
@@ -30,7 +30,7 @@ A \textbf{Hough-transzformáció} erre a problémára kínál megoldást. Felada
 
 \bigskip
 
-Történelmi áttekintésként megjegyezhetjük, hogy a Hough-transzformációt Paul~Hough alkotta meg 1959-ben buborékkamra-fényképek gépi analíziséhez \cite{hough_eredeti}. Ebben a cikkben Hough még csak egyenesek felismeréséről beszél. A manapság használt transzformációt Richard~Duda és Peter~Hart fejlesztette ki 1972-ben ,,általánosított Hough-transzformáció'' néven \cite{hough_duda}, tíz évvel azután, hogy Paul Hough szabadalmaztatta módszerét. Az õ kiegészítésük már lehetõvé tette, hogy a transzformáció nemcsak egyenesek, hanem körök és más analitikusan leírható görbék keresésére is felhasználható legyen.
+Történelmi áttekintésként megjegyezhetjük, hogy a Hough-transzformációt Paul~Hough alkotta meg 1959-ben buborékkamra-fényképek gépi analíziséhez \cite{hough_eredeti}. Ebben a cikkben Hough még csak egyenesek felismeréséről beszél. A manapság használt transzformációt Richard~Duda és Peter~Hart fejlesztette ki 1972-ben ,,általánosított Hough-transzformáció'' néven \cite{hough_duda}, tíz évvel azután, hogy Paul Hough szabadalmaztatta módszerét. Az ő kiegészítésük már lehetõvé tette, hogy a transzformáció nemcsak egyenesek, hanem körök és más analitikusan leírható görbék keresésére is felhasználható legyen.
 
 A gépi látás felhasználói körében azonban igazán csak Dana~H.~Ballard 1981-es cikke \cite{hough_ballard} nyomán lett népszerű, aki a transzformáció még további felhasználási lehetőségeit vetette fel. Eredményeinek köszönhetően a módszer analitikusan nem (vagy csak nehezen) leírható formák keresésére is alkalmazhatóvá vált. Félreértésekre adhat okot, hogy mind Duda és Hart, mind Ballard az ,,általánosított'' megnevezést használja a módszer általuk kitalált kiegészítéseinek. A továbbiakban az ,,általános'' jelzőt a Duda--Hart-féle kiegészítés megnevezésére használom, ahol Ballard módszeréről esik szó, azt külön jelzem.
 
@@ -54,7 +54,7 @@ y = m \cdot x + b
 
 reprezentáció, ahol $ m $ az egyenes meredeksége (iránytangense), a $ b $ konstans az ordinátatengely-metszet, vagyis az egyenes és az $ y $ tengely metszéspontja.
 
-A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordinátarendszer $ y $ tengelyével párhuzamos, vagy ahhoz közelítő egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függőleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
+A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordináta-rendszer $ y $ tengelyével párhuzamos, vagy ahhoz közelítő egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függőleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
 
 \begin{align}\label{eq:egyenes_hesse}
 r = x \cdot \cos \theta + y \cdot \sin \theta
@@ -107,7 +107,7 @@ Gyakorlati szabályként elmondható, hogy 1 fok pontosságnál többre ritkán 
 
 A továbbiakban tételezzük fel, hogy a kép bináris, és megfelelően előfeldolgozott (pl. élkeresés, küszöbözés), azon már csak a felismerni kívánt egyenesek pontjai találhatóak. A háttér képpontjait jelölje a 0 érték, az érdekes pontokat tartalmazó előtér képpontjai legyenek 1 értékűek.
 
-A keresés folyamán bejárjuk a képteret pixelrõl pixelre. A 0 értékű képpontok biztosan nem részei egy képen található egyenesnek sem, ezért ezekkel nem kell foglalkozunk. Ha 1 értékű pixelt találunk az $ (x,y) $ helyen, az potenciálisan része lehet egy, a képen található egyenesnek. Az akkumulátor minden $ \theta $ értékhez (pl. fokonként) meghatározzuk az $ (x,y) $ ponton átmenő, $ \theta $ irányú egyenes origótól vett $ r $ távolságát a \eqref{egyenes_hesse} összefüggés alapján. Az akkumulátortömb értékét minden így kiszámolt $ (r,\theta) $ indexekkel jelölt helyen megnöveljük ($ r $ meghatározásánál természetesen a tömb kvantáltságát figyelembe véve). Ezt a folyamatot úgy is mondhatjuk, hogy az $ (x,y) $ pont a kiszámított $ (r, \theta) $ pontok halmazára, vagyis ezen paraméterek által a képtérben képviselt egyenesekre \textbf{,,szavaz''}.
+A keresés folyamán bejárjuk a képteret pixelről pixelre. A 0 értékű képpontok biztosan nem részei egy képen található egyenesnek sem, ezért ezekkel nem kell foglalkozunk. Ha 1 értékű pixelt találunk az $ (x,y) $ helyen, az potenciálisan része lehet egy, a képen található egyenesnek. Az akkumulátor minden $ \theta $ értékhez (pl. fokonként) meghatározzuk az $ (x,y) $ ponton átmenő, $ \theta $ irányú egyenes origótól vett $ r $ távolságát a \eqref{egyenes_hesse} összefüggés alapján. Az akkumulátortömb értékét minden így kiszámolt $ (r,\theta) $ indexekkel jelölt helyen megnöveljük ($ r $ meghatározásánál természetesen a tömb kvantáltságát figyelembe véve). Ezt a folyamatot úgy is mondhatjuk, hogy az $ (x,y) $ pont a kiszámított $ (r, \theta) $ pontok halmazára, vagyis ezen paraméterek által a képtérben képviselt egyenesekre \emph{,,szavaz''}.
 
 Az algoritmus első fázisának lefutása után az akkumulátortömböt kell vizsgálnunk. Optimális esetben a képen egy egyenesre eső pixelek mindegyike (a többi más szavazatuk mellett) szavazott a ,,valódi'' egyenest jelentő $ (r, \theta) $ párra. Az akkumulátortömb maximális értékű $ (r, \theta) $ elemei adják meg tehát a képen található egyeneseket. A zaj, az esetleg több pixel széles vonalak, és a kvantálási pontatlanság miatt azonban célravezetőbb \textbf{lokális maximumokat} (lásd \figref{houghparam} ábra) keresni az akkumulátortömbben így meghatározva a \textbf{legvalószínűbb} egyenesek $ r $ és $ \theta $ paramétereit.
 
@@ -115,7 +115,7 @@ Az algoritmus első fázisának lefutása után az akkumulátortömböt kell viz
 \centering
 \includegraphics[width=67mm, keepaspectratio]{figures/houghparam_1.png}\hspace{1cm}
 \includegraphics[width=67mm, keepaspectratio]{figures/houghparam_2.png}
-\caption{A képtér (balra) és az ebből származó paramétertér (jobbra) egyenesek keresése során.\\Forrás: \url{http://href.hu/x/c91i}}
+\caption{A képtér (balra) és az ebből származó paramétertér (jobbra) egyenesek keresése során.\\Forrás: \url{http://bit.ly/9dWOsj}}
 \label{fig:houghparam}
 \end{figure}
 
@@ -135,7 +135,7 @@ A körökhöz megfelelő reprezentáció megtalálásához még annyit sem kell 
 ( x - x_{0})^{2} + (y - y_{0})^2 = r^2
 \end{align}
 
-egyenlet adja meg (\figref{repr_circle} ábra). Szögfüggvények használatával az \eqref{kor_koogeom} egyenletet átalakíthatjuk
+egyenlet adja meg (\figref{repr_circle} ábra). Szögfüggvények használatával a \eqref{kor_koogeom} egyenletet átalakíthatjuk
 
 \begin{align}\label{eq:kor_param}
 x &= x_{0} + r \cdot \cos \theta \nonumber \\
@@ -155,9 +155,9 @@ formára, ahol $ (x_{0}, y_{0}) $ szintén a kör középpontjának koordinátá
 \subsubsection{Paramétertér körök esetében}\label{sect:korok_parameterter}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Látható, hogy körök esetében már csak akkor elegendő két paraméter -- az $ (x_{0}, y_{0}) $ középpont-koordináták -- a forma leírásához, ha előre adott sugarú köröket keresünk, vagyis $ r $ konstans. Ez azonban csak bizonyos esetekben használható, általános esetben túl nagy megkötést jelent. Tehát a paramétertér dimenziószámát növelnünk kell: az $ r $ sugárparaméter dimenziójával együtt az már \textbf{három dimenziós lesz}.
+Látható, hogy körök esetében már csak akkor elegendő két paraméter -- az $ (x_{0}, y_{0}) $ középpont-koordináták -- a forma leírásához, ha előre adott sugarú köröket keresünk, vagyis $ r $ konstans. Ez azonban csak bizonyos esetekben használható, általános esetben túl nagy megkötést jelent. Tehát a paramétertér dimenziószámát növelnünk kell: az $ r $ sugárparaméter dimenziójával együtt az már \emph{három dimenziós lesz}.
 
-A paraméterteret az akkumulátor tömb mivoltából adódóan itt is egész számokra kell kvantálnunk. Körkeresés esetén az akkumulátor tehát egy három dimenziós tömb, amely a középpont két koordinátájának és a sugárnak egész értékeivel indexelhető. Már a pontos algoritmus ismerete nélkül is látszik, hogy a potenciális körök keresése jóval komplexebb művelet az ismeretlen paraméterek magasabb száma miatt.
+A paraméterteret az akkumulátor tömb mivoltából adódóan itt is egész számokra kell kvantálnunk. Körkeresés esetén az akkumulátor tehát egy három dimenziós tömb, amely a középpont két koordinátájának és a kör sugarának egész értékeivel indexelhető. Már a pontos algoritmus ismerete nélkül is látszik, hogy a potenciális körök keresése jóval komplexebb művelet az ismeretlen paraméterek magasabb száma miatt.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{A körkeresés folyamata}\label{sect:korok_keresese}
@@ -165,9 +165,9 @@ A paraméterteret az akkumulátor tömb mivoltából adódóan itt is egész sz�
 
 Az alaphelyzet legyen az egyenesek keresésekor felállított: a felismerni kívánt körvonalak képpontjai legyenek 1, a háttér felismerés szempontjából érdektelen képpontjai pedig legyenek 0 értékűek.
 
-A bejárás során 1 értékű pixelt találva jóval több számítani valónk van, mint egyenesek esetében. Az akkumulátor \textbf{összes lehetséges $ r $ sugárparaméterére} meg kell határoznunk a potenciális körök középpontjait. Ehhez felhasználjuk az \eqref{kor_param} összefüggéseket $ r $ és $ \theta $ ismeretében ($ \theta $ lehetséges értékeinek megválasztása -- tipikusan például fokonként -- azonos elven történhet a \sectref{parameterter_akkumulator} szakaszban olvashatóakkal).
+A bejárás során 1 értékű pixelt találva jóval több számítani valónk van, mint egyenesek esetében. Az akkumulátor \textbf{összes lehetséges $ r $ sugárparaméterére} meg kell határoznunk a potenciális körök középpontjait. Ehhez felhasználjuk a \eqref{kor_param} összefüggéseket $ r $ és $ \theta $ ismeretében ($ \theta $ lehetséges értékeinek megválasztása -- tipikusan például fokonként -- azonos elven történhet a \sectref{parameterter_akkumulator} szakaszban olvashatóakkal).
 
-Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felsõ korlátot adva a keresést a két érték közötti sugarú körökre szűkíthetjük. Némi előzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentősen csökkenthető a számítási idő- és tárigény.
+Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felső korlátot adva a keresést a két érték közötti sugarú körökre szűkíthetjük. Némi előzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentősen csökkenthető a számítási idő- és tárigény.
 
 Másfelől pedig felhasználhatunk lokális információkat is: a vizsgálat alatt lévő képpont egy adott ablaknyi környezetét vizsgálva, meghatározhatjuk a körvonal adott pontbeli \textbf{gradiensét}. Ez az információ felhasználható a középpont keresésében, ugyanis a kör középpontjának a körvonalpont normálisán kell feküdnie. Így, ha nem is egyetlen kitüntetett irányra, de a számítási pontatlanságot és a zajt figyelembe véve egy szűk tartományra korlátozhatjuk a keresett körközéppontok irányát. Ez a választott tartomány méretével fordított arányosságban csökkenti a szükséges számítások számát. Példának okáért, ha a kiszámított gradiens segítségével akár csak 90 fok pontossággal meg tudjuk határozni a pontban vett normális irányát, a számítások háromnegyedét nem kell elvégeznünk, ráadásul az akkumulátortömb sem telítődik feleslegesen olyan paraméterekkel, amelyekből biztosan (vagy elég nagy valószínűséggel) nem fog helyes megoldás születni.
 
@@ -175,11 +175,7 @@ Másfelől pedig felhasználhatunk lokális információkat is: a vizsgálat ala
 \subsubsection{Egyéb körkeresési eljárások}\label{sect:korok_kiegeszites}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-A körkeresésre használt Hough-transzformáció további kiegészítéseivel találkozhatunk H. K. Yuen \textit{et al} hivatkozott cikkében \cite{hough_circles}. A cikkben az előző alfejezetben ismertetett sztenderd változat mellett még további négy módosulat vizsgálatát és ezek összehasonlítását végzik el a szerzők. Ezek közül a cikkben ,,2-1 Hough-transzformációnak'' néven hivatkozott módszert emelném ki, a későbbiek során ugyanis ennek fontos szerepe lesz. Elnevezésként a cikkben használt ,,21HT'' rövidítést fogom használni.
-
-A \textbf{21HT} módszer a \cite{hough_21_davies} és \cite{hough_21_illingworth} számon hivatkozott cikkekben volt először használatos. A kiegészítés felhasználja a rendelkezésre álló gradiens-információt (lásd: \sectref{korok_keresese}), és ennek ismeretében pedig a problémát két részre osztja. Mivel a kör középpontjának a körvonalpontok normálisán kell feküdnie, ezen normálisok közös metszéspontja valójában tehát meghatározza a középpontot. Egy kétdimenziós akkumulátortömb pedig elég minden pont saját normálisára esõ szavazatainak nyilvántartásához. Ezután a sugár meghatározása a következő módszerrel történhet: meghatározzuk minden pont és az előző lépésben kiszámított középpont-jelölt távolságát, majd ezekből az információkból egy sugár-hisztogramot állítunk elő. Ennek vizsgálatával már meghatározhatjuk a középpontokhoz tartozó sugarakat is. A módszer tárigénye az eredeti megközelítéshez képest jóval kisebb, hiszen csak egy \textbf{2D akkumulátort} és egy \textbf{1D hisztogramot} kell használnunk -- innen a módszer ,,2-1'' elnevezése.
-
-Eredmények tekintetében az összehasonlító cikk szerint a 21HT módszer felveszi a versenyt a sztenderd megoldással. Igaz, hogy a kétfázisú számítás miatt az első fázisban összeszedett hiba szükségszerűen rárakódik a második fázisra, ezt a pontatlanságot ellensúlyozni tudja a módszer jelentősen kisebb tárigénye.
+A körkeresésre használt Hough-transzformáció további kiegészítéseivel találkozhatunk H. K. Yuen \textit{et al} hivatkozott cikkében \cite{hough_circles}. A cikkben az előző alfejezetben ismertetett sztenderd változat mellett még további négy módosulat vizsgálatát és ezek összehasonlítását végzik el a szerzők.
 
 %............................................................................
 \subsection{Összegzés}\label{sect:hough_osszefoglalas}
@@ -225,17 +221,17 @@ A számítógépes látás területén az optikai áramlás közelítésének k�
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=80mm, keepaspectratio]{figures/opticalflow.png}
-\caption{A kép jobb oldalán piros nyilak jelképezik az optikai áramlást.\\Forrás: \url{http://href.hu/x/dz36}}
+\caption{A kép jobb oldalán piros nyilak jelképezik az optikai áramlást.\\Forrás: \url{http://bit.ly/13N0b0l}}
 \label{fig:optical_flow}
 \end{figure}
 
-Az eljárás feltételezi, hogy az áramlás konstans a vizsgált képpont helyi környezetében, és ebben a környezetben (ablakban) a legkisebb négyzetek módszerével próbálja kiszámolni az aktuális pont elmozdulásvektorát. Azzal, hogy nem egy-egy képpontot, hanem egy kis lokális ablakot vesz figyelembe a számítás során, a Lucas--Kanade eljárás kevésbé érzékenyen reagál a zajos képekre. Másrészt viszont a lokális tulajdonság hatására az eljárás nem tud információt szolgáltatni a kép nagy, összefüggő, azonos intenzitású területein.
+Az eljárás feltételezi, hogy az áramlás konstans a vizsgált képpont helyi környezetében, és ebben a környezetben (ablakban) a legkisebb négyzetek módszerével próbálja kiszámolni az aktuális pont elmozdulásvektorát. Azzal, hogy nem egy-egy képpontot, hanem egy kis lokális ablakot vesz figyelembe a számítás során, a Lucas--Kanade eljárás kevésbé érzékenyen reagál a zajos bemenetei képekre. Másrészt viszont a lokális tulajdonság hatására az eljárás nem tud információt szolgáltatni a kép nagy, összefüggő, azonos intenzitású területein.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Matematikai háttér}\label{sect:matrixok}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Tegyük fel, hogy két egymás követő időpillanatban a képek közti eltérés megfelelően kicsi. Az optikai áramlás eljárás alapegyenlete ebben az esetben következő
+Tegyük fel, hogy két egymás követő időpillanatban a képek közti eltérés megfelelően kicsi. Az optikai áramlás eljárás alapegyenlete ebben az esetben
 
 \begin{align}\label{eq:optflow_alap}
 I_x V_x + I_y V_y = - I_t
@@ -268,7 +264,7 @@ A \eqref{optflow_matrix}-ban definiált egyenletrendszer felülhatározott, vagy
 v &= \frac{A^T b}{A^T A}
 \end{align}
 
-ami \eqref{optflow_matrix}-at behelyettesítve a következő alakra hozható
+ami \eqref{optflow_matrix}-et behelyettesítve a következő alakra hozható
 
 \begin{align}\label{eq:optflow_seb2}
 \left[ \begin{array}{c} V_x \\ V_y \end{array} \right] &= \left[ \begin{array}{cc} \sum_{i=1}^n I_x(q_i)^2 & \sum_{i=1}^n I_x(q_i)I_y(q_i) \\ \sum_{i=1}^n I_x(q_i)I_y(q_i) & \sum_{i=1}^n I_y(q_i)^2 \end{array} \right]^{-1} \left[ \begin{array}{c} - \sum_{i=1}^n I_x(q_i)I_t(q_i) \\ - \sum_{i=1}^n I_y(q_i)I_t(q_i) \end{array} \right]
@@ -344,10 +340,9 @@ A feladat tehát olyan algoritmust találni, amely lehetőleg minél kisebb szá
 A kétlépéses (two-pass) algoritmusok -- nevükből adódóan -- két különálló lépésben határozzák meg a bináris képen található összefüggő blobokat.
 
 \begin{enumerate}
-  \item Első lépésben \textbf{átmeneti címkék} kiosztására, valamint az átmeneti címkék közti ekvivalenciák meghatározására kerül sor.
+  \item Első lépésben \textbf{átmeneti címkék} kiosztására, valamint ezen címkék közti ekvivalenciák meghatározására kerül sor.
   \item Második lépésben már meghatározhatjuk a komponenseket a korábban ekvivalensnek jelzett címkék \textbf{összevonásával}.
 \end{enumerate}
-
 
 %.  .  .  .  .   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . . . . . . . . . . . . 
 \paragraph{Rosenfeld--Pfalz}
@@ -438,7 +433,7 @@ Az \textbf{első lépés} során elvégzendő feladatok az aktuális képpontra:
   \item Tároljuk a szomszédos címkék közti ekvivalenciákat!
 \end{enumerate}
 
-A \textbf{második lépésben}, hasonlóan az előző megoldáshoz, a képpontokat újra sorba véve újracímkézzük azokat az ekvivalens címkék legkisebbikével.
+A \textbf{második lépésben}, hasonlóan az előző megoldáshoz, a képpontokat ismét sorba véve újracímkézzük azokat az ekvivalens címkék legkisebbikével.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Egyéb algoritmusok}\label{sect:blob_egyeb}
@@ -524,7 +519,7 @@ $\dfrac{P}{2 \sqrt{\pi A}}$
 
 \bigskip
 
-A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt a értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemléltethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főlet angolszász területen elterjedt elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
+A blob orientációjának meghatározásában lehet segítségünkre a \textbf{Feret-átmérő} fogalma. Az általános definíció szerint Feret-átmérőn azt az értéket értjük, amely távolságba az objektum ,,beszorítható'' a megadott iránnyal párhuzamos egyenesek közé. A fogalom legkönnyebben úgy szemléltethető, mintha az objektumot egy tolómérő adott irányba álló pofái közé szorítanánk. A tolómérőn leolvasott érték az objektum mérési irányra vett Feret-átmérője -- ebből származik a másik, főleg angolszász nyelvterületen honos elnevezés, a \emph{caliper diameter} (caliper: tolómérő, tolómérce). 
 
 A gépi látás területén Feret-átmérőn általában automatikusan a legnagyobb Feret-átmérőt értjük. A legnagyobb Feret-átmérőnek kitüntetett szerepet tulajdoníthatunk: irányszögét kitűnően használhatjuk a blob \textbf{orientációjának} jellemzésére.
 

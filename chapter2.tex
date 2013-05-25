@@ -122,7 +122,7 @@ A visszaverődés-alapú megoldásokkal rokonítható még az a módszer, amikor
 
 A neurális hálózatot természetesen be kell tanítani a használhatóság érdekében. A betanítási procedúra első lépéseként tanítóképeket kell generálni, általános esetben pár percet vesz igénybe, ami alatt a követnie kell egy, a képernyőn megjelenő jelzést. A tanítóképek birtokában ezután a hálózat betanítható, ez a jelenlegi technikai szint mellett kb. tíz perces nagyságrendű időt vesz igénybe. Azonban azonos körülmények és tesztszemély esetén a tanítást nem kell máskor újra elvégezni.
 
-A neurális hálózat előnye a betanítás után, használat közben mutatkozik meg leginkább: felépítéséből adódóan a háló nagyon rövid idő alatt ,,döntést tud hozni'', így a valósidejű feldolgozási sebesség kritériuma mindenképpen kielégítésre kerül. A döntés eredménye ráadásul akár közvetlenül felhasználható: mindössze úgy kell megterveznünk a rendszert, hogy a neurális háló kimenet közvetlenül egy kétdimenziós koordinátát szolgáltasson a képernyő koordináta-rendszerében.
+A neurális hálózat előnye a betanítás után, használat közben mutatkozik meg leginkább: felépítéséből adódóan a háló nagyon rövid idő alatt ,,döntést tud hozni'', így a valósidejű feldolgozási sebesség kritériuma mindenképpen kielégítésre kerül. A döntés eredménye ráadásul akár direkt módon felhasználható: mindössze úgy kell megterveznünk a rendszert, hogy a neurális háló kimenete közvetlenül egy kétdimenziós koordinátát szolgáltasson a képernyő koordináta-rendszerében.
 
 A módszer egy másik előnye, hogy nem igényel közeli, nagy felbontású képet a szemrégióról, egy átlagos felbontású kamerával, pl. kartávolságból is elegendő nagyságú lesz a szemrégió. Ennek egyik folyományaként -- hogy nagyobb látószögű képek használhatók -- adódik, hogy viszonylag nagy mozgási szabadsága lehetséges a vizsgált személy fejének tekintetében, anélkül, hogy a kamerát újra kéne pozicionálnunk.
 
@@ -147,7 +147,7 @@ Az eddigiektől a pupillakövetési probléma egy merőben eltérő megközelít
 \label{fig:eog}
 \end{figure}
 
-A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkülönbség mérésén alapul, amellyel mind függőleges, mind vízszintes irányban követhető a szem mozgása, de csak körülbelül $1$--$2$ fok pontossággal. A használata azonban korántsem mondható egyszerűnek: az potenciálváltozást érzékelő elektródák (lásd \figref{eog} ábra) miatt szükséges fizikai kontaktuson kívül a rendszer kalibrációja rendkívül hosszadalmas, és hozzáértést igénylő feladat.
+A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkülönbség mérésén alapul, amellyel mind függőleges, mind vízszintes irányban követhető a szem mozgása, de csak körülbelül $1$--$2$ fok pontossággal. A használata azonban korántsem mondható egyszerűnek: a potenciálváltozást érzékelő elektródák (lásd \figref{eog} ábra) miatt szükséges fizikai kontaktuson kívül a rendszer kalibrációja rendkívül hosszadalmas, és hozzáértést igénylő feladat.
 
 %............................................................................
 \subsection{Követés speciális kontaktlencse használatával}\label{sect:kontakt}
@@ -155,7 +155,7 @@ A módszer a szemgolyó elülső és hátulsó pólusa közötti potenciálkül�
 
 A szem helyzetének, ebből közvetve a tekintet irányának számításához speciális kontaktlencséket is használhatunk. Az egyik lehetséges megoldás, hogy a lencse anyagában olyan véseteket alakítanak ki (tipikusan valamilyen könnyen felismerhető mintázatot), amelyek a fénytörés jelenségének felhasználásával megkönnyítik a szem helyzetének meghatározását.
 
-Ha azonban egy megfelelően kis méretű indukciós tekercset is sikerült a kontaktlencse anyagába ágyazni, akkor a fej körül generált nagyfrekvenciás elektromágneses mezőkkel az tekercs helyzete közvetlenül is könnyen meghatározható. Az eljárás körülményessége azonban kétségessé teszi a technika laboratóriumokon kívüli felhasználhatóságát.
+Ha azonban egy megfelelően kis méretű indukciós tekercset is sikerült a kontaktlencse anyagába ágyazni, akkor a fej körül generált nagyfrekvenciás elektromágneses mezőkkel a tekercs helyzete közvetlenül is könnyen meghatározható. Az eljárás körülményessége azonban kétségessé teszi a technika laboratóriumokon kívüli felhasználhatóságát.
 
 
 %............................................................................
@@ -190,7 +190,7 @@ A \tabref{osszehas} táblázat tartalmazza az ebben a szakaszban felsorolt tekin
 %\end{flushright}
 %\end{verse}
 
-A szemmozgások többsége -- így a későbbi vizsgálatok szempontjából fontosak is -- a retinán elhelyezkedő sárgafolt (\emph{fovea centralis}, lásd \figref{eyediag} ábra) helyzetének megváltoztatására szolgál. A látóideg kivezetése mellett elhelyezkedő sárgafolton csak tömötten egymás mellé rendeződött csapok találhatók. A csapok jó fényviszonyok mellett nagyon magas felbontásban képesek színek gazdag skáláját feldolgozni, ezért a legélesebb látás a sárgafoltra vetített kép esetén lehetséges. Érthető tehát, hogy a sárgafoltot olyan pozícióba célszerű mozgatni, hogy a figyelem tárgyának képe ide vetüljön. Az ehhez szükséges pozicionáló típusú szemmozgások közé tartoznak a \emph{szakkádok}, a \emph{lassú követések}, és -- bár meglepőnek tűnik -- a \emph{fixációk} is, ezekkel a szakasz további részeiben részletesebben foglalkozok.
+A szemmozgások többsége -- így a későbbi vizsgálatok szempontjából fontosak is -- a retinán elhelyezkedő sárgafolt (\emph{fovea centralis}, lásd \figref{eyediag} ábra) helyzetének megváltoztatására szolgál. A látóideg kivezetése mellett elhelyezkedő sárgafolton csak tömötten egymás mellé rendeződött csapok találhatók. A csapok jó fényviszonyok mellett nagyon magas felbontásban képesek színek gazdag skáláját feldolgozni, ezért a legélesebb látás a sárgafoltra vetített kép esetén lehetséges. Érthető tehát, hogy a sárgafoltot olyan pozícióba célszerű mozgatni, hogy a figyelem tárgyának képe ide vetüljön. Az ehhez szükséges pozicionáló típusú szemmozgások közé tartoznak a \emph{szakkádok}, a \emph{lassú követések} és -- bár meglepőnek tűnik -- a \emph{fixációk} is, ezekkel a szakasz további részeiben részletesebben foglalkozok.
 
 \begin{figure}[!ht]
 \centering
@@ -203,7 +203,7 @@ A \emph{fovea} pozicionálását elősegítő mozgások mellett természetesen m
 
 \bigskip
 
-A szakasz első részében sorra veszem, és bemutatom a pozicionáló típusú szemmozgások alapjait, a mérnöki megközelítésből jelentéktelen részleteket mellőzve. Végül a \sectref{mozg_osszegzes} szakaszban összefoglalom a megszerzett ismereteket, valamint hogy a megismert mozgások milyen követelményeket, illetve korlátozásokat támasztanak a realizálandó rendszer tervezése során.
+A szakasz első részében sorra veszem és bemutatom a pozicionáló típusú szemmozgások alapjait, a mérnöki megközelítésből jelentéktelen részleteket mellőzve. Végül, a \sectref{mozg_osszegzes} szakaszban összefoglalom a megszerzett ismereteket valamint azon követelményeket és korlátozásokat, amelyeket a megismert mozgások támasztanak a realizálandó rendszer tervezése során.
 
 %,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 \subsection{Szakkádok}\label{sect:szakkadok}
@@ -274,7 +274,7 @@ A \textbf{látható fényben} történő követés egyértelmű előnye, hogy ne
 \label{fig:eyepic}
 \end{figure}
 
-Az \textbf{infratartománynak} a látható fénnyel szemben vannak előnyei, de hátrányai is. Az előnyök közé tartozik, hogy a pupilla képe a infra megvilágításban nagyon kontrasztos (lásd \figref{eyepic} ábra), emiatt jóval könnyebben szegmentálható az írisztől (különösen sötétebb szemű alany esetén), mint látható fényben. Az infrás megvalósítás hátránya azonban, hogy a megfelelő működéshez sötétet igényel (igaz, ezzel összhangban a látható megvilágítási változásokra invariáns), de sötétben, a tisztán infra megvilágítás megvalósítása nehéz feladat, különösen a piacon kapható egyszerűbb infra LED-ekkel, vagy LED-es reflektorokkal.
+Az \textbf{infratartománynak} a látható fénnyel szemben vannak előnyei, de hátrányai is. Az előnyök közé tartozik, hogy a pupilla képe az infra-megvilágításban nagyon kontrasztos (lásd \figref{eyepic} ábra), emiatt jóval könnyebben szegmentálható az írisztől (különösen sötétebb szemű alany esetén), mint látható fényben. Az infrás megvalósítás hátránya azonban, hogy a megfelelő működéshez sötétet igényel (igaz, ezzel összhangban a látható megvilágítási változásokra invariáns), de sötétben, a tisztán infra megvilágítás megvalósítása nehéz feladat, különösen a piacon kapható egyszerűbb infra LED-ekkel vagy LED-es reflektorokkal.
 
 \bigskip
 

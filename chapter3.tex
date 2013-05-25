@@ -2,7 +2,7 @@
 \chapter{Elméleti alapok}\label{sect:elmeleti_alapok}
 %----------------------------------------------------------------------------
 
-Már a szakdolgozatomban \cite{thesis_sajat} is arra kerestem a választ, hogy melyek lehetnek a pupilla követésének gyors és robusztus megvalósításai. A kérdés a tekintetkövető rendszer esetében is kardinális: a pupilla gyors és pontos követése a elengedhetetlen a megfelelő minőségű követés megvalósításához.
+Már a szakdolgozatomban \cite{thesis_sajat} is arra kerestem a választ, hogy melyek lehetnek a pupilla követésének gyors és robusztus megvalósításai. A kérdés a tekintetkövető rendszer esetében is kardinális: a pupilla gyors és pontos követése elengedhetetlen a megfelelő minőségű követés megvalósításához.
 
 Munkám során számos módszer elméletét kellett megértenem, majd a gyakorlatba ültetnem. Dolgozatomnak ebben a fejezetében ezért a legfontosabb általam vizsgált módszerek alapjaival szeretném megismertetni az olvasót.
 
@@ -54,7 +54,7 @@ y = m \cdot x + b
 
 reprezentáció, ahol $ m $ az egyenes meredeksége (iránytangense), a $ b $ konstans az ordinátatengely-metszet, vagyis az egyenes és az $ y $ tengely metszéspontja.
 
-A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordináta-rendszer $ y $ tengelyével párhuzamos, vagy ahhoz közelítő egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függőleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
+A \eqref{egyenes_klasszikus} egyenlettel megadott modellel az a probléma, hogy a koordináta-rendszer $ y $ tengelyével párhuzamos vagy ahhoz közelítő egyenesek leírására nem használható $ m $ végtelen nagy értéke miatt. Nem szerencsés azonban az ilyen ,,függőleges'' egyenesek kizárása a számításból. Ennek kiküszöbölésére -- jelen esetben -- jobb modellként segítségül hívhatjuk a \textbf{Hesse-féle normálalakos} reprezentációt. Ez az
 
 \begin{align}\label{eq:egyenes_hesse}
 r = x \cdot \cos \theta + y \cdot \sin \theta
@@ -109,7 +109,7 @@ A továbbiakban tételezzük fel, hogy a kép bináris, és megfelelően előfel
 
 A keresés folyamán bejárjuk a képteret pixelről pixelre. A 0 értékű képpontok biztosan nem részei egy képen található egyenesnek sem, ezért ezekkel nem kell foglalkozunk. Ha 1 értékű pixelt találunk az $ (x,y) $ helyen, az potenciálisan része lehet egy, a képen található egyenesnek. Az akkumulátor minden $ \theta $ értékhez (pl. fokonként) meghatározzuk az $ (x,y) $ ponton átmenő, $ \theta $ irányú egyenes origótól vett $ r $ távolságát a \eqref{egyenes_hesse} összefüggés alapján. Az akkumulátortömb értékét minden így kiszámolt $ (r,\theta) $ indexekkel jelölt helyen megnöveljük ($ r $ meghatározásánál természetesen a tömb kvantáltságát figyelembe véve). Ezt a folyamatot úgy is mondhatjuk, hogy az $ (x,y) $ pont a kiszámított $ (r, \theta) $ pontok halmazára, vagyis ezen paraméterek által a képtérben képviselt egyenesekre \emph{,,szavaz''}.
 
-Az algoritmus első fázisának lefutása után az akkumulátortömböt kell vizsgálnunk. Optimális esetben a képen egy egyenesre eső pixelek mindegyike (a többi más szavazatuk mellett) szavazott a ,,valódi'' egyenest jelentő $ (r, \theta) $ párra. Az akkumulátortömb maximális értékű $ (r, \theta) $ elemei adják meg tehát a képen található egyeneseket. A zaj, az esetleg több pixel széles vonalak, és a kvantálási pontatlanság miatt azonban célravezetőbb \textbf{lokális maximumokat} (lásd \figref{houghparam} ábra) keresni az akkumulátortömbben így meghatározva a \textbf{legvalószínűbb} egyenesek $ r $ és $ \theta $ paramétereit.
+Az algoritmus első fázisának lefutása után az akkumulátortömböt kell vizsgálnunk. Optimális esetben a képen egy egyenesre eső pixelek mindegyike (a többi más szavazatuk mellett) szavazott a ,,valódi'' egyenest jelentő $ (r, \theta) $ párra. Az akkumulátortömb maximális értékű $ (r, \theta) $ elemei adják meg tehát a képen található egyeneseket. A zaj, az esetleg több pixel széles vonalak és a kvantálási pontatlanság miatt azonban célravezetőbb \textbf{lokális maximumokat} (lásd \figref{houghparam} ábra) keresni az akkumulátortömbben így meghatározva a \textbf{legvalószínűbb} egyenesek $ r $ és $ \theta $ paramétereit.
 
 \begin{figure}[!ht]
 \centering
@@ -167,7 +167,7 @@ Az alaphelyzet legyen az egyenesek keresésekor felállított: a felismerni kív
 
 A bejárás során 1 értékű pixelt találva jóval több számítani valónk van, mint egyenesek esetében. Az akkumulátor \textbf{összes lehetséges $ r $ sugárparaméterére} meg kell határoznunk a potenciális körök középpontjait. Ehhez felhasználjuk a \eqref{kor_param} összefüggéseket $ r $ és $ \theta $ ismeretében ($ \theta $ lehetséges értékeinek megválasztása -- tipikusan például fokonként -- azonos elven történhet a \sectref{parameterter_akkumulator} szakaszban olvashatóakkal).
 
-Hogy próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felső korlátot adva a keresést a két érték közötti sugarú körökre szűkíthetjük. Némi előzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentősen csökkenthető a számítási idő- és tárigény.
+Hogyan próbálhatjuk meg csökkenteni a rengeteg számítást? Egyfelől \textbf{korlátozhatjuk} $ r $ lehetséges értékeinek halmazát. Az értékeknek $ r_{min} $ alsó és $ r_{max} $ felső korlátot adva a keresést a két érték közötti sugarú körökre szűkíthetjük. Némi előzetes információ birtokában (körülbelül, vagy a kép oldalainak arányában mekkora köröket kell keresnünk) jelentősen csökkenthető a számítási idő- és tárigény.
 
 Másfelől pedig felhasználhatunk lokális információkat is: a vizsgálat alatt lévő képpont egy adott ablaknyi környezetét vizsgálva, meghatározhatjuk a körvonal adott pontbeli \textbf{gradiensét}. Ez az információ felhasználható a középpont keresésében, ugyanis a kör középpontjának a körvonalpont normálisán kell feküdnie. Így, ha nem is egyetlen kitüntetett irányra, de a számítási pontatlanságot és a zajt figyelembe véve egy szűk tartományra korlátozhatjuk a keresett körközéppontok irányát. Ez a választott tartomány méretével fordított arányosságban csökkenti a szükséges számítások számát. Példának okáért, ha a kiszámított gradiens segítségével akár csak 90 fok pontossággal meg tudjuk határozni a pontban vett normális irányát, a számítások háromnegyedét nem kell elvégeznünk, ráadásul az akkumulátortömb sem telítődik feleslegesen olyan paraméterekkel, amelyekből biztosan (vagy elég nagy valószínűséggel) nem fog helyes megoldás születni.
 
@@ -197,7 +197,7 @@ A fent vázolt felépítésre lehet jó példa a Viola--Jones objektumdetektor �
 \subsection{A Viola--Jones objektumdetektor}\label{sect:viola}
 %............................................................................
 
-A Paul Viola és Michael Jones által 2001-ben elővezetett \cite{vj} Viola--Jones objektumdetektor az első olyan objektumfelismerő rendszer, megközelítheti, vagy akár teljesítheti is a valósidejű feldolgozás által támasztott követelményeket. A rendszer eleinte arcdetektálás céljából készült, de mint kiderült, működése könnyen általánosítható, így megfelelő tanítás után bármilyen objektum felismerésére képes lehet.
+A Paul Viola és Michael Jones által 2001-ben elővezetett \cite{vj} Viola--Jones objektumdetektor az első olyan objektumfelismerő rendszer, amely megközelítheti, vagy akár teljesítheti is a valósidejű feldolgozás által támasztott követelményeket. A rendszer eleinte arcdetektálás céljából készült, de mint kiderült, működése könnyen általánosítható, így megfelelő tanítás után bármilyen objektum felismerésére képes lehet.
 
 \begin{figure}[!ht]
 \centering
@@ -225,13 +225,13 @@ A számítógépes látás területén az optikai áramlás közelítésének k�
 \label{fig:optical_flow}
 \end{figure}
 
-Az eljárás feltételezi, hogy az áramlás konstans a vizsgált képpont helyi környezetében, és ebben a környezetben (ablakban) a legkisebb négyzetek módszerével próbálja kiszámolni az aktuális pont elmozdulásvektorát. Azzal, hogy nem egy-egy képpontot, hanem egy kis lokális ablakot vesz figyelembe a számítás során, a Lucas--Kanade eljárás kevésbé érzékenyen reagál a zajos bemenetei képekre. Másrészt viszont a lokális tulajdonság hatására az eljárás nem tud információt szolgáltatni a kép nagy, összefüggő, azonos intenzitású területein.
+Az eljárás feltételezi, hogy az áramlás konstans a vizsgált képpont helyi környezetében, és ebben a környezetben (ablakban) a legkisebb négyzetek módszerével próbálja kiszámolni az aktuális pont elmozdulásvektorát. Azzal, hogy nem egy-egy képpontot, hanem egy kis lokális ablakot vesz figyelembe a számítás során, a Lucas--Kanade eljárás kevésbé érzékenyen reagál a zajos bemeneti képekre. Másrészt viszont a lokális tulajdonság hatására az eljárás nem tud információt szolgáltatni a kép nagy, összefüggő, azonos intenzitású területein.
 
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Matematikai háttér}\label{sect:matrixok}
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Tegyük fel, hogy két egymás követő időpillanatban a képek közti eltérés megfelelően kicsi. Az optikai áramlás eljárás alapegyenlete ebben az esetben
+Tegyük fel, hogy két egymást követő időpillanatban a képek közti eltérés megfelelően kicsi. Az optikai áramlás eljárás alapegyenlete ebben az esetben
 
 \begin{align}\label{eq:optflow_alap}
 I_x V_x + I_y V_y = - I_t
@@ -299,7 +299,7 @@ A definícióban említett tulajdonság a gyakorlatban legtöbbször a képponto
 
 \bigskip
 
-A szakirodalomban két eljárást tartanak számon a blobok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret pontosabb nyitva objektumfelismerési és -követési módszerek fejlesztésének.
+A szakirodalomban két eljárást tartanak számon a blobok meghatározásával kapcsolatban. A \textbf{blob-detektálás} (blob detection) differenciális vagy lokális szélsőértékeken alapuló metódusok segítségével keresi a képtér érdekes pontjait, legszélesebb körben a \emph{Laplacian of the Gaussian (LoG)} operátort használva. A blob-detektálás olyan további információkat szolgáltathat az él- és sarokdetektáló algoritmusok mellé, amelyek elősegíthetik a kép feldolgozását illetve megértését, teret nyitva pontosabb objektumfelismerési és -követési módszerek fejlesztésének.
 
 \begin{figure}[!ht]
 \centering
@@ -447,7 +447,7 @@ Az egyesével, szinte egymástól függetlenül vizsgált képpontok feldolgozá
 \subsection{Blob-analizis}\label{sect:blob_analizis}
 %............................................................................
 
-Sok esetben a képen felismert blobok nem mindegyik tartalmaz a feldolgozás szempontjából hasznos információt. A blobok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blobokat valamely előre definiált kritérium alapján.
+Sok esetben a képen felismert blobok nem mindegyike tartalmaz a feldolgozás szempontjából hasznos információt. A blobok algoritmikus megtalálása mellett szükségünk lehet a foltok által hordozott absztrakt információ megértésére is. A feladat elvégzéséhez hasznunkra válhat olyan mértékek meghatározása, amelyekkel \textbf{szűrni tudjuk} a felismert blobokat valamely előre definiált kritérium alapján.
 
 A pupillakeresési feladatnál például az ember számára könnyen feldolgozható \emph{,,keressünk egy relatíve nagy, kör alakú objektumot''} feltételt kell a gépi látás által is megoldható problémává formalizálni.
 
